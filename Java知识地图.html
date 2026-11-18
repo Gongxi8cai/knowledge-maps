@@ -1,0 +1,397 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Java 知识地图 · 按功能分类</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0d1117;color:#c9d1d9;font:15px/1.65 -apple-system,"Segoe UI","Microsoft YaHei",sans-serif}
+a{color:#58a6ff;text-decoration:none}
+header{padding:28px 32px 18px;border-bottom:1px solid #21262d;background:linear-gradient(180deg,#161b22,#0d1117)}
+h1{margin:0 0 10px;font-size:26px;letter-spacing:.5px}
+.sub{color:#8b949e;font-size:14px;max-width:900px}
+.stats{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
+.stat{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:6px 12px;font-size:13px;color:#8b949e}
+.stat b{color:#e6edf3;font-size:15px}
+.wrap{display:flex;align-items:flex-start;max-width:1500px;margin:0 auto}
+nav{position:sticky;top:0;width:250px;flex:0 0 250px;max-height:100vh;overflow:auto;padding:18px 12px 60px;border-right:1px solid #21262d}
+nav h2{font-size:12px;text-transform:uppercase;letter-spacing:1.2px;color:#6e7681;margin:16px 8px 8px}
+nav a{display:flex;justify-content:space-between;gap:8px;padding:6px 10px;border-radius:6px;color:#c9d1d9;font-size:13.5px}
+nav a:hover{background:#161b22;color:#e6edf3}
+nav a span{color:#6e7681;font-size:12px}
+main{flex:1;min-width:0;padding:24px 32px 80px}
+.search{width:100%;max-width:520px;background:#0d1117;border:1px solid #30363d;border-radius:8px;color:#e6edf3;padding:9px 12px;font-size:14px;margin-bottom:22px}
+.search:focus{outline:none;border-color:#1f6feb}
+.sec{margin:0 0 10px;font-size:12px;text-transform:uppercase;letter-spacing:1.4px;color:#6e7681;border-bottom:1px solid #21262d;padding-bottom:8px}
+.dom{margin:0 0 26px;border:1px solid #21262d;border-radius:10px;overflow:hidden;background:#0f141b}
+.dom>h3{margin:0;padding:14px 16px;font-size:17px;background:#161b22;border-bottom:1px solid #21262d;display:flex;gap:12px;align-items:baseline}
+.dom>h3 em{font-style:normal;font-size:12px;color:#6e7681;font-weight:400}
+.goal{padding:10px 16px;color:#8b949e;font-size:13.5px;border-bottom:1px dashed #21262d}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{text-align:left;padding:8px 12px;color:#6e7681;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.6px;border-bottom:1px solid #21262d;background:#11161d}
+td{padding:9px 12px;border-bottom:1px solid #161b22;vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#12181f}
+td.api{font-family:ui-monospace,Consolas,monospace;font-size:12.5px;color:#a5d6ff}
+td.ac{display:flex;flex-wrap:wrap;gap:5px;align-items:flex-start}
+td.ac .api{flex:0 1 auto;max-width:100%}
+td .tag{display:inline-block;font-size:10.5px;line-height:1;padding:3px 6px;border-radius:5px;
+  border:1px solid #2a3446;color:#93a2b5;background:#141b26;white-space:nowrap;margin-top:1px}
+.t-kw{border-color:#3b5bdb;color:#9db4ff;background:#141d33}
+.t-ann{border-color:#7048b6;color:#c9a6ff;background:#1d1630}
+.t-api{border-color:#1f6f43;color:#7fe3b0;background:#0f2a1d}
+.t-syn{border-color:#3a4657;color:#93a2b5;background:#161d27}
+.legend{display:flex;flex-wrap:wrap;gap:16px;align-items:center;font-size:12.5px;color:#8b949e;margin-top:10px}
+.legend .tag{margin-right:5px}
+td.cur{white-space:nowrap;color:#8b949e;font-size:12.5px}
+.badge{display:inline-block;padding:1px 7px;border-radius:20px;font-size:11.5px;margin-left:6px;border:1px solid}
+.b1{color:#3fb950;border-color:#238636;background:#0f2a17}
+.b2{color:#58a6ff;border-color:#1f6feb;background:#0d1d33}
+.b3{color:#8b949e;border-color:#30363d;background:#161b22}
+.cross{color:#d29922;font-size:12px}
+.card{border:1px solid #21262d;border-radius:10px;padding:16px 18px;margin:0 0 20px;background:#0f141b}
+.card h3{margin:0 0 10px;font-size:16px}
+.card ul{margin:6px 0 0;padding-left:20px}
+.card li{margin:7px 0}
+.note b{color:#e6edf3}
+code{font-family:ui-monospace,Consolas,monospace;background:#161b22;padding:1px 5px;border-radius:4px;font-size:12.5px;color:#a5d6ff}
+.hint{color:#6e7681;font-size:12.5px;margin:6px 0 0}
+footer{border-top:1px solid #21262d;padding:16px 32px;color:#6e7681;font-size:12.5px}
+@media (max-width:900px){.wrap{flex-direction:column}nav{position:static;width:100%;flex:none;max-height:none;border-right:none;border-bottom:1px solid #21262d}main{padding:18px}}
+</style></head><body>
+<header>
+<h1>Java 知识地图 · 按功能分类</h1>
+<div class="sub">按「你要干什么」找工具，而不是按语法书目录背。同一功能若跨多个域，会在多个域里重复出现，并在「交叉」列标出它还在哪出现；<b>基础通用</b>与<b>备注</b>各自单列。</div>
+<div class="stats">
+<div class="stat">功能域 <b>18</b></div>
+<div class="stat">功能条目 <b>144</b></div>
+<div class="stat">基础通用 <b>12</b></div>
+<div class="stat">交叉概念 <b>12</b></div>
+<div class="stat">备注 <b>13</b></div>
+<div class="stat">课程 <b>EiP WS 26/27</b></div>
+</div>
+<div class="legend"><span>第 2 列的小标签表示这一条的性质：</span>
+<span><span class="tag t-kw">关键字</span>语言自带的词，写代码绕不开</span>
+<span><span class="tag t-ann">注解</span>写在类或方法上</span>
+<span><span class="tag t-api">标准库</span>JDK 现成的类/方法，查文档</span>
+<span><span class="tag t-syn">写法</span>语法或思路，不是某个名字</span>
+</div></header>
+<div class="wrap"><nav>
+<h2>地基</h2><a href="#base">基础通用<span>12</span></a>
+<h2>功能域</h2>
+<a href="#io">输入输出与交互<span>8</span></a>
+<a href="#types">类型与数据表示<span>9</span></a>
+<a href="#expr">运算与表达式<span>8</span></a>
+<a href="#flow">控制流<span>8</span></a>
+<a href="#method">方法与递归<span>8</span></a>
+<a href="#class">类与对象<span>11</span></a>
+<a href="#oop">继承·抽象类·接口·多态<span>9</span></a>
+<a href="#coll">集合与容器<span>10</span></a>
+<a href="#gen">泛型与类型系统<span>5</span></a>
+<a href="#exc">异常与资源管理<span>7</span></a>
+<a href="#text">文本与字符串处理<span>8</span></a>
+<a href="#func">函数式与 Stream<span>6</span></a>
+<a href="#file">文件与持久化<span>6</span></a>
+<a href="#conc">并发与线程<span>7</span></a>
+<a href="#rt">内存·JVM·性能<span>7</span></a>
+<a href="#tool">工具链·测试·调试<span>10</span></a>
+<a href="#algo">数据结构与算法<span>9</span></a>
+<a href="#design">设计与建模<span>8</span></a>
+<h2>跨层</h2><a href="#cross">交叉项总表<span>12</span></a>
+<a href="#notes">备注<span>13</span></a>
+<a href="#quick">反向查</a>
+<a href="#course">课件对照</a>
+</nav><main>
+<input class="search" id="q" placeholder="搜功能、API 或关键词……（例如 equals / 排序 / 异常）">
+<div class="sec" id="base">第 0 层 · 基础通用（所有域共用）</div>
+<div class="card"><table><thead><tr><th>条目</th><th>说明</th><th>例子</th></tr></thead><tbody>
+<tr><td><b>语句与表达式</b></td><td>每条语句以分号结束；表达式有值</td><td><code>System.out.println(31-18+1);</code></td></tr>
+<tr><td><b>变量声明与作用域</b></td><td>先声明类型（或 <code>var</code>）再用；块内可见</td><td><code>int i = 0;</code></td></tr>
+<tr><td><b>命名规范</b></td><td>类 UpperCamel、方法/变量 lowerCamel、常量 UPPER_SNAKE</td><td><code>class WortZaehler</code>、<code>int maxWert</code></td></tr>
+<tr><td><b>缩进与空白</b></td><td>一般不影响语义，但影响可读性</td><td>统一 4 空格</td></tr>
+<tr><td><b>注释</b></td><td><code>//</code> 行注释、<code>/* */</code> 块注释；写 why 不写 what</td><td><code>// 用 getOrDefault 避免 null</code></td></tr>
+<tr><td><b>main 签名</b></td><td><code>public static void main(String[] args)</code> 一字不差</td><td>JVM 只认这一个入口</td></tr>
+<tr><td><b>类名 = 文件名</b></td><td><code>public class X</code> 必须在 <code>X.java</code> 里</td><td>否则编译报错</td></tr>
+<tr><td><b>编译 → 运行两步</b></td><td><code>.java</code> →（javac）→ <code>.class</code> →（java/JVM）→ 运行</td><td>改了代码必须重新编译</td></tr>
+<tr><td><b>读编译器报错</b></td><td>看第一行、行号、报错处的符号</td><td><code>&#x27;;&#x27; expected</code> = 少了分号</td></tr>
+<tr><td><b>类型直觉</b></td><td>8 种基本类型 + 引用类型；<code>int/int</code> 是整除</td><td><code>7/2 == 3</code></td></tr>
+<tr><td><b>查文档</b></td><td>Java API 文档、<code>javadoc</code>、IDE 里 Ctrl+点击</td><td>别背方法名</td></tr>
+<tr><td><b>调试习惯</b></td><td>先做最小可复现、再二分定位、别一次改五处</td><td>—</td></tr>
+</tbody></table></div>
+<div class="sec" id="outline">一页提纲 · 先扫这个</div><div class="card"><ul>
+<li><a href="#io"><b>输入输出与交互</b></a>：控制台输出 · 控制台输入 · 格式化输出 · 命令行参数 · 标准错误流 · 文件读写（小文件） · 缓冲读大文件 · 统一数据源</li>
+<li><a href="#types"><b>类型与数据表示</b></a>：八种基本类型 · 字面量与后缀 · 类型转换 · 包装类与自动装箱 · 数组 · 二维数组 · 枚举 enum · 记录类 record · 局部类型推断</li>
+<li><a href="#expr"><b>运算与表达式</b></a>：算术运算 · 整除与取余的坑 · 关系与逻辑 · 优先级与括号 · 自增自减 · 三元运算符 · 浮点误差 · 位运算</li>
+<li><a href="#flow"><b>控制流</b></a>：if / else if / else · switch 与 switch 表达式 · for 计数循环 · 增强 for · while / do-while · break / continue · 嵌套循环 · 带标签跳转</li>
+<li><a href="#method"><b>方法与递归</b></a>：定义与调用 · 返回值与 void · 参数传递（只有值传递） · 方法重载 · 递归 · 可变参数 · 作用域与生命周期 · 纯函数与副作用</li>
+<li><a href="#class"><b>类与对象</b></a>：类与实例 · 字段与可见性 · 构造方法 · this · getter / setter · static 成员 · final · toString · equals 与 hashCode · 对象组合 · 内部类 / 匿名类</li>
+<li><a href="#oop"><b>继承·抽象类·接口·多态</b></a>：extends 继承 · super · 方法重写 @Override · 多态与动态绑定 · 抽象类 abstract · 接口 interface · 接口默认方法 · instanceof 与模式匹配 · Object 根类</li>
+<li><a href="#coll"><b>集合与容器</b></a>：List / ArrayList · LinkedList · Set / HashSet · Map / HashMap · TreeMap / TreeSet · 遍历方式 · Comparator / Comparable · Collections 工具类 · 不可变集合 · 选型决策</li>
+<li><a href="#gen"><b>泛型与类型系统</b></a>：泛型类 / 泛型方法 · 类型参数 · 通配符 · 类型擦除 · 泛型与数组</li>
+<li><a href="#exc"><b>异常与资源管理</b></a>：try / catch / finally · throw / throws · 受检 vs 非受检 · 自定义异常 · try-with-resources · 读异常信息 · 断言 assert</li>
+<li><a href="#text"><b>文本与字符串处理</b></a>：String 不可变 · 常用方法 · StringBuilder · 字符串比较 · 格式化 · 正则 · 字符与编码 · 字符分类</li>
+<li><a href="#func"><b>函数式与 Stream</b></a>：函数式接口 · Lambda · 方法引用 · Stream 管道 · Optional · 并行 Stream</li>
+<li><a href="#file"><b>文件与持久化</b></a>：Path / Files · 逐行处理 · 目录操作 · 对象序列化 · CSV / JSON · 显式指定编码</li>
+<li><a href="#conc"><b>并发与线程</b></a>：Thread / Runnable · synchronized · volatile · ExecutorService · 并发集合 · 竞态与死锁 · 虚拟线程</li>
+<li><a href="#rt"><b>内存·JVM·性能</b></a>：栈与堆 · 垃圾回收 · 字节码与 .class · 引用强度 · JVM 参数 · 性能直觉 · 内存泄漏（Java 也有）</li>
+<li><a href="#tool"><b>工具链·测试·调试</b></a>：javac / java · 包与 classpath · jar 打包 · IDE（Eclipse） · 构建工具 · 单元测试 JUnit · 调试器 · 版本管理 Git · JDK 版本 · 读报错三步</li>
+<li><a href="#algo"><b>数据结构与算法</b></a>：数组 · 链表 · 栈 / 队列 · 哈希表 · 树 / 二叉搜索树 · 排序 · 查找 · 复杂度记号 · 递归与分治</li>
+<li><a href="#design"><b>设计与建模</b></a>：UML 类图 · 封装 · 继承 vs 组合 · 单一职责 · 设计模式（23 种） · 不可变对象 · 接口隔离 · 命名与可读性</li>
+</ul></div>
+<div class="sec">第 1 层 · 功能域</div>
+<div class="dom" id="io"><h3>输入输出与交互 <em>Ein-/Ausgabe</em></h3><div class="goal">程序怎么和外界交换数据：打印、读键盘、读文件。</div><table><thead><tr><th>功能</th><th>Java 关键字 / API</th><th>用来做什么</th><th>课程</th><th>交叉</th></tr></thead><tbody>
+<tr class="row"><td><b>控制台输出</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">System.out.print / println / printf</span></td><td>打印结果、临时调试</td><td class="cur">L1 · Blatt 1<span class="badge b1">必修</span></td><td class="cross">文本</td></tr>
+<tr class="row"><td><b>控制台输入</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">new Scanner(System.in)、nextInt / nextLine</span></td><td>读用户输入</td><td class="cur">Blatt 3–4<span class="badge b2">涉及</span></td><td class="cross">方法</td></tr>
+<tr class="row"><td><b>格式化输出</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">String.format(&quot;%.2f&quot;)、printf(&quot;%d %s&quot;)</span></td><td>表格对齐、保留小数位</td><td class="cur">Blatt 4 · 6<span class="badge b2">涉及</span></td><td class="cross">文本</td></tr>
+<tr class="row"><td><b>命令行参数</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">String[] args</span></td><td>从外部传文件名/参数</td><td class="cur">Blatt 6<span class="badge b2">涉及</span></td><td class="cross">工具链</td></tr>
+<tr class="row"><td><b>标准错误流</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">System.err</span></td><td>错误信息与正常输出分开</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">异常</td></tr>
+<tr class="row"><td><b>文件读写（小文件）</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">Files.readString / writeString</span></td><td>一次读入整个语料</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">文件</td></tr>
+<tr class="row"><td><b>缓冲读大文件</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">BufferedReader、Files.lines</span></td><td>逐行处理，不爆内存</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">文件、算法</td></tr>
+<tr class="row"><td><b>统一数据源</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">InputStream / Reader 抽象</span></td><td>同一段代码换键盘/文件</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">文件</td></tr>
+</tbody></table></div>
+<div class="dom" id="types"><h3>类型与数据表示 <em>Datentypen</em></h3><div class="goal">数据在内存里怎么表示：数字、字符、真假、序列。</div><table><thead><tr><th>功能</th><th>Java 关键字 / API</th><th>用来做什么</th><th>课程</th><th>交叉</th></tr></thead><tbody>
+<tr class="row"><td><b>八种基本类型</b></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api">byte short int long float double char boolean</span></td><td>选对类型，避免溢出和精度问题</td><td class="cur">L2 · Blatt 1–2<span class="badge b1">必修</span></td><td class="cross">运算</td></tr>
+<tr class="row"><td><b>字面量与后缀</b></td><td class="ac"><span class="tag t-syn">写法</span><span class="api">1_000、10L、1.5f、&#x27;a&#x27;、&#x27;\n&#x27;</span></td><td>写常量不写错类型</td><td class="cur">L2 · Blatt 2<span class="badge b1">必修</span></td><td class="cross">文本</td></tr>
+<tr class="row"><td><b>类型转换</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">(int) 3.9、Integer.parseInt(s)</span></td><td>精度丢失、字符串转数字</td><td class="cur">L2 · Blatt 2<span class="badge b1">必修</span></td><td class="cross">运算</td></tr>
+<tr class="row"><td><b>包装类与自动装箱</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">Integer、Double、Integer.valueOf</span></td><td>集合里只能放对象</td><td class="cur">L2<span class="badge b2">涉及</span></td><td class="cross">集合</td></tr>
+<tr class="row"><td><b>数组</b></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api">int[] a = new int[5]; a.length</span></td><td>定长同类型序列（三角、矩阵）</td><td class="cur">L4 · Blatt 4<span class="badge b1">必修</span></td><td class="cross">算法</td></tr>
+<tr class="row"><td><b>二维数组</b></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api">int[][] m = new int[3][4]</span></td><td>矩阵、表格、棋盘</td><td class="cur">L4<span class="badge b2">涉及</span></td><td class="cross">算法</td></tr>
+<tr class="row"><td><b>枚举 enum</b></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api">enum Farbe { ROT, GRUEN, BLAU }</span></td><td>有限取值，替代魔法数字</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">类</td></tr>
+<tr class="row"><td><b>记录类 record</b></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api">record Punkt(double x, double y) {}</span></td><td>不可变数据载体（Java 16+）</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">类</td></tr>
+<tr class="row"><td><b>局部类型推断</b></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api">var liste = new ArrayList&lt;String&gt;();</span></td><td>少写重复类型（Java 10+）</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">工具链</td></tr>
+</tbody></table></div>
+<div class="dom" id="expr"><h3>运算与表达式 <em>Ausdrücke</em></h3><div class="goal">怎么算：算术、比较、逻辑，以及它们怎么组合。</div><table><thead><tr><th>功能</th><th>Java 关键字 / API</th><th>用来做什么</th><th>课程</th><th>交叉</th></tr></thead><tbody>
+<tr class="row"><td><b>算术运算</b></td><td class="ac"><span class="tag t-syn">写法</span><span class="api">+ - * / %</span></td><td>基本计算</td><td class="cur">L2 · Blatt 2<span class="badge b1">必修</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>整除与取余的坑</b></td><td class="ac"><span class="tag t-syn">写法</span><span class="api">7/2 == 3、7%2 == 1</span></td><td>整数除法不是四舍五入</td><td class="cur">L2 · Blatt 2<span class="badge b1">必修</span></td><td class="cross">类型</td></tr>
+<tr class="row"><td><b>关系与逻辑</b></td><td class="ac"><span class="tag t-syn">写法</span><span class="api">== != &lt; &gt; &amp;&amp; || !</span></td><td>条件组合；&amp;&amp; 短路求值</td><td class="cur">L2 · Blatt 2<span class="badge b1">必修</span></td><td class="cross">控制流</td></tr>
+<tr class="row"><td><b>优先级与括号</b></td><td class="ac"><span class="tag t-syn">写法</span><span class="api">2+3*x 是 2+(3*x)</span></td><td>歧义是 bug 之源（L1 第 23 页）</td><td class="cur">L1<span class="badge b1">必修</span></td><td class="cross">基础</td></tr>
+<tr class="row"><td><b>自增自减</b></td><td class="ac"><span class="tag t-syn">写法</span><span class="api">i++、++i</span></td><td>循环计数；注意副作用</td><td class="cur">L3 · Blatt 3<span class="badge b1">必修</span></td><td class="cross">控制流</td></tr>
+<tr class="row"><td><b>三元运算符</b></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api">int max = a &gt; b ? a : b;</span></td><td>两选一，替代短 if</td><td class="cur">L3<span class="badge b2">涉及</span></td><td class="cross">控制流</td></tr>
+<tr class="row"><td><b>浮点误差</b></td><td class="ac"><span class="tag t-syn">写法</span><span class="api">0.1+0.2 != 0.3；Math.abs(a-b) &lt; 1e-9</span></td><td>小数比较必须给容差</td><td class="cur">Blatt 6<span class="badge b1">必修</span></td><td class="cross">备注</td></tr>
+<tr class="row"><td><b>位运算</b></td><td class="ac"><span class="tag t-syn">写法</span><span class="api">&amp; | ^ ~ &lt;&lt; &gt;&gt; &gt;&gt;&gt;</span></td><td>掩码、底层优化、哈希</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">运行时</td></tr>
+</tbody></table></div>
+<div class="dom" id="flow"><h3>控制流 <em>Kontrollfluss</em></h3><div class="goal">程序往哪走：分支、循环、提前跳出。</div><table><thead><tr><th>功能</th><th>Java 关键字 / API</th><th>用来做什么</th><th>课程</th><th>交叉</th></tr></thead><tbody>
+<tr class="row"><td><b>if / else if / else</b></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api">if (x &gt; 0) { … }</span></td><td>分支</td><td class="cur">L3 · Blatt 3<span class="badge b1">必修</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>switch 与 switch 表达式</b></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api">switch (x) { case 1: … }；case -&gt; yield</span></td><td>多分支、枚举分派</td><td class="cur">L3<span class="badge b2">涉及</span></td><td class="cross">类型</td></tr>
+<tr class="row"><td><b>for 计数循环</b></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api">for (int i = 0; i &lt; n; i++)</span></td><td>次数已知的循环</td><td class="cur">L3 · Blatt 3<span class="badge b1">必修</span></td><td class="cross">运算</td></tr>
+<tr class="row"><td><b>增强 for</b></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api">for (int x : arr) { … }</span></td><td>遍历数组/集合（只读）</td><td class="cur">L4 · Blatt 4<span class="badge b1">必修</span></td><td class="cross">集合</td></tr>
+<tr class="row"><td><b>while / do-while</b></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api">while (b &gt; 0) { … }</span></td><td>次数未知（欧几里得算法）</td><td class="cur">L1 · L3<span class="badge b1">必修</span></td><td class="cross">方法</td></tr>
+<tr class="row"><td><b>break / continue</b></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api">break; continue;</span></td><td>提前退出、跳过一轮</td><td class="cur">L3<span class="badge b2">涉及</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>嵌套循环</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">两层 for 打三角形（Blatt 4）</span></td><td>图案、矩阵、穷举</td><td class="cur">Blatt 4<span class="badge b1">必修</span></td><td class="cross">算法</td></tr>
+<tr class="row"><td><b>带标签跳转</b></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api">outer: for (…) { break outer; }</span></td><td>跳出多层（可读性差，少用）</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">—</td></tr>
+</tbody></table></div>
+<div class="dom" id="method"><h3>方法与递归 <em>Prozeduren</em></h3><div class="goal">怎么把一件事拆成可复用的块。</div><table><thead><tr><th>功能</th><th>Java 关键字 / API</th><th>用来做什么</th><th>课程</th><th>交叉</th></tr></thead><tbody>
+<tr class="row"><td><b>定义与调用</b></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api">static int add(int a, int b) { return a + b; }</span></td><td>拆分逻辑、消除重复</td><td class="cur">L3 · Blatt 4<span class="badge b1">必修</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>返回值与 void</b></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api">return wert; / void</span></td><td>有没有结果要交回</td><td class="cur">L3<span class="badge b1">必修</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>参数传递（只有值传递）</b></td><td class="ac"><span class="tag t-syn">写法</span><span class="api">f(x) 复制一份进去</span></td><td>对象传的是引用的副本，改字段有效、换引用无效</td><td class="cur">L3 · Blatt 6<span class="badge b1">必修</span></td><td class="cross">基础、类</td></tr>
+<tr class="row"><td><b>方法重载</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">add(int,int) 与 add(double,double)</span></td><td>同名不同参（看参数选）</td><td class="cur">L3 · Blatt 6<span class="badge b1">必修</span></td><td class="cross">类</td></tr>
+<tr class="row"><td><b>递归</b></td><td class="ac"><span class="tag t-syn">写法</span><span class="api">fak(n) = n * fak(n-1)</span></td><td>分治、遍历树、排列组合</td><td class="cur">L3<span class="badge b2">涉及</span></td><td class="cross">算法</td></tr>
+<tr class="row"><td><b>可变参数</b></td><td class="ac"><span class="tag t-syn">写法</span><span class="api">void f(String... xs)</span></td><td>参数个数不定</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>作用域与生命周期</b></td><td class="ac"><span class="tag t-syn">写法</span><span class="api">局部变量 / 字段</span></td><td>变量在哪一层可见</td><td class="cur">L3<span class="badge b1">必修</span></td><td class="cross">基础</td></tr>
+<tr class="row"><td><b>纯函数与副作用</b></td><td class="ac"><span class="tag t-syn">写法</span><span class="api">只依赖参数、只返回值</span></td><td>好测试、好推理</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">设计</td></tr>
+</tbody></table></div>
+<div class="dom" id="class"><h3>类与对象 <em>Klassen und Objekte</em></h3><div class="goal">怎么把数据和行为捆成一个实体。</div><table><thead><tr><th>功能</th><th>Java 关键字 / API</th><th>用来做什么</th><th>课程</th><th>交叉</th></tr></thead><tbody>
+<tr class="row"><td><b>类与实例</b></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api">class Punkt { double x; } → new Punkt()</span></td><td>建模现实实体</td><td class="cur">L5 · Blatt 5<span class="badge b1">必修</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>字段与可见性</b></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api">private / public / protected</span></td><td>封装：外部只能通过方法改</td><td class="cur">L5 · Blatt 5<span class="badge b1">必修</span></td><td class="cross">继承</td></tr>
+<tr class="row"><td><b>构造方法</b></td><td class="ac"><span class="tag t-syn">写法</span><span class="api">Punkt(double x, double y) { … }</span></td><td>保证对象一出生就合法</td><td class="cur">L5 · Blatt 5<span class="badge b1">必修</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>this</b></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api">this.x = x;</span></td><td>区分字段与同名参数</td><td class="cur">L5<span class="badge b1">必修</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>getter / setter</b></td><td class="ac"><span class="tag t-syn">写法</span><span class="api">getX() / setX(int x)</span></td><td>受控访问，可在 setter 里校验</td><td class="cur">L5 · Blatt 5<span class="badge b1">必修</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>static 成员</b></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api">static int counter;</span></td><td>类级共享：计数器、工具方法、main</td><td class="cur">L5 · Blatt 6<span class="badge b2">涉及</span></td><td class="cross">工具链</td></tr>
+<tr class="row"><td><b>final</b></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api">final double PI = 3.14;</span></td><td>常量、引用不可换</td><td class="cur">L5<span class="badge b2">涉及</span></td><td class="cross">设计</td></tr>
+<tr class="row"><td><b>toString</b></td><td class="ac"><span class="tag t-ann">注解</span><span class="api">@Override public String toString() { … }</span></td><td>打印/日志时人类可读</td><td class="cur">Blatt 5–6<span class="badge b1">必修</span></td><td class="cross">文本</td></tr>
+<tr class="row"><td><b>equals 与 hashCode</b></td><td class="ac"><span class="tag t-ann">注解</span><span class="api">@Override equals(Object o)、hashCode()</span></td><td>内容相等；放进 HashSet/HashMap 必须成对重写</td><td class="cur">Blatt 6<span class="badge b2">涉及</span></td><td class="cross">集合</td></tr>
+<tr class="row"><td><b>对象组合</b></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api">class Buch { private Autor autor; }</span></td><td>has-a 关系，优先于继承</td><td class="cur">Blatt 5<span class="badge b2">涉及</span></td><td class="cross">设计</td></tr>
+<tr class="row"><td><b>内部类 / 匿名类</b></td><td class="ac"><span class="tag t-syn">写法</span><span class="api">new Comparator&lt;Punkt&gt;() { … }</span></td><td>一次性小对象（Lambda 可替代）</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">函数式</td></tr>
+</tbody></table></div>
+<div class="dom" id="oop"><h3>继承·抽象类·接口·多态 <em>Vererbung und Interface</em></h3><div class="goal">怎么让多个类共享行为、互相替换。</div><table><thead><tr><th>功能</th><th>Java 关键字 / API</th><th>用来做什么</th><th>课程</th><th>交叉</th></tr></thead><tbody>
+<tr class="row"><td><b>extends 继承</b></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api">class Hund extends Tier</span></td><td>is-a 复用</td><td class="cur">L6<span class="badge b1">必修</span></td><td class="cross">设计</td></tr>
+<tr class="row"><td><b>super</b></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api">super(); super.laut();</span></td><td>调父类构造/方法</td><td class="cur">L6<span class="badge b1">必修</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>方法重写 @Override</b></td><td class="ac"><span class="tag t-syn">写法</span><span class="api">同签名、换实现</span></td><td>多态的基础</td><td class="cur">L6<span class="badge b1">必修</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>多态与动态绑定</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">Tier t = new Hund(); t.laut();</span></td><td>一个接口多种实现，调用处不用改</td><td class="cur">L6<span class="badge b1">必修</span></td><td class="cross">设计</td></tr>
+<tr class="row"><td><b>抽象类 abstract</b></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api">abstract class Form { abstract double flaeche(); }</span></td><td>半成品模板：有字段、有已实现方法</td><td class="cur">L6<span class="badge b1">必修</span></td><td class="cross">备注</td></tr>
+<tr class="row"><td><b>接口 interface</b></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api">interface Zahlbar { double betrag(); }</span></td><td>能力契约，一个类可多实现</td><td class="cur">L6<span class="badge b1">必修</span></td><td class="cross">备注</td></tr>
+<tr class="row"><td><b>接口默认方法</b></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api">default void log() { … }</span></td><td>给旧接口加方法不破坏实现者</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>instanceof 与模式匹配</b></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api">if (t instanceof Hund h) { h.bellen(); }</span></td><td>类型判断 + 自动绑定（16+）</td><td class="cur">L6<span class="badge b2">涉及</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>Object 根类</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">toString / equals / hashCode</span></td><td>所有类都继承它</td><td class="cur">L5–L6<span class="badge b1">必修</span></td><td class="cross">—</td></tr>
+</tbody></table></div>
+<div class="dom" id="coll"><h3>集合与容器 <em>Collections</em></h3><div class="goal">怎么装一堆东西并高效取用。</div><table><thead><tr><th>功能</th><th>Java 关键字 / API</th><th>用来做什么</th><th>课程</th><th>交叉</th></tr></thead><tbody>
+<tr class="row"><td><b>List / ArrayList</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">new ArrayList&lt;&gt;()、add / get / size</span></td><td>可变长序列（首选）</td><td class="cur">L7 · Blatt 6<span class="badge b1">必修</span></td><td class="cross">算法</td></tr>
+<tr class="row"><td><b>LinkedList</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">new LinkedList&lt;&gt;()</span></td><td>频繁头尾插删</td><td class="cur">L7<span class="badge b2">涉及</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>Set / HashSet</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">new HashSet&lt;&gt;()、contains</span></td><td>去重、快速成员判断</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">算法</td></tr>
+<tr class="row"><td><b>Map / HashMap</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">put / get / getOrDefault / entrySet</span></td><td>键值表（词频统计）</td><td class="cur">L7<span class="badge b2">涉及</span></td><td class="cross">算法</td></tr>
+<tr class="row"><td><b>TreeMap / TreeSet</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">new TreeMap&lt;&gt;()</span></td><td>自动按键排序，可 range 查询</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>遍历方式</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">for-each、Iterator、forEach</span></td><td>边遍历边删要用 Iterator</td><td class="cur">L7<span class="badge b1">必修</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>Comparator / Comparable</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">compareTo、Comparator.comparing(...)</span></td><td>自定义排序规则</td><td class="cur">L7<span class="badge b2">涉及</span></td><td class="cross">函数式</td></tr>
+<tr class="row"><td><b>Collections 工具类</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">sort / reverse / max / min</span></td><td>常用操作一行搞定</td><td class="cur">L7<span class="badge b2">涉及</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>不可变集合</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">List.of(1, 2, 3)</span></td><td>常量表，防被改</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">设计</td></tr>
+<tr class="row"><td><b>选型决策</b></td><td class="ac"><span class="tag t-syn">写法</span><span class="api">要顺序？要唯一？要键值？要排序？</span></td><td>选错容器是性能 bug 的常见来源</td><td class="cur">L7<span class="badge b2">涉及</span></td><td class="cross">备注</td></tr>
+</tbody></table></div>
+<div class="dom" id="gen"><h3>泛型与类型系统 <em>Generics</em></h3><div class="goal">怎么让容器「只装某一种东西」，并且在编译期就查出来。</div><table><thead><tr><th>功能</th><th>Java 关键字 / API</th><th>用来做什么</th><th>课程</th><th>交叉</th></tr></thead><tbody>
+<tr class="row"><td><b>泛型类 / 泛型方法</b></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api">class Box&lt;T&gt; { T inhalt; }</span></td><td>类型安全的容器</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">集合</td></tr>
+<tr class="row"><td><b>类型参数</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">List&lt;String&gt; 与 List&lt;Integer&gt; 不能互转</span></td><td>编译期检查，省掉强制转换</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">集合</td></tr>
+<tr class="row"><td><b>通配符</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">List&lt;? extends Number&gt;、? super T</span></td><td>读写限制（PECS 原则）</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>类型擦除</b></td><td class="ac"><span class="tag t-syn">写法</span><span class="api">运行时没有泛型信息</span></td><td>不能 new T()、不能 instanceof List&lt;String&gt;</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">运行时</td></tr>
+<tr class="row"><td><b>泛型与数组</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">new T[10] 编译不过</span></td><td>用 List&lt;T&gt; 代替</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">—</td></tr>
+</tbody></table></div>
+<div class="dom" id="exc"><h3>异常与资源管理 <em>Ausnahmen</em></h3><div class="goal">出错时怎么办，以及怎么保证资源被释放。</div><table><thead><tr><th>功能</th><th>Java 关键字 / API</th><th>用来做什么</th><th>课程</th><th>交叉</th></tr></thead><tbody>
+<tr class="row"><td><b>try / catch / finally</b></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api">try { … } catch (IOException e) { … } finally { … }</span></td><td>捕获、兜底、必执行清理</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">文件</td></tr>
+<tr class="row"><td><b>throw / throws</b></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api">throw new IllegalArgumentException(&quot;…&quot;);</span></td><td>主动报错 / 声明可能抛</td><td class="cur">Blatt 5–6 参数校验<span class="badge b2">涉及</span></td><td class="cross">方法</td></tr>
+<tr class="row"><td><b>受检 vs 非受检</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">IOException 必须处理；NullPointerException 不必</span></td><td>决定要不要写 catch</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">备注</td></tr>
+<tr class="row"><td><b>自定义异常</b></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api">class UngueltigeEingabe extends Exception { }</span></td><td>领域错误有名字</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">设计</td></tr>
+<tr class="row"><td><b>try-with-resources</b></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api">try (var in = Files.newBufferedReader(p)) { … }</span></td><td>自动关闭文件/流</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">文件</td></tr>
+<tr class="row"><td><b>读异常信息</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">从最下面一行往上找、看 Caused by</span></td><td>调试第一技能</td><td class="cur">全部 Blatt<span class="badge b1">必修</span></td><td class="cross">基础</td></tr>
+<tr class="row"><td><b>断言 assert</b></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api">assert x &gt; 0 : &quot;x muss positiv sein&quot;;</span></td><td>开发期自检（默认关闭）</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">工具链</td></tr>
+</tbody></table></div>
+<div class="dom" id="text"><h3>文本与字符串处理 <em>Zeichenketten</em></h3><div class="goal">怎么切、查、拼、比较字符串（计算语言学的日常）。</div><table><thead><tr><th>功能</th><th>Java 关键字 / API</th><th>用来做什么</th><th>课程</th><th>交叉</th></tr></thead><tbody>
+<tr class="row"><td><b>String 不可变</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">s.toUpperCase() 返回新串</span></td><td>可安全共享；循环拼接慢</td><td class="cur">L4 · Blatt 4<span class="badge b1">必修</span></td><td class="cross">运行时</td></tr>
+<tr class="row"><td><b>常用方法</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">length / charAt / substring / indexOf / split / replace / trim</span></td><td>切分与查找</td><td class="cur">L4 · Blatt 4<span class="badge b1">必修</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>StringBuilder</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">sb.append(x); sb.toString()</span></td><td>循环里拼串的正确做法</td><td class="cur">L4<span class="badge b2">涉及</span></td><td class="cross">运行时</td></tr>
+<tr class="row"><td><b>字符串比较</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">equals / equalsIgnoreCase / compareTo</span></td><td>内容比较，永远不用 ==</td><td class="cur">Blatt 2 · 4<span class="badge b1">必修</span></td><td class="cross">备注</td></tr>
+<tr class="row"><td><b>格式化</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">String.format(&quot;%.2f&quot;, x)</span></td><td>对齐表格、固定小数</td><td class="cur">Blatt 4 · 6<span class="badge b2">涉及</span></td><td class="cross">io</td></tr>
+<tr class="row"><td><b>正则</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">&quot;\\s+&quot;.split(s)、replaceAll(&quot;[^A-Za-z]&quot;, &quot;&quot;)</span></td><td>清洗文本（词频任务就靠它）</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">算法</td></tr>
+<tr class="row"><td><b>字符与编码</b></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api">char vs String、UTF-8 / UTF-16、getBytes</span></td><td>德语变音符号乱码的根源</td><td class="cur">L2 · L4<span class="badge b2">涉及</span></td><td class="cross">文件</td></tr>
+<tr class="row"><td><b>字符分类</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">Character.isLetter / isDigit / toLowerCase</span></td><td>判断字母数字、统一大小写</td><td class="cur">L4<span class="badge b2">涉及</span></td><td class="cross">类型</td></tr>
+</tbody></table></div>
+<div class="dom" id="func"><h3>函数式与 Stream <em>Funktionale Programmierung</em></h3><div class="goal">怎么把「做什么」当参数传，少写循环。</div><table><thead><tr><th>功能</th><th>Java 关键字 / API</th><th>用来做什么</th><th>课程</th><th>交叉</th></tr></thead><tbody>
+<tr class="row"><td><b>函数式接口</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">Function / Supplier / Consumer / Predicate</span></td><td>把行为当参数</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>Lambda</b></td><td class="ac"><span class="tag t-syn">写法</span><span class="api">(a, b) -&gt; a + b</span></td><td>简短实现接口（排序最常用）</td><td class="cur">Blatt 5–6 排序<span class="badge b2">涉及</span></td><td class="cross">集合</td></tr>
+<tr class="row"><td><b>方法引用</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">String::length、System.out::println</span></td><td>Lambda 的进一步简写</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>Stream 管道</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">list.stream().filter(…).map(…).sorted(…).toList()</span></td><td>声明式处理集合</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">集合</td></tr>
+<tr class="row"><td><b>Optional</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">Optional.ofNullable(x).orElse(0)</span></td><td>显式表达「可能没有值」</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">异常</td></tr>
+<tr class="row"><td><b>并行 Stream</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">.parallelStream()</span></td><td>大数据加速（小数据更慢，慎用）</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">并发</td></tr>
+</tbody></table></div>
+<div class="dom" id="file"><h3>文件与持久化 <em>Dateien</em></h3><div class="goal">怎么把数据存下来、读回来。</div><table><thead><tr><th>功能</th><th>Java 关键字 / API</th><th>用来做什么</th><th>课程</th><th>交叉</th></tr></thead><tbody>
+<tr class="row"><td><b>Path / Files</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">Path.of(&quot;a.txt&quot;)、Files.readString(p)</span></td><td>读写文本（显式 UTF-8）</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">io</td></tr>
+<tr class="row"><td><b>逐行处理</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">Files.lines(p)、BufferedReader.readLine()</span></td><td>大语料不爆内存</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">算法</td></tr>
+<tr class="row"><td><b>目录操作</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">Files.list、Files.createDirectories</span></td><td>批量处理、建输出目录</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">工具链</td></tr>
+<tr class="row"><td><b>对象序列化</b></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api">implements Serializable、ObjectOutputStream</span></td><td>直接存对象（长期存储慎用）</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>CSV / JSON</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">手写 split 或库（Jackson）</span></td><td>数据交换格式</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>显式指定编码</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">StandardCharsets.UTF_8</span></td><td>避免平台默认编码坑</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">文本</td></tr>
+</tbody></table></div>
+<div class="dom" id="conc"><h3>并发与线程 <em>Nebenläufigkeit</em></h3><div class="goal">怎么同时做多件事，以及为什么这很难。</div><table><thead><tr><th>功能</th><th>Java 关键字 / API</th><th>用来做什么</th><th>课程</th><th>交叉</th></tr></thead><tbody>
+<tr class="row"><td><b>Thread / Runnable</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">new Thread(r).start()</span></td><td>并行执行</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>synchronized</b></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api">synchronized void f() { … }</span></td><td>互斥访问共享状态</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>volatile</b></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api">volatile boolean fertig;</span></td><td>保证可见性（不保证原子性）</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">运行时</td></tr>
+<tr class="row"><td><b>ExecutorService</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">Executors.newFixedThreadPool(4)</span></td><td>线程池，别手动 new 一堆</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>并发集合</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">ConcurrentHashMap、CopyOnWriteArrayList</span></td><td>多线程共享容器</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">集合</td></tr>
+<tr class="row"><td><b>竞态与死锁</b></td><td class="ac"><span class="tag t-syn">写法</span><span class="api">先问：哪些状态是共享的？</span></td><td>并发 bug 的根源</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">备注</td></tr>
+<tr class="row"><td><b>虚拟线程</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">Thread.ofVirtual().start(r)（Java 21+）</span></td><td>高并发 IO</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">—</td></tr>
+</tbody></table></div>
+<div class="dom" id="rt"><h3>内存·JVM·性能 <em>Laufzeit</em></h3><div class="goal">程序跑起来之后发生了什么。</div><table><thead><tr><th>功能</th><th>Java 关键字 / API</th><th>用来做什么</th><th>课程</th><th>交叉</th></tr></thead><tbody>
+<tr class="row"><td><b>栈与堆</b></td><td class="ac"><span class="tag t-syn">写法</span><span class="api">局部变量在栈、对象在堆</span></td><td>理解引用与生命周期</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">类型</td></tr>
+<tr class="row"><td><b>垃圾回收</b></td><td class="ac"><span class="tag t-syn">写法</span><span class="api">不可达对象自动回收</span></td><td>不用手动 free（但不能不管内存）</td><td class="cur">L1<span class="badge b2">涉及</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>字节码与 .class</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">javap -c HelloWorld</span></td><td>看编译器到底生成了什么</td><td class="cur">L1<span class="badge b2">涉及</span></td><td class="cross">工具链</td></tr>
+<tr class="row"><td><b>引用强度</b></td><td class="ac"><span class="tag t-syn">写法</span><span class="api">强 / 软 / 弱 / 虚引用</span></td><td>缓存与内存敏感场景</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>JVM 参数</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">-Xmx512m、-Xms512m</span></td><td>内存上限与初始值</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>性能直觉</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">先看复杂度，再看常数：拼接、装箱、IO</span></td><td>先写对，再写快</td><td class="cur">L8<span class="badge b2">涉及</span></td><td class="cross">算法</td></tr>
+<tr class="row"><td><b>内存泄漏（Java 也有）</b></td><td class="ac"><span class="tag t-syn">写法</span><span class="api">集合只增不删、监听器没注销</span></td><td>长跑程序必查</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">备注</td></tr>
+</tbody></table></div>
+<div class="dom" id="tool"><h3>工具链·测试·调试 <em>Werkzeuge</em></h3><div class="goal">怎么编译、怎么查错、怎么验证。</div><table><thead><tr><th>功能</th><th>Java 关键字 / API</th><th>用来做什么</th><th>课程</th><th>交叉</th></tr></thead><tbody>
+<tr class="row"><td><b>javac / java</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">javac -encoding UTF-8 -d build X.java；java -cp build X</span></td><td>编译与运行两步</td><td class="cur">L0 · Blatt 1<span class="badge b1">必修</span></td><td class="cross">基础</td></tr>
+<tr class="row"><td><b>包与 classpath</b></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api">package a.b;、-cp build</span></td><td>类文件在哪、怎么找</td><td class="cur">Blatt 1<span class="badge b2">涉及</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>jar 打包</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">jar --create --file x.jar -C build .</span></td><td>分发可执行包</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>IDE（Eclipse）</b></td><td class="ac"><span class="tag t-syn">写法</span><span class="api">语法高亮、自动编译、补全、向导</span></td><td>提高日常效率</td><td class="cur">L34 页<span class="badge b2">涉及</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>构建工具</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">Maven / Gradle</span></td><td>依赖管理与标准目录</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>单元测试 JUnit</b></td><td class="ac"><span class="tag t-ann">注解</span><span class="api">@Test、assertEquals</span></td><td>自动验证改动没弄坏东西</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>调试器</b></td><td class="ac"><span class="tag t-syn">写法</span><span class="api">断点、单步、看变量</span></td><td>比到处 println 强</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>版本管理 Git</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">commit、branch、diff</span></td><td>作业与项目必备</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>JDK 版本</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">本课用 Java 21（LTS）；--release 21</span></td><td>新特性可用性、兼容性</td><td class="cur">L0 第 11 页<span class="badge b1">必修</span></td><td class="cross">备注</td></tr>
+<tr class="row"><td><b>读报错三步</b></td><td class="ac"><span class="tag t-syn">写法</span><span class="api">第一行 + 行号 + 符号/标识符</span></td><td>80% 的错看这三样就够</td><td class="cur">全部<span class="badge b1">必修</span></td><td class="cross">基础</td></tr>
+</tbody></table></div>
+<div class="dom" id="algo"><h3>数据结构与算法 <em>Datenstrukturen und Algorithmen</em></h3><div class="goal">数据怎么组织、操作要多少代价。</div><table><thead><tr><th>功能</th><th>Java 关键字 / API</th><th>用来做什么</th><th>课程</th><th>交叉</th></tr></thead><tbody>
+<tr class="row"><td><b>数组</b></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api">随机访问 O(1)、插入删除 O(n)</span></td><td>最基础的序列</td><td class="cur">L4 · L7<span class="badge b1">必修</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>链表</b></td><td class="ac"><span class="tag t-syn">写法</span><span class="api">插入删除 O(1)、查找 O(n)</span></td><td>频繁增删的序列</td><td class="cur">L7<span class="badge b1">必修</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>栈 / 队列</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">Deque、push/pop、offer/poll</span></td><td>括号匹配、BFS、撤销</td><td class="cur">L7<span class="badge b2">涉及</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>哈希表</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">HashMap 均摊 O(1)</span></td><td>计数、去重、索引</td><td class="cur">L7<span class="badge b2">涉及</span></td><td class="cross">集合</td></tr>
+<tr class="row"><td><b>树 / 二叉搜索树</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">有序、查找 O(log n)</span></td><td>索引、范围查询</td><td class="cur">L7<span class="badge b2">涉及</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>排序</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">冒泡/插入/归并/快排、Arrays.sort</span></td><td>排序与比较器</td><td class="cur">L8<span class="badge b1">必修</span></td><td class="cross">方法</td></tr>
+<tr class="row"><td><b>查找</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">线性查找、二分（Arrays.binarySearch）</span></td><td>有序数据快速定位</td><td class="cur">L8<span class="badge b2">涉及</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>复杂度记号</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">O(1) / O(log n) / O(n) / O(n log n) / O(n²)</span></td><td>估算「输入变大十倍会怎样」</td><td class="cur">L8<span class="badge b1">必修</span></td><td class="cross">备注</td></tr>
+<tr class="row"><td><b>递归与分治</b></td><td class="ac"><span class="tag t-syn">写法</span><span class="api">归并排序、二分递归</span></td><td>把大问题切成同类小问题</td><td class="cur">L8<span class="badge b2">涉及</span></td><td class="cross">方法</td></tr>
+</tbody></table></div>
+<div class="dom" id="design"><h3>设计与建模 <em>Entwurf und Modellierung</em></h3><div class="goal">写代码之前怎么想清楚结构。</div><table><thead><tr><th>功能</th><th>Java 关键字 / API</th><th>用来做什么</th><th>课程</th><th>交叉</th></tr></thead><tbody>
+<tr class="row"><td><b>UML 类图</b></td><td class="ac"><span class="tag t-syn">写法</span><span class="api">类框（字段/方法）+ 关系箭头</span></td><td>先画再写，作业要交（Blatt 5）</td><td class="cur">Blatt 5<span class="badge b1">必修</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>封装</b></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api">private 字段 + 公开方法</span></td><td>改内部实现不影响调用方</td><td class="cur">L5<span class="badge b1">必修</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>继承 vs 组合</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">is-a 用继承；has-a 用组合</span></td><td>默认选组合，继承只在真 is-a 时用</td><td class="cur">L6<span class="badge b1">必修</span></td><td class="cross">备注</td></tr>
+<tr class="row"><td><b>单一职责</b></td><td class="ac"><span class="tag t-syn">写法</span><span class="api">一个类只干一件事</span></td><td>可读、可测、可改</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>设计模式（23 种）</b></td><td class="ac"><span class="tag t-syn">写法</span><span class="api">单例、工厂、观察者、策略…</span></td><td>求职与大项目；现在只需知道名字</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">备注</td></tr>
+<tr class="row"><td><b>不可变对象</b></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api">final 字段、无 setter、防御性拷贝</span></td><td>线程安全、易推理</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">并发</td></tr>
+<tr class="row"><td><b>接口隔离</b></td><td class="ac"><span class="tag t-syn">写法</span><span class="api">小而专的接口，别做胖接口</span></td><td>实现方不必写空方法</td><td class="cur">—<span class="badge b3">课外</span></td><td class="cross">—</td></tr>
+<tr class="row"><td><b>命名与可读性</b></td><td class="ac"><span class="tag t-api">标准库</span><span class="api">类名名词、方法动词、lowerCamelCase</span></td><td>代码即文档（也是评分点）</td><td class="cur">全部<span class="badge b1">必修</span></td><td class="cross">基础</td></tr>
+</tbody></table></div>
+<div class="sec" id="cross">跨层 A · 交叉项总表</div><div class="card"><table><thead><tr><th>概念</th><th>出现在哪些域</th><th>为什么交叉</th></tr></thead><tbody>
+<tr><td><b>String</b></td><td>类型 · 文本 · 集合（作键） · 文件 · 输入输出</td><td>既是数据类型，又是文本处理对象，还常当 Map 的键、文件内容、输出单位</td></tr>
+<tr><td><b>equals / hashCode</b></td><td>类与对象 · 集合 · 文本</td><td>定义在 Object（类域），用于内容比较（文本域），HashSet/HashMap 依赖它（集合域）</td></tr>
+<tr><td><b>值传递</b></td><td>方法 · 基础通用 · 类与对象</td><td>语法上属方法调用，语义上决定对象能不能被「改到」，所以贯穿基础与类</td></tr>
+<tr><td><b>泛型</b></td><td>集合 · 泛型 · 函数式</td><td>集合靠它保证类型安全，函数式接口也带类型参数</td></tr>
+<tr><td><b>try-with-resources</b></td><td>异常 · 文件</td><td>语法在异常域，用途是文件/流的自动关闭</td></tr>
+<tr><td><b>Lambda</b></td><td>集合 · 函数式 · 并发</td><td>集合排序在用（Comparator），Stream 的基石，并发的任务提交也用</td></tr>
+<tr><td><b>递归</b></td><td>方法 · 数据结构与算法</td><td>方法的一种写法，但真正价值在分治与树/图遍历</td></tr>
+<tr><td><b>复杂度</b></td><td>数据结构与算法 · 内存·JVM·性能 · 备注</td><td>算法域定义，性能域测量，备注里决定「先优化哪里」</td></tr>
+<tr><td><b>编码 UTF-8</b></td><td>文本 · 文件 · 输入输出</td><td>文本域的概念，落到文件与 IO 才踩坑（德语变音符号）</td></tr>
+<tr><td><b>多态</b></td><td>继承·接口 · 设计 · 集合（Comparator）</td><td>继承域的机制，设计域的目的，集合域里 Comparator 就是多态的应用</td></tr>
+<tr><td><b>static</b></td><td>类与对象 · 工具链（main） · 设计</td><td>类域定义，工具链里 main 必须 static，设计上滥用会破坏可测性</td></tr>
+<tr><td><b>不可变性</b></td><td>文本（String） · 设计 · 并发</td><td>String 的天然属性，设计上的主动选择，并发里最省心的策略</td></tr>
+</tbody></table></div>
+<div class="sec" id="notes">跨层 B · 备注（易错点 / 版本 / 取舍 / 顺序）</div><div class="card">
+<div class="note" style="margin:9px 0"><b>1. <code>==</code> 与 <code>equals</code></b>：基本类型比 <code>==</code>；对象比内容用 <code>equals</code>。<code>String</code> 用 <code>==</code> 会时对时错——这是本课最高频的错。</div>
+<div class="note" style="margin:9px 0"><b>2. determiniert 与 deterministisch</b>：算法两性质：同输入同结果（结果确定）≠ 步骤顺序唯一（过程确定）。随机数 +2 是前者不是后者；16/4 或 2*2 是后者不是前者。</div>
+<div class="note" style="margin:9px 0"><b>3. 重载与重写</b>：重载（overload）= 同名不同参数，编译期选；重写（override）= 同签名换实现，运行期选。</div>
+<div class="note" style="margin:9px 0"><b>4. 抽象类与接口</b>：抽象类可以带状态和已实现方法；接口是纯契约（可有 default 方法）。要共享代码选抽象类，要能力契约选接口。</div>
+<div class="note" style="margin:9px 0"><b>5. String 与 StringBuilder</b>：<code>String</code> 不可变，循环里 <code>+=</code> 是 O(n²)；循环内拼接用 <code>StringBuilder</code>。</div>
+<div class="note" style="margin:9px 0"><b>6. 浮点比较</b>：<code>0.1+0.2 != 0.3</code>。比较小数用 <code>Math.abs(a-b) &lt; 1e-9</code>，别用 <code>==</code>。</div>
+<div class="note" style="margin:9px 0"><b>7. 整数除法与溢出</b>：<code>7/2 == 3</code>；<code>int</code> 最大约 21 亿，乘法前先想会不会溢出（<code>long</code> 或 <code>Math.multiplyExact</code>）。</div>
+<div class="note" style="margin:9px 0"><b>8. 版本差异</b>：本课用 <b>Java 21（LTS）</b>。<code>record</code>(16+)、<code>instanceof</code> 模式匹配(16+)、<code>switch</code> 表达式(14+)、虚拟线程(21+) 都可用了；装 25 也能跑。</div>
+<div class="note" style="margin:9px 0"><b>9. 继承优先组合</b>：只有真 is-a 才继承；其余用字段组合。继承层次一变，父类改动会波及所有子类。</div>
+<div class="note" style="margin:9px 0"><b>10. 学习顺序</b>：① 能编译能跑 → ② 能读懂报错 → ③ 能把长 main 拆成方法 → ④ 能设计出 2–3 个类 → ⑤ 再上集合/泛型 → ⑥ 最后才是并发/Stream。</div>
+<div class="note" style="margin:9px 0"><b>11. 本课扣分点</b>：类名≠文件名、main 签名写错、漏分号、命名不规范、注释只写 what。</div>
+<div class="note" style="margin:9px 0"><b>12. LLM 时代的提醒</b>：课程原话：LLM 能解出所有练习题，但 EiP 考的是<b>概念</b>；LLM 常生成胡话，没有概念知识就无法判断。</div>
+<div class="note" style="margin:9px 0"><b>13. 现在不要碰</b>：Spring / MySQL / Redis / Kafka / 微服务 / 23 种设计模式——那是大三大四找实习的内容（见你 D 盘那份 xmind 的后半段）。</div>
+</div>
+<div class="sec" id="quick">反向查 · 我要做 X，看哪个域</div><div class="card"><table><thead><tr><th>我要……</th><th>去这里</th></tr></thead><tbody>
+<tr><td>打印一张对齐的表</td><td>输入输出 + 文本（<code>printf</code> / <code>String.format</code>）</td></tr>
+<tr><td>读文件统计词频</td><td>输入输出 + 集合（<code>HashMap</code>）+ 文本（<code>split</code>/正则）</td></tr>
+<tr><td>建一个实体类（Book、Punkt）</td><td>类与对象（字段/构造/getter/toString）</td></tr>
+<tr><td>存一堆对象并按某字段排序</td><td>集合（<code>List</code>）+ 算法（<code>Comparator</code>）</td></tr>
+<tr><td>判断两次输入是否相等 / 去重</td><td>文本（<code>equals</code>）+ 集合（<code>HashSet</code>）</td></tr>
+<tr><td>程序对非法输入崩了</td><td>异常（校验 + <code>throw</code>）</td></tr>
+<tr><td>程序太慢</td><td>数据结构与算法（复杂度）+ 内存·JVM（拼接/装箱）</td></tr>
+<tr><td>多个类共享行为</td><td>继承·抽象类·接口（先想清楚是不是真 is-a）</td></tr>
+<tr><td>把程序交给别人跑</td><td>工具链（<code>jar</code> / classpath / JDK 版本）</td></tr>
+<tr><td>作业要交 UML</td><td>设计与建模（类图 + 关系箭头）</td></tr>
+</tbody></table></div>
+<div class="sec" id="course">与本课课件 / 作业的对照</div><div class="card"><table><thead><tr><th>课程单元</th><th>覆盖的功能域</th></tr></thead><tbody>
+<tr><td><b>L0 Organisatorisches</b></td><td>工具链 · 备注（版本、考试）</td></tr>
+<tr><td><b>L1 Algorithmus und Programm</b></td><td>基础通用 · 运算（优先级） · 控制流（while） · 内存·JVM（字节码）</td></tr>
+<tr><td><b>L2 Datenrepräsentation und Variable</b></td><td>类型 · 运算 · 文本（编码）</td></tr>
+<tr><td><b>L3 Kontrollfluss und Prozeduren</b></td><td>控制流 · 方法</td></tr>
+<tr><td><b>L4 Zusammengesetzte Datentypen</b></td><td>类型（数组） · 文本 · 控制流（增强 for）</td></tr>
+<tr><td><b>L5 OOP I: Klassen und Objekte</b></td><td>类与对象 · 设计（UML）</td></tr>
+<tr><td><b>L6 OOP II: Vererbung und Interface</b></td><td>继承·接口·多态 · 方法（重载/重写）</td></tr>
+<tr><td><b>L7 Dynamische Datenstrukturen</b></td><td>集合 · 数据结构与算法（链表/栈/树）</td></tr>
+<tr><td><b>L8 Sortieralgorithmen und Komplexität</b></td><td>数据结构与算法（排序/复杂度） · 内存·JVM（性能）</td></tr>
+<tr><td><b>Blatt 1–2</b></td><td>类型 · 运算 · 工具链</td></tr>
+<tr><td><b>Blatt 3–4</b></td><td>控制流 · 方法 · 类型（数组） · 文本</td></tr>
+<tr><td><b>Blatt 5–6</b></td><td>类与对象 · 继承·接口 · 设计（UML） · 方法（double 比较）</td></tr>
+</tbody></table></div>
+<div class="card"><h3>怎么用这张图</h3><ul>
+<li><b>先看第 0 层</b>：分号、类名、报错读法——90% 的初学者问题都在这层。</li>
+<li><b>按需查域</b>：写作业时先问「我在做哪件事」，再去对应域找 API。</li>
+<li><b>交叉项当复习线</b>：<code>equals</code>、多态、不可变三条线贯穿全图。</li>
+<li><b>备注当错题本</b>：每被某个坑咬到，回来找对应的一条。</li>
+<li><b>对照表定位进度</b>：老师讲到 L3，就只点亮控制流与方法两个域。</li>
+</ul></div></main></div>
+<footer>生成于 2026-11-18 · 数据源：EiP WS26/27 讲义 L0–L8 + Übungsblatt 1–6 + 自写解答 · 同目录另有 <code>Java知识地图.md</code></footer>
+<script>
+const q = document.getElementById('q');
+q.addEventListener('input', () => {
+  const v = q.value.trim().toLowerCase();
+  document.querySelectorAll('.dom').forEach(d => {
+    let hit = 0;
+    d.querySelectorAll('tr.row').forEach(r => {
+      const ok = !v || r.textContent.toLowerCase().includes(v);
+      r.style.display = ok ? '' : 'none';
+      if (ok) hit++;
+    });
+    d.style.display = (!v || hit || d.querySelector('h3').textContent.toLowerCase().includes(v)) ? '' : 'none';
+  });
+});
+</script></body></html>
