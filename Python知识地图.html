@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Python 知识地图</title>
+<style>
+:root {
+  --bg:#0d1117; --panel:#161b22; --panel2:#1c2330; --line:#2a3446;
+  --fg:#e6edf3; --dim:#8b98a9; --accent:#f0b866; --code:#9cd0ff;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0; background:var(--bg); color:var(--fg);
+  font:15px/1.65 -apple-system,"Segoe UI","Microsoft YaHei",Roboto,sans-serif;
+}
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header {
+  padding:34px 40px 22px; border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg,#121926 0%,var(--bg) 100%);
+}
+h1 { margin:0 0 8px; font-size:27px; letter-spacing:.4px; }
+h1 .dot { color:var(--accent); }
+.tagline { color:var(--dim); font-size:14px; max-width:960px; }
+.chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+.chip {
+  font-size:12.5px; color:var(--dim); border:1px solid var(--line);
+  border-radius:999px; padding:4px 11px; background:var(--panel);
+}
+.chip b { color:var(--fg); font-weight:600; }
+.wrap { display:grid; grid-template-columns:236px 1fr; align-items:start; }
+nav {
+  position:sticky; top:0; max-height:100vh; overflow:auto;
+  padding:20px 12px 40px; border-right:1px solid var(--line);
+}
+nav .grp { font-size:11.5px; color:#6c7a8d; text-transform:uppercase;
+  letter-spacing:1px; margin:16px 8px 6px; }
+nav a { display:flex; justify-content:space-between; gap:8px; color:#c3ccd8;
+  font-size:13.5px; padding:5px 8px; border-radius:6px; }
+nav a:hover { background:var(--panel2); text-decoration:none; }
+nav a.on { background:var(--panel2); color:var(--accent); }
+nav .n { color:#5d6b7e; font-size:12px; }
+main { padding:26px 40px 80px; max-width:1180px; }
+.search { position:sticky; top:0; z-index:5; padding:12px 0 14px; background:var(--bg); }
+.search input {
+  width:100%; max-width:430px; padding:10px 13px; border-radius:8px;
+  border:1px solid var(--line); background:var(--panel); color:var(--fg);
+  font-size:14px; outline:none;
+}
+.search input:focus { border-color:var(--accent); }
+.search .hint { color:#6c7a8d; font-size:12.5px; margin-left:10px; }
+h2 {
+  font-size:19px; margin:38px 0 14px; padding-bottom:8px;
+  border-bottom:1px solid var(--line);
+}
+h2:first-of-type { margin-top:10px; }
+.card {
+  background:var(--panel); border:1px solid var(--line); border-radius:12px;
+  padding:18px 20px 10px; margin:16px 0;
+}
+.card h3 { margin:0 0 4px; font-size:16.5px; }
+.card h3 .de { color:#6c7a8d; font-weight:400; font-size:12.5px; margin-left:8px; }
+.card .goal { color:var(--dim); font-size:13.5px; margin:0 0 12px; }
+table { width:100%; border-collapse:collapse; font-size:13.5px; }
+th {
+  text-align:left; color:#7f8da0; font-weight:600; font-size:12px;
+  text-transform:uppercase; letter-spacing:.6px;
+  padding:6px 10px; border-bottom:1px solid var(--line); white-space:nowrap;
+}
+td { padding:8px 10px; border-bottom:1px solid #1e2634; vertical-align:top; }
+tr:last-child td { border-bottom:none; }
+td.k { font-weight:600; color:#dbe6f3; }
+td .api {
+  font-family:ui-monospace,Consolas,"Cascadia Mono",monospace; font-size:12.5px;
+  color:var(--code); background:#0f1621; border:1px solid #1f2a3a;
+  border-radius:5px; padding:1px 5px; display:inline-block; word-break:break-word;
+}
+td .tag {
+  display:inline-block; font-size:10.5px; line-height:1; padding:3px 6px; margin-right:6px;
+  border-radius:5px; border:1px solid var(--line); color:var(--dim); background:#141b26;
+  vertical-align:1px; white-space:nowrap;
+}
+td.ac { display:flex; flex-wrap:wrap; gap:5px; align-items:flex-start; }
+td.ac .tag { margin-right:0; margin-top:1px; }
+td.ac .api { flex:0 1 auto; max-width:100%; }
+.t-kw  { border-color:#3b5bdb; color:#9db4ff; background:#141d33; }
+.t-ann { border-color:#7048b6; color:#c9a6ff; background:#1d1630; }
+.t-api { border-color:#1f6f43; color:#7fe3b0; background:#0f2a1d; }
+.t-lib { border-color:#1f6f43; color:#7fe3b0; background:#0f2a1d; }
+.t-stl { border-color:#1f6f43; color:#7fe3b0; background:#0f2a1d; }
+.t-mod { border-color:#1f6f43; color:#7fe3b0; background:#0f2a1d; }
+.t-bi  { border-color:#2a6f7a; color:#8fe4ef; background:#0d2328; }
+.t-cli { border-color:#7a5220; color:#f0b866; background:#2a1f0f; }
+.t-cmd { border-color:#2a6f7a; color:#8fe4ef; background:#0d2328; }
+.t-opt { border-color:#7a5220; color:#f0b866; background:#2a1f0f; }
+.t-cfg { border-color:#7a2f3c; color:#ff8fa3; background:#2a121a; }
+.t-fn  { border-color:#7a5220; color:#f0b866; background:#2a1f0f; }
+.t-tag { border-color:#2a6f7a; color:#8fe4ef; background:#0d2328; }
+.t-attr { border-color:#7048b6; color:#c9a6ff; background:#1d1630; }
+.t-syn { border-color:#3a4657; color:#93a2b5; background:#161d27; }
+.legend { display:flex; flex-wrap:wrap; gap:14px; align-items:center; color:var(--dim);
+  font-size:12.5px; margin:6px 0 2px; }
+.legend .tag { margin-right:5px; }
+td.why { color:#aab6c4; }
+.lvl {
+  font-size:11.5px; border-radius:999px; padding:1px 8px; white-space:nowrap;
+  border:1px solid var(--line); color:var(--dim);
+}
+.lvl.g { border-color:#1f6f43; color:#5ddb9b; background:#0f2a1d; }
+.lvl.b { border-color:#24507f; color:#7bb8ff; background:#0f1e2e; }
+.lvl.o { border-color:#7a5220; color:#f0b866; background:#2a1f0f; }
+.lvl.r { border-color:#7a2f3c; color:#ff8fa3; background:#2a121a; }
+.x { color:var(--accent); font-size:12.5px; }
+.note { display:flex; gap:12px; padding:10px 0; border-bottom:1px solid #1e2634; }
+.note:last-child { border-bottom:none; }
+.note .i {
+  flex:0 0 26px; height:26px; border-radius:8px; background:var(--panel2);
+  color:var(--accent); font-size:12.5px; display:grid; place-items:center;
+}
+.note .t { font-weight:600; }
+.note .d { color:#aab6c4; font-size:13.5px; }
+.outline li { margin:3px 0; }
+.outline .dn { color:var(--fg); font-weight:600; }
+.outline .en { color:var(--dim); }
+code {
+  font-family:ui-monospace,Consolas,"Cascadia Mono",monospace; font-size:12.5px;
+  color:var(--code); background:#0f1621; border:1px solid #1f2a3a;
+  border-radius:5px; padding:1px 5px;
+}
+.hidden { display:none !important; }
+footer { color:#5d6b7e; font-size:12.5px; padding:30px 40px 60px; border-top:1px solid var(--line); }
+@media (max-width:900px) {
+  .wrap { grid-template-columns:1fr; }
+  nav { position:static; max-height:none; border-right:none; border-bottom:1px solid var(--line); }
+  main, header, footer { padding-left:20px; padding-right:20px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+<h1>Python <span class="dot">·</span>知识地图</h1>
+<div class="tagline">按「你要干什么」找工具。Python 的坑不在语法而在语义：可变/不可变、默认参数的求值时机、以及「同一个对象被两个名字指着」。</div>
+<div class="chips">
+<span class="chip">功能域 <b>14</b></span>
+<span class="chip">功能条目 <b>124</b></span>
+<span class="chip">基础通用 <b>10</b></span>
+<span class="chip">交叉概念 <b>7</b></span>
+<span class="chip">备注 <b>12</b></span>
+<span class="chip">自学 · 第一门语言</span>
+</div>
+<div class="legend"><span>第 2 列的小标签表示这一条的性质：</span>
+<span><span class="tag t-kw">关键字</span>语言自带的词，写代码绕不开</span>
+<span><span class="tag t-bi">内置</span>Python 内置，不用 import</span>
+<span><span class="tag t-mod">模块</span>Python 模块，import 就能用</span>
+<span><span class="tag t-cli">命令行</span>在终端里敲的命令</span>
+<span><span class="tag t-syn">写法</span>写法或思路，不是某个名字</span>
+</div></header>
+<div class="wrap"><nav>
+<div class="grp">地基</div>
+<a href="#base">基础通用 <span class="n">10</span></a>
+<a href="#outline">一页提纲 <span class="n">14</span></a>
+<div class="grp">功能域</div>
+<a href="#env">解释器与环境 <span class="n">9</span></a>
+<a href="#types">类型与变量 <span class="n">9</span></a>
+<a href="#coll">容器 <span class="n">10</span></a>
+<a href="#flow">控制流 <span class="n">9</span></a>
+<a href="#func">函数 <span class="n">9</span></a>
+<a href="#oop">面向对象 <span class="n">9</span></a>
+<a href="#mod">模块与包 <span class="n">8</span></a>
+<a href="#exc">异常处理 <span class="n">9</span></a>
+<a href="#io">文件与路径 <span class="n">9</span></a>
+<a href="#text">文本与正则 <span class="n">9</span></a>
+<a href="#iter">迭代器与生成器 <span class="n">8</span></a>
+<a href="#lib">常用标准库 <span class="n">9</span></a>
+<a href="#data">数据与科学计算 <span class="n">8</span></a>
+<a href="#debug">调试与测试 <span class="n">9</span></a>
+<div class="grp">跨层</div>
+<a href="#cross">交叉项总表 <span class="n">7</span></a>
+<a href="#notes">备注 <span class="n">12</span></a>
+<a href="#quick">反向查 <span class="n">10</span></a>
+</nav><main>
+<div class="search"><input id="q" type="search" placeholder="搜功能、API 或关键词……（例如 指针 / 索引 / 管道）" autocomplete="off"><span class="hint" id="hint">151 条</span></div>
+<h2 id="base">第 0 层 · 基础通用（所有域共用）</h2>
+<div class="card"><table><thead><tr><th style="width:16%">条目</th><th style="width:38%">说明</th><th>例子</th></tr></thead><tbody>
+<tr><td class="k">解释执行</td><td><code>python script.py</code> 直接跑，没有编译步骤</td><td><span class="api">改完立刻能跑，适合试错</span></td></tr>
+<tr><td class="k">缩进就是语法</td><td>同一块用同样的缩进（4 空格），别混 Tab</td><td><span class="api"><code>IndentationError</code> 的头号来源</span></td></tr>
+<tr><td class="k">动态类型</td><td>变量只是名字，值有类型</td><td><span class="api"><code>x = 1</code> 之后 <code>x = 「a」</code> 也合法</span></td></tr>
+<tr><td class="k">一切皆对象</td><td>函数、类、模块都是对象，可以传来传去</td><td><span class="api"><code>f = print</code> 合法</span></td></tr>
+<tr><td class="k">None 表示「没有值」</td><td>判断用 <code>is None</code>，不要用 <code>== None</code></td><td><span class="api"><code>if x is None:</code></span></td></tr>
+<tr><td class="k">真值规则</td><td>空容器、0、空字符串、None 都是假</td><td><span class="api"><code>if not items:</code></span></td></tr>
+<tr><td class="k">解释器位置很重要</td><td><code>python -V</code> 与 <code>python -m pip -V</code> 必须指同一个 Python</td><td><span class="api">装包装错地方 = 白装</span></td></tr>
+<tr><td class="k">虚拟环境隔离依赖</td><td>每个项目一个 <code>venv</code>，别往全局装</td><td><span class="api"><code>python -m venv .venv</code></span></td></tr>
+<tr><td class="k">报错从下往上读</td><td>最后一行是异常类型和信息，上面是调用栈</td><td><span class="api"><code>KeyError: 'name'</code></span></td></tr>
+<tr><td class="k"><code>help()</code> / <code>dir()</code></td><td>交互式查对象有什么方法</td><td><span class="api"><code>help(str.split)</code></span></td></tr>
+</tbody></table></div>
+<h2 id="outline">一页提纲 · 先扫这个</h2>
+<div class="card outline"><ul style="margin:0;padding-left:18px">
+<li><span class="dn">解释器与环境</span>：<span class="en">看版本与位置</span> · <span class="en"><code>pip</code> 的正确用法</span> · <span class="en">虚拟环境</span> · <span class="en">看装了什么</span> · <span class="en"><code>PYTHONPATH</code></span> · <span class="en"><code>-m</code> 运行模块</span> · <span class="en">多版本共存</span> · <span class="en">REPL 与 <code>-i</code></span> · <span class="en">重装/升级后要做什么</span></li>
+<li><span class="dn">类型与变量</span>：<span class="en">基本类型</span> · <span class="en">动态与强类型</span> · <span class="en">不可变 vs 可变</span> · <span class="en">类型转换</span> · <span class="en">类型注解</span> · <span class="en"><code>isinstance</code></span> · <span class="en">浅拷贝 vs 深拷贝</span> · <span class="en"><code>id</code> 与 <code>is</code></span> · <span class="en">f-string 里的 <code>=</code></span></li>
+<li><span class="dn">容器</span>：<span class="en"><code>list</code></span> · <span class="en"><code>dict</code></span> · <span class="en"><code>set</code></span> · <span class="en"><code>tuple</code></span> · <span class="en">切片</span> · <span class="en">推导式</span> · <span class="en">排序</span> · <span class="en">解包</span> · <span class="en"><code>in</code> 与计数</span> · <span class="en">嵌套与共享</span></li>
+<li><span class="dn">控制流</span>：<span class="en"><code>if / elif / else</code></span> · <span class="en"><code>for</code></span> · <span class="en"><code>range</code></span> · <span class="en"><code>while</code></span> · <span class="en"><code>break</code> / <code>continue</code> / <code>else</code></span> · <span class="en"><code>enumerate</code> / <code>zip</code></span> · <span class="en"><code>match</code></span> · <span class="en"><code>any</code> / <code>all</code></span> · <span class="en">提前返回</span></li>
+<li><span class="dn">函数</span>：<span class="en">定义与调用</span> · <span class="en">默认参数的坑</span> · <span class="en">位置与关键字</span> · <span class="en"><code>*args</code> / <code>**kwargs</code></span> · <span class="en">作用域 LEGB</span> · <span class="en">闭包</span> · <span class="en">lambda</span> · <span class="en">装饰器</span> · <span class="en">生成器函数</span></li>
+<li><span class="dn">面向对象</span>：<span class="en">定义类</span> · <span class="en"><code>self</code></span> · <span class="en">继承与 <code>super</code></span> · <span class="en"><code>property</code></span> · <span class="en"><code>dataclass</code></span> · <span class="en">双下方法</span> · <span class="en">类属性 vs 实例属性</span> · <span class="en">组合优于继承</span> · <span class="en"><code>__slots__</code></span></li>
+<li><span class="dn">模块与包</span>：<span class="en"><code>import</code> 的三种写法</span> · <span class="en"><code>__name__ == "__main__"</code></span> · <span class="en">包与 <code>__init__.py</code></span> · <span class="en">模块搜索路径</span> · <span class="en">相对导入</span> · <span class="en">标准库地图</span> · <span class="en">第三方包</span> · <span class="en"><code>dir()</code> 与 <code>help()</code></span></li>
+<li><span class="dn">异常处理</span>：<span class="en"><code>try / except</code></span> · <span class="en"><code>else</code> / <code>finally</code></span> · <span class="en"><code>raise</code></span> · <span class="en">自定义异常</span> · <span class="en">异常层次</span> · <span class="en">EAFP 风格</span> · <span class="en">别吞异常</span> · <span class="en"><code>assert</code></span> · <span class="en"><code>raise ... from</code></span></li>
+<li><span class="dn">文件与路径</span>：<span class="en">读文件</span> · <span class="en">逐行读大文件</span> · <span class="en">写文件</span> · <span class="en"><code>pathlib</code></span> · <span class="en"><code>csv</code></span> · <span class="en"><code>json</code></span> · <span class="en">编码问题</span> · <span class="en">临时文件</span> · <span class="en">二进制</span></li>
+<li><span class="dn">文本与正则</span>：<span class="en">常用方法</span> · <span class="en">f-string</span> · <span class="en">切片与判断</span> · <span class="en">正则基础</span> · <span class="en">命名分组</span> · <span class="en">贪婪 vs 非贪婪</span> · <span class="en">规范化</span> · <span class="en">编码转换</span> · <span class="en">德语/中文排序</span></li>
+<li><span class="dn">迭代器与生成器</span>：<span class="en">可迭代 vs 迭代器</span> · <span class="en"><code>yield</code></span> · <span class="en">生成器表达式</span> · <span class="en"><code>itertools</code></span> · <span class="en">能省多少内存</span> · <span class="en">只能用一次</span> · <span class="en"><code>zip</code> 的惰性版</span> · <span class="en">管道式写法</span></li>
+<li><span class="dn">常用标准库</span>：<span class="en"><code>collections</code></span> · <span class="en"><code>datetime</code></span> · <span class="en"><code>random</code></span> · <span class="en"><code>argparse</code></span> · <span class="en"><code>logging</code></span> · <span class="en"><code>subprocess</code></span> · <span class="en"><code>math</code> / <code>statistics</code></span> · <span class="en"><code>os</code> / <code>sys</code></span> · <span class="en"><code>functools</code></span></li>
+<li><span class="dn">数据与科学计算</span>：<span class="en"><code>numpy</code></span> · <span class="en">广播</span> · <span class="en"><code>pandas</code></span> · <span class="en"><code>matplotlib</code></span> · <span class="en">Jupyter</span> · <span class="en">三者分工</span> · <span class="en">安装</span> · <span class="en">中文字体</span></li>
+<li><span class="dn">调试与测试</span>：<span class="en"><code>print</code> 的替代</span> · <span class="en"><code>breakpoint()</code></span> · <span class="en">pdb 命令</span> · <span class="en"><code>pytest</code></span> · <span class="en"><code>-x</code> / <code>--pdb</code></span> · <span class="en"><code>logging</code></span> · <span class="en">计时</span> · <span class="en">常见坑清单</span> · <span class="en">类型检查</span></li>
+</ul></div>
+<div class="card" id="env"><h3>解释器与环境<span class="de">Umgebung</span></h3>
+<p class="goal">先搞清楚「哪个 python 在跑、包装到哪了」——这比学语法更早出问题。</p>
+<table><thead><tr><th style="width:15%">功能</th><th style="width:27%">关键字 / API</th><th style="width:33%">用来做什么</th><th style="width:10%">阶段</th><th style="width:15%">交叉</th></tr></thead><tbody>
+<tr><td class="k">看版本与位置</td><td class="ac"><span class="tag t-cli">命令行</span><span class="api"><code>python -V</code>、<code>python -c "import sys; print(sys.executable)"</code></span></td><td>确认命令行里的 python 是哪一个</td><td><span class="lvl g">入门</span></td><td class="x">模块</td></tr>
+<tr><td class="k"><code>pip</code> 的正确用法</td><td class="ac"><span class="tag t-mod">模块</span><span class="api"><code>python -m pip install 包名</code></span></td><td>别直接敲 <code>pip</code>——它可能是另一个 Python 的</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k">虚拟环境</td><td class="ac"><span class="tag t-cli">命令行</span><span class="api"><code>python -m venv .venv</code> → <code>.venv\Scripts\activate</code></span></td><td>项目隔离依赖；激活后 <code>python</code>/<code>pip</code> 都指向它</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k">看装了什么</td><td class="ac"><span class="tag t-cli">命令行</span><span class="api"><code>python -m pip list</code>、<code>pip show 包名</code></span></td><td>包在哪个 site-packages 一目了然</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>PYTHONPATH</code></td><td class="ac"><span class="tag t-syn">写法</span><span class="api">环境变量，追加模块搜索路径</span></td><td>临时调试用；长期靠包安装</td><td><span class="lvl o">进阶</span></td><td class="x">模块</td></tr>
+<tr><td class="k"><code>-m</code> 运行模块</td><td class="ac"><span class="tag t-cli">命令行</span><span class="api"><code>python -m http.server</code>、<code>python -m pytest</code></span></td><td>用模块方式跑，路径语义更干净</td><td><span class="lvl b">常用</span></td><td class="x">模块</td></tr>
+<tr><td class="k">多版本共存</td><td class="ac"><span class="tag t-cli">命令行</span><span class="api"><code>py -0p</code> 列出所有解释器、<code>py -3.15</code> 指定</span></td><td>Windows 上的 Python Launcher</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k">REPL 与 <code>-i</code></td><td class="ac"><span class="tag t-cli">命令行</span><span class="api"><code>python -i script.py</code> 跑完留在交互里</span></td><td>调试小片段最快的方式</td><td><span class="lvl b">常用</span></td><td class="x">调试与测试</td></tr>
+<tr><td class="k">重装/升级后要做什么</td><td class="ac"><span class="tag t-syn">写法</span><span class="api">重装 Python 后重跑关联脚本与 venv</span></td><td>venv 里记的是旧路径，会失效</td><td><span class="lvl o">进阶</span></td><td class="x">—</td></tr>
+</tbody></table></div>
+<div class="card" id="types"><h3>类型与变量<span class="de">Typen</span></h3>
+<p class="goal">名字只是标签；值分可变与不可变，这一条决定了后面八成的坑。</p>
+<table><thead><tr><th style="width:15%">功能</th><th style="width:27%">关键字 / API</th><th style="width:33%">用来做什么</th><th style="width:10%">阶段</th><th style="width:15%">交叉</th></tr></thead><tbody>
+<tr><td class="k">基本类型</td><td class="ac"><span class="tag t-bi">内置</span><span class="api"><code>int</code> <code>float</code> <code>str</code> <code>bool</code> <code>NoneType</code></span></td><td><code>int</code> 任意精度，不会溢出</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k">动态与强类型</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>x = 1</code> 后 <code>x = 「a」</code> 合法；但 <code>1 + 「a」</code> 报错</span></td><td>名字无类型，值有类型</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k">不可变 vs 可变</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>int/str/tuple/frozenset</code> 不可变；<code>list/dict/set</code> 可变</span></td><td>不可变可作 dict 的键；可变要小心共享</td><td><span class="lvl b">常用</span></td><td class="x">容器</td></tr>
+<tr><td class="k">类型转换</td><td class="ac"><span class="tag t-bi">内置</span><span class="api"><code>int("42")</code>、<code>str(3.5)</code>、<code>float("1e3")</code></span></td><td>转换失败抛 <code>ValueError</code></td><td><span class="lvl g">入门</span></td><td class="x">异常</td></tr>
+<tr><td class="k">类型注解</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>def f(x: int) -&gt; str:</code></span></td><td>只是提示，运行时不检查；配合 mypy 才有用</td><td><span class="lvl o">进阶</span></td><td class="x">函数</td></tr>
+<tr><td class="k"><code>isinstance</code></td><td class="ac"><span class="tag t-bi">内置</span><span class="api"><code>isinstance(x, (int, float))</code></span></td><td>比 <code>type(x) == int</code> 更能照顾继承</td><td><span class="lvl b">常用</span></td><td class="x">面向对象</td></tr>
+<tr><td class="k">浅拷贝 vs 深拷贝</td><td class="ac"><span class="tag t-mod">模块</span><span class="api"><code>copy.copy</code> / <code>copy.deepcopy</code></span></td><td>嵌套结构改内层要深拷贝</td><td><span class="lvl o">进阶</span></td><td class="x">容器</td></tr>
+<tr><td class="k"><code>id</code> 与 <code>is</code></td><td class="ac"><span class="tag t-bi">内置</span><span class="api"><code>a is b</code> 比较是不是同一个对象</span></td><td>小整数与短字符串会被缓存，别拿 <code>is</code> 比内容</td><td><span class="lvl o">进阶</span></td><td class="x">—</td></tr>
+<tr><td class="k">f-string 里的 <code>=</code></td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>f"{x=}"</code> 打印 <code>x=1</code></span></td><td>调试时最省事的写法</td><td><span class="lvl b">常用</span></td><td class="x">文本</td></tr>
+</tbody></table></div>
+<div class="card" id="coll"><h3>容器<span class="de">Container</span></h3>
+<p class="goal"><code>list</code> 有序可改、<code>dict</code> 查得快、<code>set</code> 去重、<code>tuple</code> 不可变——先选对容器。</p>
+<table><thead><tr><th style="width:15%">功能</th><th style="width:27%">关键字 / API</th><th style="width:33%">用来做什么</th><th style="width:10%">阶段</th><th style="width:15%">交叉</th></tr></thead><tbody>
+<tr><td class="k"><code>list</code></td><td class="ac"><span class="tag t-bi">内置</span><span class="api"><code>a = [1, 2, 3]</code>；<code>append</code> <code>pop</code> <code>insert</code> <code>remove</code></span></td><td>有序、可重复、随机访问 O(1)</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>dict</code></td><td class="ac"><span class="tag t-bi">内置</span><span class="api"><code>d = {"a": 1}</code>；<code>d.get(k, 默认)</code></span></td><td>键值映射，查找平均 O(1)</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>set</code></td><td class="ac"><span class="tag t-bi">内置</span><span class="api"><code>s = {1, 2}</code>；<code>| &amp; -</code></span></td><td>去重与集合运算；元素必须可哈希</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>tuple</code></td><td class="ac"><span class="tag t-bi">内置</span><span class="api"><code>t = (1, 2)</code>；能当 dict 的键</span></td><td>不可变，适合固定结构（坐标、返回值）</td><td><span class="lvl b">常用</span></td><td class="x">类型与变量</td></tr>
+<tr><td class="k">切片</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>a[1:3]</code>、<code>a[::-1]</code>、<code>a[::2]</code></span></td><td>返回新对象；切片赋值可替换一段</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k">推导式</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>[x*x for x in a if x &gt; 0]</code></span></td><td>列表/字典/集合推导，比 for+append 快且短</td><td><span class="lvl b">常用</span></td><td class="x">迭代器与生成器</td></tr>
+<tr><td class="k">排序</td><td class="ac"><span class="tag t-bi">内置</span><span class="api"><code>sorted(a)</code>、<code>a.sort(key=lambda x: -x)</code></span></td><td><code>sorted</code> 返回新列表；同值稳定排序</td><td><span class="lvl b">常用</span></td><td class="x">函数</td></tr>
+<tr><td class="k">解包</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>a, b = b, a</code>；<code>first, *rest = a</code></span></td><td>交换变量、取剩余项</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>in</code> 与计数</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>x in a</code>、<code>a.count(x)</code></span></td><td>list 的 <code>in</code> 是 O(n)，set/dict 是 O(1)</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k">嵌套与共享</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>[[0]*3]*3</code> 三个内层是同一个列表</span></td><td>要用 <code>[[0]*3 for _ in range(3)]</code></td><td><span class="lvl o">进阶</span></td><td class="x">类型与变量</td></tr>
+</tbody></table></div>
+<div class="card" id="flow"><h3>控制流<span class="de">Kontrollfluss</span></h3>
+<p class="goal">分支与循环；Python 用缩进划块，<code>for</code> 是「遍历可迭代对象」。</p>
+<table><thead><tr><th style="width:15%">功能</th><th style="width:27%">关键字 / API</th><th style="width:33%">用来做什么</th><th style="width:10%">阶段</th><th style="width:15%">交叉</th></tr></thead><tbody>
+<tr><td class="k"><code>if / elif / else</code></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>if x &gt; 0: … elif x == 0: … else: …</code></span></td><td>条件不用括号，冒号不能少</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>for</code></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>for x in 可迭代对象:</code></span></td><td>遍历容器、字符串、文件、range</td><td><span class="lvl g">入门</span></td><td class="x">迭代器与生成器</td></tr>
+<tr><td class="k"><code>range</code></td><td class="ac"><span class="tag t-bi">内置</span><span class="api"><code>range(n)</code>、<code>range(1, n+1)</code>、<code>range(n-1, -1, -1)</code></span></td><td>左闭右开；不会真的生成整个列表（3.x）</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>while</code></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>while cond:</code></span></td><td>条件先判；要自己保证会结束</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>break</code> / <code>continue</code> / <code>else</code></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>for … else: …</code>（没 break 才执行）</span></td><td><code>else</code> 是「循环正常结束」的分支</td><td><span class="lvl o">进阶</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>enumerate</code> / <code>zip</code></td><td class="ac"><span class="tag t-bi">内置</span><span class="api"><code>for i, x in enumerate(a)</code>；<code>for a1, b1 in zip(A, B)</code></span></td><td>要下标用 enumerate，别用 <code>range(len(a))</code></td><td><span class="lvl b">常用</span></td><td class="x">容器</td></tr>
+<tr><td class="k"><code>match</code></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>match cmd: case "go": …</code></span></td><td>3.10+ 的结构化模式匹配，比一长串 elif 清楚</td><td><span class="lvl o">进阶</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>any</code> / <code>all</code></td><td class="ac"><span class="tag t-bi">内置</span><span class="api"><code>any(x &gt; 0 for x in a)</code></span></td><td>把循环写成表达式，短路求值</td><td><span class="lvl b">常用</span></td><td class="x">迭代器与生成器</td></tr>
+<tr><td class="k">提前返回</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>if not ok: return None</code></span></td><td>减少嵌套</td><td><span class="lvl b">常用</span></td><td class="x">函数</td></tr>
+</tbody></table></div>
+<div class="card" id="func"><h3>函数<span class="de">Funktionen</span></h3>
+<p class="goal">函数是对象；参数有四种玩法，默认参数只在定义时求值一次。</p>
+<table><thead><tr><th style="width:15%">功能</th><th style="width:27%">关键字 / API</th><th style="width:33%">用来做什么</th><th style="width:10%">阶段</th><th style="width:15%">交叉</th></tr></thead><tbody>
+<tr><td class="k">定义与调用</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>def f(a, b=2): return a + b</code></span></td><td>返回值用 <code>return</code>，没有就是 <code>None</code></td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k">默认参数的坑</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>def f(a, buf=[])</code> 会跨调用共享同一个列表</span></td><td>用 <code>None</code> 当默认值，函数里再建容器</td><td><span class="lvl b">常用</span></td><td class="x">类型与变量</td></tr>
+<tr><td class="k">位置与关键字</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>f(1, b=2)</code></span></td><td>关键字参数让调用更可读</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>*args</code> / <code>**kwargs</code></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>def f(*args, **kwargs)</code></span></td><td>接收任意数量位置/关键字参数</td><td><span class="lvl b">常用</span></td><td class="x">解包</td></tr>
+<tr><td class="k">作用域 LEGB</td><td class="ac"><span class="tag t-syn">写法</span><span class="api">Local → Enclosing → Global → Builtin</span></td><td>函数里赋值会创建局部变量；改全局要 <code>global</code></td><td><span class="lvl o">进阶</span></td><td class="x">—</td></tr>
+<tr><td class="k">闭包</td><td class="ac"><span class="tag t-syn">写法</span><span class="api">内层函数记住外层的变量</span></td><td>配合 <code>nonlocal</code> 修改外层变量</td><td><span class="lvl o">进阶</span></td><td class="x">—</td></tr>
+<tr><td class="k">lambda</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>key=lambda x: x[1]</code></span></td><td>只能写一个表达式，适合当参数</td><td><span class="lvl b">常用</span></td><td class="x">容器</td></tr>
+<tr><td class="k">装饰器</td><td class="ac"><span class="tag t-mod">模块</span><span class="api"><code>@functools.wraps</code> + <code>def deco(f)</code></span></td><td>不改函数体就加行为（计时、缓存、权限）</td><td><span class="lvl o">进阶</span></td><td class="x">模块</td></tr>
+<tr><td class="k">生成器函数</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>def gen(): yield 1</code></span></td><td>一次产一个值，省内存</td><td><span class="lvl o">进阶</span></td><td class="x">迭代器与生成器</td></tr>
+</tbody></table></div>
+<div class="card" id="oop"><h3>面向对象<span class="de">Objekte</span></h3>
+<p class="goal">类把数据和行为捆在一起；<code>self</code>、继承、<code>property</code>、<code>dataclass</code> 是常用四件套。</p>
+<table><thead><tr><th style="width:15%">功能</th><th style="width:27%">关键字 / API</th><th style="width:33%">用来做什么</th><th style="width:10%">阶段</th><th style="width:15%">交叉</th></tr></thead><tbody>
+<tr><td class="k">定义类</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>class Buch: def __init__(self, t): self.titel = t</code></span></td><td><code>__init__</code> 初始化实例</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>self</code></td><td class="ac"><span class="tag t-syn">写法</span><span class="api">第一个参数，指实例本身</span></td><td>调用时不用传；忘了写就变普通函数</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k">继承与 <code>super</code></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>class Roman(Buch): def __init__(...): super().__init__(...)</code></span></td><td>多继承按 MRO 找方法</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>property</code></td><td class="ac"><span class="tag t-bi">内置</span><span class="api"><code>@property</code> + <code>@x.setter</code></span></td><td>把方法当属性用，能加校验</td><td><span class="lvl o">进阶</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>dataclass</code></td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>@dataclass class Punkt: x: float; y: float</code></span></td><td>自动生成 <code>__init__</code>/<code>__repr__</code>/<code>__eq__</code></td><td><span class="lvl b">常用</span></td><td class="x">类型与变量</td></tr>
+<tr><td class="k">双下方法</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>__str__</code> <code>__len__</code> <code>__eq__</code> <code>__lt__</code></span></td><td>让你的对象能用 <code>print</code>、<code>len</code>、<code>==</code>、排序</td><td><span class="lvl o">进阶</span></td><td class="x">容器</td></tr>
+<tr><td class="k">类属性 vs 实例属性</td><td class="ac"><span class="tag t-syn">写法</span><span class="api">类里直接写的变量是共享的</span></td><td>可变类属性被所有实例共享——经典坑</td><td><span class="lvl o">进阶</span></td><td class="x">—</td></tr>
+<tr><td class="k">组合优于继承</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>self.motor = Motor()</code></span></td><td>has-a 用成员，is-a 才继承</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>__slots__</code></td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>__slots__ = ("x", "y")</code></span></td><td>省内存、防手滑加属性</td><td><span class="lvl r">进阶+</span></td><td class="x">—</td></tr>
+</tbody></table></div>
+<div class="card" id="mod"><h3>模块与包<span class="de">Module</span></h3>
+<p class="goal">一个 <code>.py</code> 就是模块，一个目录（带 <code>__init__.py</code>）就是包；导入路径是新手第二大坑。</p>
+<table><thead><tr><th style="width:15%">功能</th><th style="width:27%">关键字 / API</th><th style="width:33%">用来做什么</th><th style="width:10%">阶段</th><th style="width:15%">交叉</th></tr></thead><tbody>
+<tr><td class="k"><code>import</code> 的三种写法</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>import os</code>、<code>from os import path</code>、<code>import numpy as np</code></span></td><td>优先整模块导入，避免名字冲突</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>__name__ == "__main__"</code></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>if __name__ == "__main__": main()</code></span></td><td>既能被导入又能直接跑</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k">包与 <code>__init__.py</code></td><td class="ac"><span class="tag t-cli">命令行</span><span class="api">目录 + <code>__init__.py</code> 就是一个包</span></td><td>3.3+ 有命名空间包，但显式写更清楚</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k">模块搜索路径</td><td class="ac"><span class="tag t-mod">模块</span><span class="api"><code>sys.path</code>：当前目录 → 标准库 → site-packages</span></td><td><code>ModuleNotFoundError</code> 先看这里</td><td><span class="lvl o">进阶</span></td><td class="x">环境</td></tr>
+<tr><td class="k">相对导入</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>from . import util</code></span></td><td>只在包内部可用；脚本直接跑会失败</td><td><span class="lvl o">进阶</span></td><td class="x">—</td></tr>
+<tr><td class="k">标准库地图</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>os/sys/pathlib/json/csv/re/datetime/collections/itertools</code></span></td><td>九成需求不用装第三方</td><td><span class="lvl b">常用</span></td><td class="x">常用标准库</td></tr>
+<tr><td class="k">第三方包</td><td class="ac"><span class="tag t-cli">命令行</span><span class="api"><code>python -m pip install requests</code></span></td><td>装到当前解释器的 site-packages</td><td><span class="lvl g">入门</span></td><td class="x">环境</td></tr>
+<tr><td class="k"><code>dir()</code> 与 <code>help()</code></td><td class="ac"><span class="tag t-bi">内置</span><span class="api"><code>dir(mod)</code> 看有什么，<code>help(mod.f)</code> 看文档</span></td><td>比搜网页快</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+</tbody></table></div>
+<div class="card" id="exc"><h3>异常处理<span class="de">Ausnahmen</span></h3>
+<p class="goal">出错就抛异常；捕获要具体，别用裸 <code>except</code> 把 bug 吞掉。</p>
+<table><thead><tr><th style="width:15%">功能</th><th style="width:27%">关键字 / API</th><th style="width:33%">用来做什么</th><th style="width:10%">阶段</th><th style="width:15%">交叉</th></tr></thead><tbody>
+<tr><td class="k"><code>try / except</code></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>try: … except ValueError as e: …</code></span></td><td>按异常类型捕获，越具体越好</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>else</code> / <code>finally</code></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>else</code> 没异常时跑、<code>finally</code> 一定跑</span></td><td><code>finally</code> 用来收尾（关文件、删临时）</td><td><span class="lvl b">常用</span></td><td class="x">文件</td></tr>
+<tr><td class="k"><code>raise</code></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>raise ValueError("bad input")</code></span></td><td>主动报错；<code>raise X from e</code> 保留原因</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k">自定义异常</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>class ParseError(Exception): pass</code></span></td><td>给调用方一个可捕获的类型</td><td><span class="lvl o">进阶</span></td><td class="x">面向对象</td></tr>
+<tr><td class="k">异常层次</td><td class="ac"><span class="tag t-bi">内置</span><span class="api"><code>Exception</code> 是所有常规异常的基类</span></td><td>别继承 <code>BaseException</code></td><td><span class="lvl o">进阶</span></td><td class="x">—</td></tr>
+<tr><td class="k">EAFP 风格</td><td class="ac"><span class="tag t-syn">写法</span><span class="api">先做、错了再处理（<code>try: d[k]</code>）</span></td><td>比 <code>if k in d</code> 更 Pythonic</td><td><span class="lvl o">进阶</span></td><td class="x">容器</td></tr>
+<tr><td class="k">别吞异常</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>except Exception: pass</code> 会藏住真 bug</span></td><td>至少要 <code>logging.exception(...)</code> 记下来</td><td><span class="lvl b">常用</span></td><td class="x">调试与测试</td></tr>
+<tr><td class="k"><code>assert</code></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>assert x &gt; 0, "x 必须为正"</code></span></td><td>只在调试生效（<code>-O</code> 会关掉），别用它校验用户输入</td><td><span class="lvl b">常用</span></td><td class="x">调试与测试</td></tr>
+<tr><td class="k"><code>raise ... from</code></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api">把底层异常链上去</span></td><td>报错时能看到因果链</td><td><span class="lvl o">进阶</span></td><td class="x">—</td></tr>
+</tbody></table></div>
+<div class="card" id="io"><h3>文件与路径<span class="de">Dateien</span></h3>
+<p class="goal"><code>with open(...)</code> 是标准姿势；路径操作交给 <code>pathlib</code>，别手拼字符串。</p>
+<table><thead><tr><th style="width:15%">功能</th><th style="width:27%">关键字 / API</th><th style="width:33%">用来做什么</th><th style="width:10%">阶段</th><th style="width:15%">交叉</th></tr></thead><tbody>
+<tr><td class="k">读文件</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>with open(p, encoding="utf-8") as f: text = f.read()</code></span></td><td><code>with</code> 保证关闭；一定要写 <code>encoding</code></td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k">逐行读大文件</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>for line in f:</code></span></td><td>不会一次读进内存</td><td><span class="lvl b">常用</span></td><td class="x">迭代器与生成器</td></tr>
+<tr><td class="k">写文件</td><td class="ac"><span class="tag t-bi">内置</span><span class="api"><code>open(p, "w")</code> 覆盖、<code>"a"</code> 追加</span></td><td>写入前想清楚要不要保留原内容</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>pathlib</code></td><td class="ac"><span class="tag t-mod">模块</span><span class="api"><code>Path("d") / "a.txt"</code>、<code>.exists()</code>、<code>.glob("*.pdf")</code></span></td><td>跨平台路径拼接的首选</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>csv</code></td><td class="ac"><span class="tag t-mod">模块</span><span class="api"><code>csv.reader</code> / <code>csv.DictReader</code></span></td><td>别用 <code>split(",")</code>——引号与换行会坑你</td><td><span class="lvl b">常用</span></td><td class="x">文本</td></tr>
+<tr><td class="k"><code>json</code></td><td class="ac"><span class="tag t-mod">模块</span><span class="api"><code>json.load(f)</code> / <code>json.dump(obj, f, ensure_ascii=False)</code></span></td><td>中文要 <code>ensure_ascii=False</code></td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k">编码问题</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>UnicodeDecodeError: 'gbk' codec can't decode</code></span></td><td>读文件显式 <code>encoding="utf-8"</code>；Windows 默认是 gbk</td><td><span class="lvl b">常用</span></td><td class="x">文本</td></tr>
+<tr><td class="k">临时文件</td><td class="ac"><span class="tag t-mod">模块</span><span class="api"><code>tempfile.NamedTemporaryFile</code>、<code>Path.tempdir</code></span></td><td>别往当前目录乱扔中间文件</td><td><span class="lvl o">进阶</span></td><td class="x">—</td></tr>
+<tr><td class="k">二进制</td><td class="ac"><span class="tag t-bi">内置</span><span class="api"><code>open(p, "rb")</code>、<code>struct</code> 解包</span></td><td>图片、压缩包、协议数据</td><td><span class="lvl o">进阶</span></td><td class="x">—</td></tr>
+</tbody></table></div>
+<div class="card" id="text"><h3>文本与正则<span class="de">Text</span></h3>
+<p class="goal">字符串方法解决八成问题，剩下两成交给 <code>re</code>；编码是绕不开的一课。</p>
+<table><thead><tr><th style="width:15%">功能</th><th style="width:27%">关键字 / API</th><th style="width:33%">用来做什么</th><th style="width:10%">阶段</th><th style="width:15%">交叉</th></tr></thead><tbody>
+<tr><td class="k">常用方法</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>split</code> <code>join</code> <code>strip</code> <code>replace</code> <code>startswith</code> <code>find</code></span></td><td><code>"-".join(parts)</code> 是拼接的标准写法</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k">f-string</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>f"{name}: {wert:.2f}"</code></span></td><td>格式化首选；<code>:.2f</code> 两位小数、<code>:,</code> 千分位</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k">切片与判断</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>s[:3]</code>、<code>s.isdigit()</code>、<code>s.upper()</code></span></td><td>字符串不可变，方法都返回新串</td><td><span class="lvl g">入门</span></td><td class="x">类型与变量</td></tr>
+<tr><td class="k">正则基础</td><td class="ac"><span class="tag t-mod">模块</span><span class="api"><code>re.search(r"\d+", s)</code>、<code>re.findall</code>、<code>re.sub</code></span></td><td>用原始字符串 <code>r"..."</code>，避免反斜杠二次转义</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k">命名分组</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>(?P&lt;name&gt;\w+)</code> + <code>m.group("name")</code></span></td><td>比数字下标可读</td><td><span class="lvl o">进阶</span></td><td class="x">—</td></tr>
+<tr><td class="k">贪婪 vs 非贪婪</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>.*</code> 贪婪、<code>.*?</code> 非贪婪</span></td><td>截取标签内容时最容易踩</td><td><span class="lvl o">进阶</span></td><td class="x">—</td></tr>
+<tr><td class="k">规范化</td><td class="ac"><span class="tag t-mod">模块</span><span class="api"><code>unicodedata.normalize("NFC", s)</code></span></td><td>德语变音符号、组合字符比较前先归一</td><td><span class="lvl r">进阶+</span></td><td class="x">—</td></tr>
+<tr><td class="k">编码转换</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>s.encode("utf-8")</code>、<code>b.decode("utf-8", errors="replace")</code></span></td><td>文件/网络边界上最容易出问题</td><td><span class="lvl o">进阶</span></td><td class="x">文件与路径</td></tr>
+<tr><td class="k">德语/中文排序</td><td class="ac"><span class="tag t-bi">内置</span><span class="api"><code>sorted(words, key=str.lower)</code></span></td><td>默认按码点排，大小写会乱</td><td><span class="lvl b">常用</span></td><td class="x">容器</td></tr>
+</tbody></table></div>
+<div class="card" id="iter"><h3>迭代器与生成器<span class="de">Iteratoren</span></h3>
+<p class="goal">惰性求值是 Python 处理大数据的核心技巧：一次只算一个。</p>
+<table><thead><tr><th style="width:15%">功能</th><th style="width:27%">关键字 / API</th><th style="width:33%">用来做什么</th><th style="width:10%">阶段</th><th style="width:15%">交叉</th></tr></thead><tbody>
+<tr><td class="k">可迭代 vs 迭代器</td><td class="ac"><span class="tag t-bi">内置</span><span class="api"><code>iter(x)</code> 得到迭代器，<code>next(it)</code> 取下一个</span></td><td><code>for</code> 就是这套协议的语法糖</td><td><span class="lvl o">进阶</span></td><td class="x">控制流</td></tr>
+<tr><td class="k"><code>yield</code></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>def gen(): for i in range(3): yield i</code></span></td><td>函数变成生成器，调用时不执行、取时才执行</td><td><span class="lvl o">进阶</span></td><td class="x">函数</td></tr>
+<tr><td class="k">生成器表达式</td><td class="ac"><span class="tag t-bi">内置</span><span class="api"><code>sum(x*x for x in a)</code></span></td><td>括号版推导式，不建中间列表</td><td><span class="lvl b">常用</span></td><td class="x">容器</td></tr>
+<tr><td class="k"><code>itertools</code></td><td class="ac"><span class="tag t-mod">模块</span><span class="api"><code>chain</code> <code>islice</code> <code>groupby</code> <code>product</code> <code>count</code></span></td><td>组合、切片、笛卡尔积的现成工具</td><td><span class="lvl o">进阶</span></td><td class="x">常用标准库</td></tr>
+<tr><td class="k">能省多少内存</td><td class="ac"><span class="tag t-syn">写法</span><span class="api">1000 万行文件用生成器只占常数内存</span></td><td>读日志、跑管道时尤其重要</td><td><span class="lvl b">常用</span></td><td class="x">文件与路径</td></tr>
+<tr><td class="k">只能用一次</td><td class="ac"><span class="tag t-syn">写法</span><span class="api">生成器耗尽就空了</span></td><td>要复用就存成 list 或重新创建</td><td><span class="lvl o">进阶</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>zip</code> 的惰性版</td><td class="ac"><span class="tag t-bi">内置</span><span class="api"><code>itertools.zip_longest</code></span></td><td>长度不等时不丢数据</td><td><span class="lvl r">进阶+</span></td><td class="x">—</td></tr>
+<tr><td class="k">管道式写法</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>(f(x) for x in gen if pred(x))</code></span></td><td>把处理串成流水线，可读且省内存</td><td><span class="lvl o">进阶</span></td><td class="x">函数</td></tr>
+</tbody></table></div>
+<div class="card" id="lib"><h3>常用标准库<span class="de">Standardbibliothek</span></h3>
+<p class="goal">这些「不用装就能用」的模块覆盖了日常八成任务。</p>
+<table><thead><tr><th style="width:15%">功能</th><th style="width:27%">关键字 / API</th><th style="width:33%">用来做什么</th><th style="width:10%">阶段</th><th style="width:15%">交叉</th></tr></thead><tbody>
+<tr><td class="k"><code>collections</code></td><td class="ac"><span class="tag t-mod">模块</span><span class="api"><code>Counter</code> <code>defaultdict</code> <code>deque</code> <code>namedtuple</code></span></td><td>计数、带默认值的字典、双端队列</td><td><span class="lvl b">常用</span></td><td class="x">容器</td></tr>
+<tr><td class="k"><code>datetime</code></td><td class="ac"><span class="tag t-mod">模块</span><span class="api"><code>datetime.now()</code>、<code>timedelta(days=7)</code>、<code>strftime</code></span></td><td>日期计算与格式化；时区要显式</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>random</code></td><td class="ac"><span class="tag t-mod">模块</span><span class="api"><code>random.random()</code>、<code>randint</code>、<code>choice</code>、<code>shuffle</code></span></td><td>要可复现就 <code>random.seed(42)</code></td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>argparse</code></td><td class="ac"><span class="tag t-mod">模块</span><span class="api"><code>parser.add_argument("--n", type=int)</code></span></td><td>写命令行工具的标准姿势</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>logging</code></td><td class="ac"><span class="tag t-mod">模块</span><span class="api"><code>logging.basicConfig(level=logging.INFO)</code></span></td><td>比 <code>print</code> 更适合长期运行的程序</td><td><span class="lvl b">常用</span></td><td class="x">调试与测试</td></tr>
+<tr><td class="k"><code>subprocess</code></td><td class="ac"><span class="tag t-mod">模块</span><span class="api"><code>subprocess.run(["ls"], capture_output=True, text=True)</code></span></td><td>调外部命令；别用 <code>os.system</code></td><td><span class="lvl o">进阶</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>math</code> / <code>statistics</code></td><td class="ac"><span class="tag t-mod">模块</span><span class="api"><code>math.sqrt</code>、<code>statistics.mean/median/stdev</code></span></td><td>基础统计量不用装 numpy</td><td><span class="lvl b">常用</span></td><td class="x">数据与科学计算</td></tr>
+<tr><td class="k"><code>os</code> / <code>sys</code></td><td class="ac"><span class="tag t-mod">模块</span><span class="api"><code>os.environ</code>、<code>sys.argv</code>、<code>sys.exit(1)</code></span></td><td>环境变量、命令行参数、退出码</td><td><span class="lvl b">常用</span></td><td class="x">环境</td></tr>
+<tr><td class="k"><code>functools</code></td><td class="ac"><span class="tag t-mod">模块</span><span class="api"><code>lru_cache</code>、<code>partial</code>、<code>wraps</code></span></td><td>缓存与函数包装</td><td><span class="lvl o">进阶</span></td><td class="x">函数</td></tr>
+</tbody></table></div>
+<div class="card" id="data"><h3>数据与科学计算<span class="de">Daten</span></h3>
+<p class="goal">numpy 管数组、pandas 管表格、matplotlib 画图；课程作业基本就这三件。</p>
+<table><thead><tr><th style="width:15%">功能</th><th style="width:27%">关键字 / API</th><th style="width:33%">用来做什么</th><th style="width:10%">阶段</th><th style="width:15%">交叉</th></tr></thead><tbody>
+<tr><td class="k"><code>numpy</code></td><td class="ac"><span class="tag t-cli">命令行</span><span class="api"><code>np.array([1,2,3])</code>、<code>a.mean()</code>、<code>a[a &gt; 0]</code></span></td><td>向量化运算比 for 快几十倍</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k">广播</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>a + b</code> 形状不同也能算（按规则扩展）</span></td><td>写不出循环时的救星，也是报错来源</td><td><span class="lvl o">进阶</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>pandas</code></td><td class="ac"><span class="tag t-mod">模块</span><span class="api"><code>pd.read_csv</code>、<code>df.groupby(...).agg(...)</code></span></td><td>表格的筛选、分组、连接、透视</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>matplotlib</code></td><td class="ac"><span class="tag t-mod">模块</span><span class="api"><code>plt.plot(x, y)</code>、<code>plt.savefig("a.png", dpi=150)</code></span></td><td><code>savefig</code> 要在 <code>show</code> 之前</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k">Jupyter</td><td class="ac"><span class="tag t-cli">命令行</span><span class="api"><code>.ipynb</code> 单元格执行、<code>%timeit</code>、<code>!pip</code></span></td><td>边看结果边写，适合探索</td><td><span class="lvl b">常用</span></td><td class="x">调试与测试</td></tr>
+<tr><td class="k">三者分工</td><td class="ac"><span class="tag t-syn">写法</span><span class="api">numpy 数值、pandas 表格、matplotlib 图形</span></td><td>别用 pandas 干 numpy 的活（慢）</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k">安装</td><td class="ac"><span class="tag t-cli">命令行</span><span class="api"><code>python -m pip install numpy pandas matplotlib</code></span></td><td>装到当前解释器；venv 里更干净</td><td><span class="lvl g">入门</span></td><td class="x">环境</td></tr>
+<tr><td class="k">中文字体</td><td class="ac"><span class="tag t-mod">模块</span><span class="api"><code>plt.rcParams["font.sans-serif"] = ["Microsoft YaHei"]</code></span></td><td>图上中文变方块时加这行</td><td><span class="lvl o">进阶</span></td><td class="x">—</td></tr>
+</tbody></table></div>
+<div class="card" id="debug"><h3>调试与测试<span class="de">Debugging</span></h3>
+<p class="goal">先能看见发生了什么，再谈修：断点、日志、测试，三层手段。</p>
+<table><thead><tr><th style="width:15%">功能</th><th style="width:27%">关键字 / API</th><th style="width:33%">用来做什么</th><th style="width:10%">阶段</th><th style="width:15%">交叉</th></tr></thead><tbody>
+<tr><td class="k"><code>print</code> 的替代</td><td class="ac"><span class="tag t-bi">内置</span><span class="api"><code>print(repr(x))</code>、<code>pprint.pprint</code>、f-string 的 <code>{x=}</code></span></td><td><code>repr</code> 能看清引号与 <code>None</code></td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>breakpoint()</code></td><td class="ac"><span class="tag t-syn">写法</span><span class="api">代码里插一行，运行到这里进 <code>pdb</code></span></td><td>3.7+ 内置，不用记 <code>import pdb</code></td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k">pdb 命令</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>n</code> 下一步、<code>s</code> 进入、<code>c</code> 继续、<code>p x</code> 打印、<code>l</code> 看上下文</span></td><td><code>q</code> 退出</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>pytest</code></td><td class="ac"><span class="tag t-cli">命令行</span><span class="api"><code>def test_add(): assert add(1,2) == 3</code>；<code>python -m pytest -q</code></span></td><td>函数名以 <code>test_</code> 开头就自动被发现</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>-x</code> / <code>--pdb</code></td><td class="ac"><span class="tag t-syn">写法</span><span class="api">第一个失败就停 / 失败直接进调试器</span></td><td>定位问题更快</td><td><span class="lvl o">进阶</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>logging</code></td><td class="ac"><span class="tag t-mod">模块</span><span class="api"><code>logging.exception("msg")</code> 打印异常+栈</span></td><td>比 <code>print</code> 可控（级别、文件、时间戳）</td><td><span class="lvl b">常用</span></td><td class="x">常用标准库</td></tr>
+<tr><td class="k">计时</td><td class="ac"><span class="tag t-mod">模块</span><span class="api"><code>time.perf_counter()</code>、<code>%timeit</code>、<code>python -m timeit</code></span></td><td>先量再优化</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k">常见坑清单</td><td class="ac"><span class="tag t-syn">写法</span><span class="api">可变默认参数、浅拷贝、<code>==</code> vs <code>is</code>、闭包延迟绑定</span></td><td>这四条能解释大部分「为什么和我预期不一样」</td><td><span class="lvl o">进阶</span></td><td class="x">函数</td></tr>
+<tr><td class="k">类型检查</td><td class="ac"><span class="tag t-cli">命令行</span><span class="api"><code>mypy script.py</code></span></td><td>注解写了就跑一遍，能提前抓一堆拼写错误</td><td><span class="lvl o">进阶</span></td><td class="x">类型与变量</td></tr>
+</tbody></table></div>
+<h2 id="cross">交叉项总表 · 同一概念出现在多个域</h2>
+<div class="card"><table><thead><tr><th style="width:18%">概念</th><th style="width:42%">出现在</th><th>为什么重复出现</th></tr></thead><tbody>
+<tr><td class="k">可变 vs 不可变</td><td>类型与变量「不可变 vs 可变」 · 容器「嵌套与共享」 · 函数「默认参数的坑」 · 面向对象「类属性 vs 实例属性」</td><td class="why">「两个名字指同一个可变对象」是 Python 最深的坑，四个域各有一个典型现场</td></tr>
+<tr><td class="k">名字与对象</td><td>类型与变量「<code>id</code> 与 <code>is</code>」 · 函数「作用域 LEGB」 · 面向对象「<code>self</code>」</td><td class="why">Python 的变量是标签不是盒子；理解这一点，传参、闭包、<code>is</code> 全都通了</td></tr>
+<tr><td class="k">惰性求值</td><td>迭代器与生成器「生成器表达式」 · 文件与路径「逐行读大文件」 · 控制流「<code>any</code> / <code>all</code>」 · 容器「推导式」</td><td class="why">都是「不要一次算完」：省内存、能短路、能处理无限序列</td></tr>
+<tr><td class="k">编码</td><td>文件与路径「编码问题」 · 文本与正则「编码转换」 · 文本与正则「规范化」</td><td class="why">读文件 → 处理字符串 → 输出，每个环节都可能因为编码报错；显式 <code>encoding="utf-8"</code> 能挡掉大半</td></tr>
+<tr><td class="k">环境与导入</td><td>环境「看版本与位置」 · 模块「模块搜索路径」 · 环境「虚拟环境」</td><td class="why"><code>ModuleNotFoundError</code> 九成不是「没装」，而是「装到另一个 Python 里了」</td></tr>
+<tr><td class="k">函数是一等对象</td><td>函数「闭包」 · 函数「装饰器」 · 常用标准库「<code>functools</code>」 · 容器「排序」</td><td class="why">能传能存能返回，才有 lambda 当 key、装饰器、回调这些写法</td></tr>
+<tr><td class="k">异常与错误处理</td><td>异常处理「别吞异常」 · 调试与测试「<code>logging</code>」 · 文件与路径「<code>with open</code>」</td><td class="why"><code>with</code> 保证释放、<code>logging.exception</code> 保留现场、<code>except</code> 别吞——三件事凑成一个可靠程序</td></tr>
+</tbody></table></div>
+<h2 id="notes">备注 · 易错点 / 取舍 / 顺序</h2>
+<div class="card note-block">
+<div class="note"><div class="i">1</div><div><div class="t">默认参数只在定义时求值一次</div><div class="d"><code>def f(a, buf=[])</code> 的 <code>buf</code> 是所有调用共享的同一个列表；用 <code>buf=None</code>。</div></div></div>
+<div class="note"><div class="i">2</div><div><div class="t"><code>==</code> 比内容，<code>is</code> 比身份</div><div class="d">只有和 <code>None</code>/<code>True</code>/<code>False</code> 比较时才用 <code>is</code>。</div></div></div>
+<div class="note"><div class="i">3</div><div><div class="t"><code>[[0]*3]*3</code> 不是二维数组</div><div class="d">三个内层是同一个列表；要 <code>[[0]*3 for _ in range(3)]</code>。</div></div></div>
+<div class="note"><div class="i">4</div><div><div class="t"><code>list.sort()</code> 返回 None</div><div class="d">它就地排序；要新列表用 <code>sorted()</code>。</div></div></div>
+<div class="note"><div class="i">5</div><div><div class="t">遍历时别改列表</div><div class="d">用 <code>for x in a[:]</code> 或新建列表；否则会跳过元素。</div></div></div>
+<div class="note"><div class="i">6</div><div><div class="t"><code>except:</code> 会连 Ctrl+C 一起吞</div><div class="d">至少写 <code>except Exception:</code>，最好指明类型。</div></div></div>
+<div class="note"><div class="i">7</div><div><div class="t">读文件一定写 <code>encoding="utf-8"</code></div><div class="d">Windows 默认 gbk，德语变音符号与 emoji 会炸。</div></div></div>
+<div class="note"><div class="i">8</div><div><div class="t"><code>import</code> 只在第一次执行</div><div class="d">模块级代码会被缓存；要刷新用 <code>importlib.reload</code>（调试才用）。</div></div></div>
+<div class="note"><div class="i">9</div><div><div class="t">浮点不要 <code>==</code></div><div class="d"><code>abs(a-b) &lt; 1e-9</code>；要精确小数用 <code>decimal</code>。</div></div></div>
+<div class="note"><div class="i">10</div><div><div class="t">字符串拼接别用 <code>+=</code> 循环</div><div class="d">O(n²)；用 <code>"".join(parts)</code>。</div></div></div>
+<div class="note"><div class="i">11</div><div><div class="t">学 Python 的顺序</div><div class="d">①容器与循环 ②函数与参数 ③文件与异常 ④类 ⑤模块与 venv ⑥生成器与装饰器。</div></div></div>
+<div class="note"><div class="i">12</div><div><div class="t">Python 不是「慢」，是「你写慢了」</div><div class="d">热点用 numpy / 内置函数 / 生成器，别急着上 C 扩展。</div></div></div>
+</div>
+<h2 id="quick">反向查 · 我要做 X，去哪个域</h2>
+<div class="card"><table><thead><tr><th style="width:45%">我要……</th><th>去这里</th></tr></thead><tbody>
+<tr><td class="k">读一个 CSV 并统计</td><td>文件与路径（<code>csv</code>）+ 容器（<code>Counter</code>）</td></tr>
+<tr><td class="k">把一堆字典按某字段排序</td><td>容器（<code>sorted(key=...)</code>）+ 函数（lambda）</td></tr>
+<tr><td class="k">处理很大的文件而不爆内存</td><td>文件与路径（逐行读）+ 迭代器与生成器</td></tr>
+<tr><td class="k">命令行工具带参数</td><td>常用标准库（<code>argparse</code>）</td></tr>
+<tr><td class="k">抓一段文本里的数字</td><td>文本与正则（<code>re.findall</code>）</td></tr>
+<tr><td class="k">装了个包但 import 不到</td><td>环境（<code>python -m pip</code>）+ 模块（<code>sys.path</code>）</td></tr>
+<tr><td class="k">程序报 <code>UnicodeDecodeError</code></td><td>文件与路径（<code>encoding="utf-8"</code>）</td></tr>
+<tr><td class="k">画个折线图存成 PNG</td><td>数据与科学计算（matplotlib <code>savefig</code>）</td></tr>
+<tr><td class="k">给函数加缓存/计时</td><td>函数（装饰器）+ 常用标准库（<code>functools</code>）</td></tr>
+<tr><td class="k">写自动化测试</td><td>调试与测试（pytest）</td></tr>
+</tbody></table></div>
+</main></div>
+<footer>Python 知识地图 · 共 124 个条目 · 由 <code>mapkit.py</code> 从同一份数据生成（Markdown 版内容一致）</footer>
+
+<script>
+(function () {
+  var box = document.getElementById('q');
+  var hint = document.getElementById('hint');
+  var cards = Array.prototype.slice.call(document.querySelectorAll('.card, .note-block'));
+  var total = document.querySelectorAll('table tbody tr').length;
+
+  function norm(s) { return (s || '').toLowerCase(); }
+
+  box.addEventListener('input', function () {
+    var q = norm(box.value.trim());
+    var hits = 0;
+    cards.forEach(function (card) {
+      var rows = Array.prototype.slice.call(card.querySelectorAll('tbody tr'));
+      if (!rows.length) { return; }
+      var shown = 0;
+      rows.forEach(function (tr) {
+        var ok = !q || norm(tr.textContent).indexOf(q) >= 0;
+        tr.classList.toggle('hidden', !ok);
+        if (ok) { shown++; }
+      });
+      card.classList.toggle('hidden', shown === 0);
+      hits += shown;
+    });
+    hint.textContent = q ? (hits + ' 条命中') : (total + ' 条');
+  });
+
+  // aktiven Navigationspunkt hervorheben
+  var links = Array.prototype.slice.call(document.querySelectorAll('nav a[href^="#"]'));
+  var targets = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });
+  var obs = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (!e.isIntersecting) { return; }
+      links.forEach(function (a) { a.classList.remove('on'); });
+      var i = targets.indexOf(e.target);
+      if (i >= 0) { links[i].classList.add('on'); }
+    });
+  }, { rootMargin: '-15% 0px -75% 0px' });
+  targets.forEach(function (t) { if (t) { obs.observe(t); } });
+})();
+</script>
+</body>
+</html>

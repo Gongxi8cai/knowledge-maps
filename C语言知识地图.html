@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>C 语言知识地图</title>
+<style>
+:root {
+  --bg:#0d1117; --panel:#161b22; --panel2:#1c2330; --line:#2a3446;
+  --fg:#e6edf3; --dim:#8b98a9; --accent:#7aa2f7; --code:#9cd0ff;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0; background:var(--bg); color:var(--fg);
+  font:15px/1.65 -apple-system,"Segoe UI","Microsoft YaHei",Roboto,sans-serif;
+}
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header {
+  padding:34px 40px 22px; border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg,#121926 0%,var(--bg) 100%);
+}
+h1 { margin:0 0 8px; font-size:27px; letter-spacing:.4px; }
+h1 .dot { color:var(--accent); }
+.tagline { color:var(--dim); font-size:14px; max-width:960px; }
+.chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+.chip {
+  font-size:12.5px; color:var(--dim); border:1px solid var(--line);
+  border-radius:999px; padding:4px 11px; background:var(--panel);
+}
+.chip b { color:var(--fg); font-weight:600; }
+.wrap { display:grid; grid-template-columns:236px 1fr; align-items:start; }
+nav {
+  position:sticky; top:0; max-height:100vh; overflow:auto;
+  padding:20px 12px 40px; border-right:1px solid var(--line);
+}
+nav .grp { font-size:11.5px; color:#6c7a8d; text-transform:uppercase;
+  letter-spacing:1px; margin:16px 8px 6px; }
+nav a { display:flex; justify-content:space-between; gap:8px; color:#c3ccd8;
+  font-size:13.5px; padding:5px 8px; border-radius:6px; }
+nav a:hover { background:var(--panel2); text-decoration:none; }
+nav a.on { background:var(--panel2); color:var(--accent); }
+nav .n { color:#5d6b7e; font-size:12px; }
+main { padding:26px 40px 80px; max-width:1180px; }
+.search { position:sticky; top:0; z-index:5; padding:12px 0 14px; background:var(--bg); }
+.search input {
+  width:100%; max-width:430px; padding:10px 13px; border-radius:8px;
+  border:1px solid var(--line); background:var(--panel); color:var(--fg);
+  font-size:14px; outline:none;
+}
+.search input:focus { border-color:var(--accent); }
+.search .hint { color:#6c7a8d; font-size:12.5px; margin-left:10px; }
+h2 {
+  font-size:19px; margin:38px 0 14px; padding-bottom:8px;
+  border-bottom:1px solid var(--line);
+}
+h2:first-of-type { margin-top:10px; }
+.card {
+  background:var(--panel); border:1px solid var(--line); border-radius:12px;
+  padding:18px 20px 10px; margin:16px 0;
+}
+.card h3 { margin:0 0 4px; font-size:16.5px; }
+.card h3 .de { color:#6c7a8d; font-weight:400; font-size:12.5px; margin-left:8px; }
+.card .goal { color:var(--dim); font-size:13.5px; margin:0 0 12px; }
+table { width:100%; border-collapse:collapse; font-size:13.5px; }
+th {
+  text-align:left; color:#7f8da0; font-weight:600; font-size:12px;
+  text-transform:uppercase; letter-spacing:.6px;
+  padding:6px 10px; border-bottom:1px solid var(--line); white-space:nowrap;
+}
+td { padding:8px 10px; border-bottom:1px solid #1e2634; vertical-align:top; }
+tr:last-child td { border-bottom:none; }
+td.k { font-weight:600; color:#dbe6f3; }
+td .api {
+  font-family:ui-monospace,Consolas,"Cascadia Mono",monospace; font-size:12.5px;
+  color:var(--code); background:#0f1621; border:1px solid #1f2a3a;
+  border-radius:5px; padding:1px 5px; display:inline-block; word-break:break-word;
+}
+td .tag {
+  display:inline-block; font-size:10.5px; line-height:1; padding:3px 6px; margin-right:6px;
+  border-radius:5px; border:1px solid var(--line); color:var(--dim); background:#141b26;
+  vertical-align:1px; white-space:nowrap;
+}
+td.ac { display:flex; flex-wrap:wrap; gap:5px; align-items:flex-start; }
+td.ac .tag { margin-right:0; margin-top:1px; }
+td.ac .api { flex:0 1 auto; max-width:100%; }
+.t-kw  { border-color:#3b5bdb; color:#9db4ff; background:#141d33; }
+.t-ann { border-color:#7048b6; color:#c9a6ff; background:#1d1630; }
+.t-api { border-color:#1f6f43; color:#7fe3b0; background:#0f2a1d; }
+.t-lib { border-color:#1f6f43; color:#7fe3b0; background:#0f2a1d; }
+.t-stl { border-color:#1f6f43; color:#7fe3b0; background:#0f2a1d; }
+.t-mod { border-color:#1f6f43; color:#7fe3b0; background:#0f2a1d; }
+.t-bi  { border-color:#2a6f7a; color:#8fe4ef; background:#0d2328; }
+.t-cli { border-color:#7a5220; color:#f0b866; background:#2a1f0f; }
+.t-cmd { border-color:#2a6f7a; color:#8fe4ef; background:#0d2328; }
+.t-opt { border-color:#7a5220; color:#f0b866; background:#2a1f0f; }
+.t-cfg { border-color:#7a2f3c; color:#ff8fa3; background:#2a121a; }
+.t-fn  { border-color:#7a5220; color:#f0b866; background:#2a1f0f; }
+.t-tag { border-color:#2a6f7a; color:#8fe4ef; background:#0d2328; }
+.t-attr { border-color:#7048b6; color:#c9a6ff; background:#1d1630; }
+.t-syn { border-color:#3a4657; color:#93a2b5; background:#161d27; }
+.legend { display:flex; flex-wrap:wrap; gap:14px; align-items:center; color:var(--dim);
+  font-size:12.5px; margin:6px 0 2px; }
+.legend .tag { margin-right:5px; }
+td.why { color:#aab6c4; }
+.lvl {
+  font-size:11.5px; border-radius:999px; padding:1px 8px; white-space:nowrap;
+  border:1px solid var(--line); color:var(--dim);
+}
+.lvl.g { border-color:#1f6f43; color:#5ddb9b; background:#0f2a1d; }
+.lvl.b { border-color:#24507f; color:#7bb8ff; background:#0f1e2e; }
+.lvl.o { border-color:#7a5220; color:#f0b866; background:#2a1f0f; }
+.lvl.r { border-color:#7a2f3c; color:#ff8fa3; background:#2a121a; }
+.x { color:var(--accent); font-size:12.5px; }
+.note { display:flex; gap:12px; padding:10px 0; border-bottom:1px solid #1e2634; }
+.note:last-child { border-bottom:none; }
+.note .i {
+  flex:0 0 26px; height:26px; border-radius:8px; background:var(--panel2);
+  color:var(--accent); font-size:12.5px; display:grid; place-items:center;
+}
+.note .t { font-weight:600; }
+.note .d { color:#aab6c4; font-size:13.5px; }
+.outline li { margin:3px 0; }
+.outline .dn { color:var(--fg); font-weight:600; }
+.outline .en { color:var(--dim); }
+code {
+  font-family:ui-monospace,Consolas,"Cascadia Mono",monospace; font-size:12.5px;
+  color:var(--code); background:#0f1621; border:1px solid #1f2a3a;
+  border-radius:5px; padding:1px 5px;
+}
+.hidden { display:none !important; }
+footer { color:#5d6b7e; font-size:12.5px; padding:30px 40px 60px; border-top:1px solid var(--line); }
+@media (max-width:900px) {
+  .wrap { grid-template-columns:1fr; }
+  nav { position:static; max-height:none; border-right:none; border-bottom:1px solid var(--line); }
+  main, header, footer { padding-left:20px; padding-right:20px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+<h1>C 语言<span class="dot">·</span>知识地图</h1>
+<div class="tagline">按「你要干什么」找工具。C 的全部难点集中在三处：指针、内存、以及「编译器不拦你、运行时才炸」的未定义行为——所以这三块在多个域里重复出现。</div>
+<div class="chips">
+<span class="chip">功能域 <b>12</b></span>
+<span class="chip">功能条目 <b>112</b></span>
+<span class="chip">基础通用 <b>10</b></span>
+<span class="chip">交叉概念 <b>8</b></span>
+<span class="chip">备注 <b>12</b></span>
+<span class="chip">自学 · 系统级基础</span>
+</div>
+<div class="legend"><span>第 2 列的小标签表示这一条的性质：</span>
+<span><span class="tag t-kw">关键字</span>语言自带的词，写代码绕不开</span>
+<span><span class="tag t-lib">C 库</span>C 标准库函数，include 就能用</span>
+<span><span class="tag t-cli">命令行</span>在终端里敲的命令</span>
+<span><span class="tag t-syn">写法</span>写法或思路，不是某个名字</span>
+</div></header>
+<div class="wrap"><nav>
+<div class="grp">地基</div>
+<a href="#base">基础通用 <span class="n">10</span></a>
+<a href="#outline">一页提纲 <span class="n">12</span></a>
+<div class="grp">功能域</div>
+<a href="#tool">编译与工具链 <span class="n">9</span></a>
+<a href="#types">类型与变量 <span class="n">9</span></a>
+<a href="#expr">运算符与表达式 <span class="n">9</span></a>
+<a href="#flow">控制流 <span class="n">8</span></a>
+<a href="#func">函数 <span class="n">9</span></a>
+<a href="#arr">数组与字符串 <span class="n">10</span></a>
+<a href="#ptr">指针 <span class="n">10</span></a>
+<a href="#mem">内存管理 <span class="n">10</span></a>
+<a href="#struct">结构体与联合 <span class="n">9</span></a>
+<a href="#io">输入输出与文件 <span class="n">10</span></a>
+<a href="#pp">预处理器 <span class="n">9</span></a>
+<a href="#lib">标准库与调试 <span class="n">10</span></a>
+<div class="grp">跨层</div>
+<a href="#cross">交叉项总表 <span class="n">8</span></a>
+<a href="#notes">备注 <span class="n">12</span></a>
+<a href="#quick">反向查 <span class="n">10</span></a>
+</nav><main>
+<div class="search"><input id="q" type="search" placeholder="搜功能、API 或关键词……（例如 指针 / 索引 / 管道）" autocomplete="off"><span class="hint" id="hint">140 条</span></div>
+<h2 id="base">第 0 层 · 基础通用（所有域共用）</h2>
+<div class="card"><table><thead><tr><th style="width:16%">条目</th><th style="width:38%">说明</th><th>例子</th></tr></thead><tbody>
+<tr><td class="k">编译 → 运行两步</td><td><code>gcc hello.c -o hello</code> 先编译成可执行文件，再运行它；C 没有解释器</td><td><span class="api"><code>gcc -Wall hello.c -o hello</code></span></td></tr>
+<tr><td class="k">源文件与头文件</td><td><code>.c</code> 放实现，<code>.h</code> 放声明；<code>#include</code> 是文本插入</td><td><span class="api"><code>#include &lt;stdio.h&gt;</code></span></td></tr>
+<tr><td class="k">程序入口</td><td><code>main</code> 是唯一入口，返回 0 表示成功</td><td><span class="api"><code>int main(void) { return 0; }</code></span></td></tr>
+<tr><td class="k">语句与分号</td><td>每条语句以 <code>;</code> 结尾；漏分号报错常指向下一行</td><td><span class="api"><code>int i = 0;</code></span></td></tr>
+<tr><td class="k">静态类型</td><td>变量必须先声明类型再用，没有动态类型</td><td><span class="api"><code>double x = 1.5;</code></span></td></tr>
+<tr><td class="k">下标从 0 开始</td><td>长度 n 的数组合法下标是 0…n-1，越界不报错</td><td><span class="api"><code>a[0]</code> 是第一个元素</span></td></tr>
+<tr><td class="k">字符串 = 字符数组 + <code>\0</code></td><td><code>"abc"</code> 占 4 字节；<code>strlen</code> 数到 <code>\0</code> 前</td><td><span class="api"><code>char s[] = "abc";</code></span></td></tr>
+<tr><td class="k">未定义行为（UB）</td><td>越界、悬空指针、有符号溢出：编译器不保证任何结果，可能「看起来正常」</td><td><span class="api"><code>a[10]</code> 越界写入</span></td></tr>
+<tr><td class="k">警告必须开</td><td><code>-Wall -Wextra</code> 能抓住大半低级错误；不看的警告等于没开</td><td><span class="api"><code>gcc -Wall -Wextra -g</code></span></td></tr>
+<tr><td class="k">查文档</td><td><code>man 3 printf</code> 查函数、<code>man 2 write</code> 查系统调用</td><td><span class="api"><code>man 3 strlen</code></span></td></tr>
+</tbody></table></div>
+<h2 id="outline">一页提纲 · 先扫这个</h2>
+<div class="card outline"><ul style="margin:0;padding-left:18px">
+<li><span class="dn">编译与工具链</span>：<span class="en">四步流水线</span> · <span class="en">常用选项</span> · <span class="en">只要目标文件</span> · <span class="en">链接多个文件</span> · <span class="en">链接库</span> · <span class="en">调试版与发布版</span> · <span class="en">Sanitizer</span> · <span class="en">Makefile</span> · <span class="en">看编译器到底做了什么</span></li>
+<li><span class="dn">类型与变量</span>：<span class="en">整数类型</span> · <span class="en">有无符号</span> · <span class="en">浮点</span> · <span class="en"><code>sizeof</code></span> · <span class="en">取值范围</span> · <span class="en">类型转换</span> · <span class="en"><code>const</code></span> · <span class="en"><code>static</code></span> · <span class="en">枚举</span></li>
+<li><span class="dn">运算符与表达式</span>：<span class="en">算术与取模</span> · <span class="en">自增自减</span> · <span class="en">比较与逻辑</span> · <span class="en">位运算</span> · <span class="en">复合赋值</span> · <span class="en">三元运算符</span> · <span class="en">逗号运算符</span> · <span class="en">优先级</span> · <span class="en">隐式整型提升</span></li>
+<li><span class="dn">控制流</span>：<span class="en">if / else if / else</span> · <span class="en">switch</span> · <span class="en">for</span> · <span class="en">while</span> · <span class="en">do-while</span> · <span class="en">break / continue</span> · <span class="en">goto</span> · <span class="en">提前返回</span></li>
+<li><span class="dn">函数</span>：<span class="en">定义与调用</span> · <span class="en">原型声明</span> · <span class="en">值传递</span> · <span class="en">返回值与错误码</span> · <span class="en">递归</span> · <span class="en"><code>static</code> 函数</span> · <span class="en">变参函数</span> · <span class="en">函数指针</span> · <span class="en">多处返回</span></li>
+<li><span class="dn">数组与字符串</span>：<span class="en">一维数组</span> · <span class="en">二维数组</span> · <span class="en">数组长度</span> · <span class="en">越界</span> · <span class="en"><code>strlen</code></span> · <span class="en">复制与拼接</span> · <span class="en">比较</span> · <span class="en">安全的格式化</span> · <span class="en">切分</span> · <span class="en">字符判断</span></li>
+<li><span class="dn">指针</span>：<span class="en">取地址与解引用</span> · <span class="en">声明读法</span> · <span class="en"><code>NULL</code></span> · <span class="en">指针算术</span> · <span class="en">数组退化为指针</span> · <span class="en"><code>void *</code></span> · <span class="en">指向指针</span> · <span class="en"><code>const</code> 与指针</span> · <span class="en">函数指针</span> · <span class="en">指针的坑</span></li>
+<li><span class="dn">内存管理</span>：<span class="en">栈 vs 堆</span> · <span class="en"><code>malloc</code></span> · <span class="en"><code>calloc</code></span> · <span class="en"><code>realloc</code></span> · <span class="en"><code>free</code></span> · <span class="en">泄漏</span> · <span class="en">悬空与双重释放</span> · <span class="en">生命周期</span> · <span class="en">柔性数组</span> · <span class="en">检查工具</span></li>
+<li><span class="dn">结构体与联合</span>：<span class="en">定义与使用</span> · <span class="en"><code>typedef</code></span> · <span class="en">初始化</span> · <span class="en">嵌套</span> · <span class="en">按值 vs 按指针传参</span> · <span class="en">数组的结构体</span> · <span class="en"><code>union</code></span> · <span class="en">位域</span> · <span class="en">返回结构体</span></li>
+<li><span class="dn">输入输出与文件</span>：<span class="en"><code>printf</code></span> · <span class="en"><code>scanf</code></span> · <span class="en">字符输入</span> · <span class="en">输出到 stderr</span> · <span class="en">打开关闭</span> · <span class="en">逐行读</span> · <span class="en">格式化读写</span> · <span class="en">二进制读写</span> · <span class="en">定位</span> · <span class="en">返回值检查</span></li>
+<li><span class="dn">预处理器</span>：<span class="en"><code>#include</code></span> · <span class="en">对象宏</span> · <span class="en">带参宏</span> · <span class="en">为什么要括号</span> · <span class="en">包含卫士</span> · <span class="en">条件编译</span> · <span class="en">字符串化与拼接</span> · <span class="en">预定义宏</span> · <span class="en"><code>#undef</code>、<code>#error</code></span></li>
+<li><span class="dn">标准库与调试</span>：<span class="en"><code>&lt;string.h&gt;</code></span> · <span class="en"><code>&lt;stdlib.h&gt;</code></span> · <span class="en"><code>qsort</code></span> · <span class="en"><code>&lt;math.h&gt;</code></span> · <span class="en"><code>&lt;time.h&gt;</code></span> · <span class="en"><code>assert</code></span> · <span class="en">gdb 基本盘</span> · <span class="en">段错误怎么查</span> · <span class="en">静态检查</span> · <span class="en">学习顺序</span></li>
+</ul></div>
+<div class="card" id="tool"><h3>编译与工具链<span class="de">Werkzeuge</span></h3>
+<p class="goal">把源码变成能跑的程序：预处理 → 编译 → 汇编 → 链接。</p>
+<table><thead><tr><th style="width:15%">功能</th><th style="width:27%">关键字 / API</th><th style="width:33%">用来做什么</th><th style="width:10%">阶段</th><th style="width:15%">交叉</th></tr></thead><tbody>
+<tr><td class="k">四步流水线</td><td class="ac"><span class="tag t-cli">命令行</span><span class="api"><code>gcc -E/-S/-c</code> | <code>.i → .s → .o → 可执行</code></span></td><td>预处理展开宏与头文件，编译成汇编，汇编成目标文件，链接成 exe</td><td><span class="lvl g">入门</span></td><td class="x">预处理器</td></tr>
+<tr><td class="k">常用选项</td><td class="ac"><span class="tag t-cli">命令行</span><span class="api"><code>-std=c17 -Wall -Wextra -g -O2</code></span></td><td>指定语言标准、开警告、留调试信息、开优化</td><td><span class="lvl g">入门</span></td><td class="x">调试</td></tr>
+<tr><td class="k">只要目标文件</td><td class="ac"><span class="tag t-cli">命令行</span><span class="api"><code>gcc -c a.c</code> → <code>a.o</code></span></td><td>多文件项目先各自编译，再一起链接</td><td><span class="lvl b">常用</span></td><td class="x">头文件</td></tr>
+<tr><td class="k">链接多个文件</td><td class="ac"><span class="tag t-cli">命令行</span><span class="api"><code>gcc a.o b.o -o app</code></span></td><td>把多个 <code>.o</code> 合成一个程序；缺 <code>main</code> 或重复定义会在这里报错</td><td><span class="lvl b">常用</span></td><td class="x">函数</td></tr>
+<tr><td class="k">链接库</td><td class="ac"><span class="tag t-cli">命令行</span><span class="api"><code>-lm</code>、<code>-I路径</code>、<code>-L路径 -l名字</code></span></td><td>数学库要显式 <code>-lm</code>；<code>-I</code> 加头文件搜索路径</td><td><span class="lvl b">常用</span></td><td class="x">标准库</td></tr>
+<tr><td class="k">调试版与发布版</td><td class="ac"><span class="tag t-cli">命令行</span><span class="api"><code>-g -O0</code> vs <code>-O2</code></span></td><td>调试时别开优化，否则断点会「跳行」</td><td><span class="lvl b">常用</span></td><td class="x">调试</td></tr>
+<tr><td class="k">Sanitizer</td><td class="ac"><span class="tag t-cli">命令行</span><span class="api"><code>-fsanitize=address,undefined</code></span></td><td>运行时抓越界、泄漏、未定义行为——学习期强烈建议开</td><td><span class="lvl o">进阶</span></td><td class="x">内存管理</td></tr>
+<tr><td class="k">Makefile</td><td class="ac"><span class="tag t-cli">命令行</span><span class="api"><code>make</code> + <code>目标: 依赖</code> + <code>Tab 命令</code></span></td><td>只重编改过的文件，不用每次手敲一长串</td><td><span class="lvl o">进阶</span></td><td class="x">—</td></tr>
+<tr><td class="k">看编译器到底做了什么</td><td class="ac"><span class="tag t-cli">命令行</span><span class="api"><code>gcc -S -masm=intel</code></span></td><td>把 C 翻成汇编，理解指针和数组的真实代价</td><td><span class="lvl r">进阶+</span></td><td class="x">指针</td></tr>
+</tbody></table></div>
+<div class="card" id="types"><h3>类型与变量<span class="de">Datentypen</span></h3>
+<p class="goal">C 的类型很薄：只有整数、浮点、指针三类底子，其余都是组合。</p>
+<table><thead><tr><th style="width:15%">功能</th><th style="width:27%">关键字 / API</th><th style="width:33%">用来做什么</th><th style="width:10%">阶段</th><th style="width:15%">交叉</th></tr></thead><tbody>
+<tr><td class="k">整数类型</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>char short int long long long</code></span></td><td>宽度随平台变；要固定宽度用 <code>int8_t…int64_t</code></td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k">有无符号</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>unsigned int</code>、<code>size_t</code></span></td><td><code>size_t</code> 是长度与下标的正确类型；混用有符号会出坑</td><td><span class="lvl b">常用</span></td><td class="x">字符串</td></tr>
+<tr><td class="k">浮点</td><td class="ac"><span class="tag t-lib">C 库</span><span class="api"><code>float</code>（约 7 位）、<code>double</code>（约 15 位）</span></td><td>默认用 <code>double</code>；比较要用误差而不是 <code>==</code></td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>sizeof</code></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>sizeof x</code>、<code>sizeof(int)</code></span></td><td>结果是字节数，类型是 <code>size_t</code>；数组传参后会失效</td><td><span class="lvl b">常用</span></td><td class="x">数组</td></tr>
+<tr><td class="k">取值范围</td><td class="ac"><span class="tag t-lib">C 库</span><span class="api"><code>&lt;limits.h&gt;</code>、<code>&lt;float.h&gt;</code></span></td><td><code>INT_MAX</code>、<code>INT_MIN</code>、<code>DBL_EPSILON</code></td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k">类型转换</td><td class="ac"><span class="tag t-lib">C 库</span><span class="api"><code>(double)i</code>、隐式提升</span></td><td>整数相除先转浮点，否则 <code>7/2 == 3</code></td><td><span class="lvl b">常用</span></td><td class="x">表达式</td></tr>
+<tr><td class="k"><code>const</code></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>const double PI = 3.14;</code></span></td><td>只读；指针的 <code>const</code> 位置决定「谁能改」</td><td><span class="lvl b">常用</span></td><td class="x">指针</td></tr>
+<tr><td class="k"><code>static</code></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api">函数内 <code>static int n;</code></span></td><td>函数内：只初始化一次、跨调用保留；文件作用域：外部不可见</td><td><span class="lvl o">进阶</span></td><td class="x">函数</td></tr>
+<tr><td class="k">枚举</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>enum Farbe { ROT, GRUEN };</code></span></td><td>给整数起名字，比 <code>#define</code> 有类型检查</td><td><span class="lvl b">常用</span></td><td class="x">结构体</td></tr>
+</tbody></table></div>
+<div class="card" id="expr"><h3>运算符与表达式<span class="de">Ausdrücke</span></h3>
+<p class="goal">算术、比较、位运算；C 的优先级和隐式转换是错误高发区。</p>
+<table><thead><tr><th style="width:15%">功能</th><th style="width:27%">关键字 / API</th><th style="width:33%">用来做什么</th><th style="width:10%">阶段</th><th style="width:15%">交叉</th></tr></thead><tbody>
+<tr><td class="k">算术与取模</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>+ - * / %</code></span></td><td>整数除法会截断；<code>%</code> 只能用于整数</td><td><span class="lvl g">入门</span></td><td class="x">类型与变量</td></tr>
+<tr><td class="k">自增自减</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>i++</code>、<code>++i</code></span></td><td>在表达式里混用是 UB 高发点，单独一行用最稳</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k">比较与逻辑</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>== != &lt; &gt; &amp;&amp; || !</code></span></td><td><code>&amp;&amp;</code>/<code>||</code> 会短路；别把 <code>=</code> 写成 <code>==</code></td><td><span class="lvl g">入门</span></td><td class="x">控制流</td></tr>
+<tr><td class="k">位运算</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>&amp; | ^ ~ &lt;&lt; &gt;&gt;</code></span></td><td>开关标志、掩码、快速乘除 2 的幂；无符号移位才安全</td><td><span class="lvl o">进阶</span></td><td class="x">—</td></tr>
+<tr><td class="k">复合赋值</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>+= -= *= /= %= &amp;= |= &lt;&lt;=</code></span></td><td><code>a += b</code> 等价 <code>a = a + b</code></td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k">三元运算符</td><td class="ac"><span class="tag t-lib">C 库</span><span class="api"><code>cond ? a : b</code></span></td><td>短小的二选一；嵌套三层就该改 <code>if</code></td><td><span class="lvl b">常用</span></td><td class="x">控制流</td></tr>
+<tr><td class="k">逗号运算符</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>a = (b++, c)</code></span></td><td>从左到右求值，整体取最后一个——除 <code>for</code> 里外少用</td><td><span class="lvl o">进阶</span></td><td class="x">—</td></tr>
+<tr><td class="k">优先级</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>*</code> 高于 <code>+</code>，<code>&amp;</code> 低于 <code>==</code></span></td><td>记不住就加括号，别赌</td><td><span class="lvl b">常用</span></td><td class="x">指针</td></tr>
+<tr><td class="k">隐式整型提升</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>char + char → int</code></span></td><td>混合有符号/无符号时结果可能反直觉（<code>-1 &gt; 0u</code> 为真）</td><td><span class="lvl r">进阶+</span></td><td class="x">类型与变量</td></tr>
+</tbody></table></div>
+<div class="card" id="flow"><h3>控制流<span class="de">Kontrollfluss</span></h3>
+<p class="goal">分支与循环；C 的 <code>switch</code> 和 <code>break</code> 语义要记清。</p>
+<table><thead><tr><th style="width:15%">功能</th><th style="width:27%">关键字 / API</th><th style="width:33%">用来做什么</th><th style="width:10%">阶段</th><th style="width:15%">交叉</th></tr></thead><tbody>
+<tr><td class="k">if / else if / else</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>if (x &gt; 0) { … }</code></span></td><td>条件里别写赋值；浮点不要直接判等</td><td><span class="lvl g">入门</span></td><td class="x">表达式</td></tr>
+<tr><td class="k">switch</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>switch (n) { case 1: … break; default: … }</code></span></td><td>只支持整数与枚举；忘了 <code>break</code> 会「贯穿」</td><td><span class="lvl b">常用</span></td><td class="x">类型与变量</td></tr>
+<tr><td class="k">for</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>for (int i = 0; i &lt; n; i++)</code></span></td><td>计数循环首选；三个部分都可空</td><td><span class="lvl g">入门</span></td><td class="x">数组</td></tr>
+<tr><td class="k">while</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>while (cond) { … }</code></span></td><td>条件先判，可能一次都不执行</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k">do-while</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>do { … } while (cond);</code></span></td><td>至少执行一次；读输入时常配合 <code>scanf</code> 返回值</td><td><span class="lvl b">常用</span></td><td class="x">输入输出</td></tr>
+<tr><td class="k">break / continue</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>break;</code> <code>continue;</code></span></td><td>跳出整个循环 / 跳过本次</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k">goto</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>goto fehler;</code></span></td><td>只推荐用于「多层出错统一清理」，别做普通跳转</td><td><span class="lvl r">进阶+</span></td><td class="x">内存管理</td></tr>
+<tr><td class="k">提前返回</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>if (!ok) return -1;</code></span></td><td>把异常情况顶到前面，减少嵌套层次</td><td><span class="lvl b">常用</span></td><td class="x">函数</td></tr>
+</tbody></table></div>
+<div class="card" id="func"><h3>函数<span class="de">Funktionen</span></h3>
+<p class="goal">C 只有值传递；要改外面的东西，必须传地址。</p>
+<table><thead><tr><th style="width:15%">功能</th><th style="width:27%">关键字 / API</th><th style="width:33%">用来做什么</th><th style="width:10%">阶段</th><th style="width:15%">交叉</th></tr></thead><tbody>
+<tr><td class="k">定义与调用</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>int add(int a, int b) { return a + b; }</code></span></td><td>参数与返回值都有类型；没有默认参数</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k">原型声明</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>int add(int, int);</code></span></td><td>放在 <code>.h</code> 或文件顶部，让编译器先知道签名</td><td><span class="lvl b">常用</span></td><td class="x">头文件</td></tr>
+<tr><td class="k">值传递</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>f(x)</code> 传的是副本</span></td><td>函数内改参数不影响调用者——这是 C 最重要的直觉</td><td><span class="lvl g">入门</span></td><td class="x">指针</td></tr>
+<tr><td class="k">返回值与错误码</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>int rc = f(); if (rc != 0) …</code></span></td><td>C 没有异常，用返回值和 <code>errno</code> 报错</td><td><span class="lvl b">常用</span></td><td class="x">标准库</td></tr>
+<tr><td class="k">递归</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>int fak(int n) { return n ? n * fak(n-1) : 1; }</code></span></td><td>要有终止条件；深度受栈大小限制</td><td><span class="lvl b">常用</span></td><td class="x">内存</td></tr>
+<tr><td class="k"><code>static</code> 函数</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>static void helper(void)</code></span></td><td>只在本文件可见，避免命名冲突</td><td><span class="lvl o">进阶</span></td><td class="x">编译</td></tr>
+<tr><td class="k">变参函数</td><td class="ac"><span class="tag t-lib">C 库</span><span class="api"><code>&lt;stdarg.h&gt;</code>：<code>va_list/va_start/va_arg</code></span></td><td>写自己的 <code>printf</code> 风格函数</td><td><span class="lvl r">进阶+</span></td><td class="x">输入输出</td></tr>
+<tr><td class="k">函数指针</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>int (*cmp)(const void*, const void*)</code></span></td><td>把「行为」当参数传，<code>qsort</code> 就这么用</td><td><span class="lvl o">进阶</span></td><td class="x">指针</td></tr>
+<tr><td class="k">多处返回</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>return</code> 可以出现在任意位置</span></td><td>配合 <code>goto cleanup</code> 管理资源释放</td><td><span class="lvl o">进阶</span></td><td class="x">内存管理</td></tr>
+</tbody></table></div>
+<div class="card" id="arr"><h3>数组与字符串<span class="de">Arrays und Strings</span></h3>
+<p class="goal">C 的数组不知道自己的长度，字符串靠 <code>\0</code> 结尾——一切越界都不报错。</p>
+<table><thead><tr><th style="width:15%">功能</th><th style="width:27%">关键字 / API</th><th style="width:33%">用来做什么</th><th style="width:10%">阶段</th><th style="width:15%">交叉</th></tr></thead><tbody>
+<tr><td class="k">一维数组</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>int a[5] = {1,2,3};</code></span></td><td>未写的元素自动为 0；长度必须在编译期确定（或 C99 VLA）</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k">二维数组</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>int m[3][4]</code></span></td><td>内存里是连续的一整块，行优先</td><td><span class="lvl b">常用</span></td><td class="x">指针</td></tr>
+<tr><td class="k">数组长度</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>sizeof a / sizeof a[0]</code></span></td><td>只在定义所在的函数里有效；传参后失效</td><td><span class="lvl b">常用</span></td><td class="x">函数</td></tr>
+<tr><td class="k">越界</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>a[n]</code> 写出界</span></td><td>不报错、静默改坏别的变量——最难查的 bug</td><td><span class="lvl b">常用</span></td><td class="x">内存管理</td></tr>
+<tr><td class="k"><code>strlen</code></td><td class="ac"><span class="tag t-lib">C 库</span><span class="api"><code>size_t strlen(const char *s)</code></span></td><td>不含结尾 <code>\0</code></td><td><span class="lvl g">入门</span></td><td class="x">指针</td></tr>
+<tr><td class="k">复制与拼接</td><td class="ac"><span class="tag t-lib">C 库</span><span class="api"><code>strcpy/strncpy/strcat/strncat</code></span></td><td><code>strncpy</code> 可能不补 <code>\0</code>，优先 <code>snprintf</code></td><td><span class="lvl b">常用</span></td><td class="x">输入输出</td></tr>
+<tr><td class="k">比较</td><td class="ac"><span class="tag t-lib">C 库</span><span class="api"><code>strcmp(a,b)</code></span></td><td>返回 0 表示相等；不能写 <code>if (a == b)</code></td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k">安全的格式化</td><td class="ac"><span class="tag t-lib">C 库</span><span class="api"><code>snprintf(buf, sizeof buf, "%s", s)</code></span></td><td>永远给长度，避免溢出</td><td><span class="lvl b">常用</span></td><td class="x">内存管理</td></tr>
+<tr><td class="k">切分</td><td class="ac"><span class="tag t-lib">C 库</span><span class="api"><code>strtok(s, ",")</code>、<code>strtok_r</code></span></td><td>会修改原字符串；多线程用 <code>_r</code> 版</td><td><span class="lvl o">进阶</span></td><td class="x">标准库</td></tr>
+<tr><td class="k">字符判断</td><td class="ac"><span class="tag t-lib">C 库</span><span class="api"><code>&lt;ctype.h&gt;</code>：<code>isdigit/isalpha/toupper</code></span></td><td>注意传 <code>unsigned char</code></td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+</tbody></table></div>
+<div class="card" id="ptr"><h3>指针<span class="de">Zeiger</span></h3>
+<p class="goal">指针就是「存地址的整数」；C 的威力与危险都从这里来。</p>
+<table><thead><tr><th style="width:15%">功能</th><th style="width:27%">关键字 / API</th><th style="width:33%">用来做什么</th><th style="width:10%">阶段</th><th style="width:15%">交叉</th></tr></thead><tbody>
+<tr><td class="k">取地址与解引用</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>&amp;x</code>、<code>*p</code></span></td><td><code>p</code> 存地址，<code>*p</code> 取那个地址上的值</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k">声明读法</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>int *p;</code> 读作「p 是指向 int 的指针」</span></td><td>多个指针要 <code>int *a, *b;</code> 而不是 <code>int* a, b;</code></td><td><span class="lvl g">入门</span></td><td class="x">类型与变量</td></tr>
+<tr><td class="k"><code>NULL</code></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>int *p = NULL;</code></span></td><td>用前判空；解引用空指针直接崩</td><td><span class="lvl g">入门</span></td><td class="x">内存管理</td></tr>
+<tr><td class="k">指针算术</td><td class="ac"><span class="tag t-lib">C 库</span><span class="api"><code>p + 1</code> 前进 <code>sizeof(*p)</code> 字节</span></td><td>数组遍历、切片都靠它</td><td><span class="lvl b">常用</span></td><td class="x">数组</td></tr>
+<tr><td class="k">数组退化为指针</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>f(a)</code> 里的 <code>a</code> 就是 <code>&amp;a[0]</code></span></td><td>所以函数里拿不到数组长度</td><td><span class="lvl b">常用</span></td><td class="x">函数</td></tr>
+<tr><td class="k"><code>void *</code></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>void *p = &amp;x;</code></span></td><td>通用地址容器（<code>malloc</code> 返回它）；不能直接解引用</td><td><span class="lvl o">进阶</span></td><td class="x">内存管理</td></tr>
+<tr><td class="k">指向指针</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>char <b>argv</code>、<code>int </b>m</code></span></td><td>字符串数组、二维动态数组</td><td><span class="lvl o">进阶</span></td><td class="x">数组</td></tr>
+<tr><td class="k"><code>const</code> 与指针</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>const char *p</code> vs <code>char * const p</code></span></td><td>前者：指向的内容不可改；后者：指针本身不可改</td><td><span class="lvl o">进阶</span></td><td class="x">类型与变量</td></tr>
+<tr><td class="k">函数指针</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>int (*f)(int) = &amp;g;</code></span></td><td>回调、表驱动、<code>qsort</code> 比较器</td><td><span class="lvl r">进阶+</span></td><td class="x">函数</td></tr>
+<tr><td class="k">指针的坑</td><td class="ac"><span class="tag t-syn">写法</span><span class="api">野指针、悬空指针、类型不匹配</span></td><td><code>free</code> 后置 <code>NULL</code>；开 sanitizer</td><td><span class="lvl b">常用</span></td><td class="x">内存管理</td></tr>
+</tbody></table></div>
+<div class="card" id="mem"><h3>内存管理<span class="de">Speicher</span></h3>
+<p class="goal">栈是自动的、堆是手动的；手动就意味着会泄漏、会双重释放。</p>
+<table><thead><tr><th style="width:15%">功能</th><th style="width:27%">关键字 / API</th><th style="width:33%">用来做什么</th><th style="width:10%">阶段</th><th style="width:15%">交叉</th></tr></thead><tbody>
+<tr><td class="k">栈 vs 堆</td><td class="ac"><span class="tag t-lib">C 库</span><span class="api">局部变量在栈、<code>malloc</code> 在堆</span></td><td>栈小（几 MB）且自动回收；堆大但要自己 <code>free</code></td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>malloc</code></td><td class="ac"><span class="tag t-lib">C 库</span><span class="api"><code>void *malloc(size_t n)</code></span></td><td>分配 n 字节，内容未初始化；失败返回 <code>NULL</code></td><td><span class="lvl g">入门</span></td><td class="x">指针</td></tr>
+<tr><td class="k"><code>calloc</code></td><td class="ac"><span class="tag t-lib">C 库</span><span class="api"><code>calloc(n, size)</code></span></td><td>分配并清零——数组首选</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>realloc</code></td><td class="ac"><span class="tag t-lib">C 库</span><span class="api"><code>p = realloc(p, neu)</code></span></td><td>扩容；失败时原指针仍有效，别直接覆盖</td><td><span class="lvl o">进阶</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>free</code></td><td class="ac"><span class="tag t-lib">C 库</span><span class="api"><code>free(p); p = NULL;</code></span></td><td>只能释放 <code>malloc</code> 系列返回的指针，且只能一次</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k">泄漏</td><td class="ac"><span class="tag t-lib">C 库</span><span class="api">分配后忘了 <code>free</code></span></td><td>长跑程序会耗尽内存；用 valgrind/ASan 找</td><td><span class="lvl b">常用</span></td><td class="x">工具链</td></tr>
+<tr><td class="k">悬空与双重释放</td><td class="ac"><span class="tag t-lib">C 库</span><span class="api"><code>free(p)</code> 后又用/又 <code>free</code></span></td><td>UB；置 <code>NULL</code> 是最便宜的防护</td><td><span class="lvl b">常用</span></td><td class="x">指针</td></tr>
+<tr><td class="k">生命周期</td><td class="ac"><span class="tag t-syn">写法</span><span class="api">谁分配谁释放</span></td><td>函数返回栈上数组的地址 = 立刻悬空</td><td><span class="lvl b">常用</span></td><td class="x">函数</td></tr>
+<tr><td class="k">柔性数组</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>struct S { int n; int a[]; };</code></span></td><td>结构体尾部跟一块变长数据，一次 <code>malloc</code> 搞定</td><td><span class="lvl r">进阶+</span></td><td class="x">结构体</td></tr>
+<tr><td class="k">检查工具</td><td class="ac"><span class="tag t-cli">命令行</span><span class="api"><code>valgrind ./app</code>、<code>-fsanitize=address</code></span></td><td>逐字节追踪越界与泄漏</td><td><span class="lvl o">进阶</span></td><td class="x">调试</td></tr>
+</tbody></table></div>
+<div class="card" id="struct"><h3>结构体与联合<span class="de">Strukturen</span></h3>
+<p class="goal">把相关字段打包成一个类型；C 没有类，只有数据和函数分开。</p>
+<table><thead><tr><th style="width:15%">功能</th><th style="width:27%">关键字 / API</th><th style="width:33%">用来做什么</th><th style="width:10%">阶段</th><th style="width:15%">交叉</th></tr></thead><tbody>
+<tr><td class="k">定义与使用</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>struct Punkt { double x, y; };</code></span></td><td>访问用 <code>.</code>，指针用 <code>-&gt;</code></td><td><span class="lvl g">入门</span></td><td class="x">指针</td></tr>
+<tr><td class="k"><code>typedef</code></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>typedef struct Punkt Punkt;</code></span></td><td>省掉每次都写 <code>struct</code></td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k">初始化</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>struct Punkt p = {1.0, 2.0};</code> 或 <code>{.x=1}</code></span></td><td>指定初始化器更安全</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k">嵌套</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>struct Buch { struct Autor a; };</code></span></td><td>结构体套结构体是常态</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k">按值 vs 按指针传参</td><td class="ac"><span class="tag t-lib">C 库</span><span class="api"><code>f(p)</code> vs <code>f(&amp;p)</code></span></td><td>大结构体传指针，且能改原值</td><td><span class="lvl b">常用</span></td><td class="x">函数</td></tr>
+<tr><td class="k">数组的结构体</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>struct Punkt ps[10];</code></span></td><td>一批对象；排序用 <code>qsort</code> + 比较函数</td><td><span class="lvl b">常用</span></td><td class="x">标准库</td></tr>
+<tr><td class="k"><code>union</code></td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>union Wert { int i; double d; };</code></span></td><td>同一块内存的多种解释；大小 = 最大成员</td><td><span class="lvl o">进阶</span></td><td class="x">—</td></tr>
+<tr><td class="k">位域</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>unsigned flag : 1;</code></span></td><td>紧凑存标志位，布局由实现决定</td><td><span class="lvl r">进阶+</span></td><td class="x">表达式</td></tr>
+<tr><td class="k">返回结构体</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>struct Punkt make(void)</code></span></td><td>合法但注意拷贝成本；或传指针写入</td><td><span class="lvl b">常用</span></td><td class="x">函数</td></tr>
+</tbody></table></div>
+<div class="card" id="io"><h3>输入输出与文件<span class="de">Ein-/Ausgabe</span></h3>
+<p class="goal">格式化输入输出 + 文件读写；<code>printf</code> 的格式符要背准。</p>
+<table><thead><tr><th style="width:15%">功能</th><th style="width:27%">关键字 / API</th><th style="width:33%">用来做什么</th><th style="width:10%">阶段</th><th style="width:15%">交叉</th></tr></thead><tbody>
+<tr><td class="k"><code>printf</code></td><td class="ac"><span class="tag t-lib">C 库</span><span class="api"><code>printf("%d %s %.2f\n", i, s, d)</code></span></td><td><code>%d</code> 整型、<code>%ld</code> long、<code>%zu</code> size_t、<code>%s</code> 字符串、<code>%.2f</code> 两位小数</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>scanf</code></td><td class="ac"><span class="tag t-lib">C 库</span><span class="api"><code>int n = scanf("%d", &amp;i);</code></span></td><td>返回成功读入的项数；失败要清输入缓冲，否则死循环</td><td><span class="lvl b">常用</span></td><td class="x">控制流</td></tr>
+<tr><td class="k">字符输入</td><td class="ac"><span class="tag t-lib">C 库</span><span class="api"><code>getchar()</code>、<code>fgets(buf, n, stdin)</code></span></td><td><code>fgets</code> 带长度最安全；<code>gets</code> 已废弃</td><td><span class="lvl b">常用</span></td><td class="x">数组</td></tr>
+<tr><td class="k">输出到 stderr</td><td class="ac"><span class="tag t-lib">C 库</span><span class="api"><code>fprintf(stderr, "%s\n", msg)</code></span></td><td>错误信息走 stderr，才能和正常输出分开重定向</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k">打开关闭</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>FILE *f = fopen("a.txt", "r"); fclose(f);</code></span></td><td>模式：<code>r/w/a</code> + <code>b</code> + <code>+</code>；每个 <code>fopen</code> 都要 <code>fclose</code></td><td><span class="lvl g">入门</span></td><td class="x">内存管理</td></tr>
+<tr><td class="k">逐行读</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>while (fgets(buf, sizeof buf, f))</code></span></td><td>读文件的标准姿态；注意最后一行可能没有 <code>\n</code></td><td><span class="lvl b">常用</span></td><td class="x">数组</td></tr>
+<tr><td class="k">格式化读写</td><td class="ac"><span class="tag t-lib">C 库</span><span class="api"><code>fprintf</code>、<code>fscanf</code></span></td><td>和 <code>printf/scanf</code> 一样，只是多一个 <code>FILE*</code></td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k">二进制读写</td><td class="ac"><span class="tag t-lib">C 库</span><span class="api"><code>fread/fwrite(buf, size, n, f)</code></span></td><td>结构体整体存取；跨平台要管字节序</td><td><span class="lvl o">进阶</span></td><td class="x">结构体</td></tr>
+<tr><td class="k">定位</td><td class="ac"><span class="tag t-lib">C 库</span><span class="api"><code>fseek/ftell/rewind</code></span></td><td>随机访问；文本模式下不支持负数偏移</td><td><span class="lvl r">进阶+</span></td><td class="x">—</td></tr>
+<tr><td class="k">返回值检查</td><td class="ac"><span class="tag t-kw">关键字</span><span class="api"><code>if (!f) perror("fopen");</code></span></td><td>文件打不开是最常见的运行期失败</td><td><span class="lvl b">常用</span></td><td class="x">标准库</td></tr>
+</tbody></table></div>
+<div class="card" id="pp"><h3>预处理器<span class="de">Präprozessor</span></h3>
+<p class="goal">编译之前先做文本替换：包含、宏、条件编译。</p>
+<table><thead><tr><th style="width:15%">功能</th><th style="width:27%">关键字 / API</th><th style="width:33%">用来做什么</th><th style="width:10%">阶段</th><th style="width:15%">交叉</th></tr></thead><tbody>
+<tr><td class="k"><code>#include</code></td><td class="ac"><span class="tag t-lib">C 库</span><span class="api"><code>&lt;stdio.h&gt;</code> 找系统路径，<code>"x.h"</code> 先找当前目录</span></td><td>头文件只是文本插入，插多了会重复定义</td><td><span class="lvl g">入门</span></td><td class="x">编译</td></tr>
+<tr><td class="k">对象宏</td><td class="ac"><span class="tag t-lib">C 库</span><span class="api"><code>#define MAX 100</code></span></td><td>给常量起名；没有类型、没有作用域</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k">带参宏</td><td class="ac"><span class="tag t-lib">C 库</span><span class="api"><code>#define SQ(x) ((x)*(x))</code></span></td><td>参数与整体都要括号；有副作用的值别传进来</td><td><span class="lvl b">常用</span></td><td class="x">表达式</td></tr>
+<tr><td class="k">为什么要括号</td><td class="ac"><span class="tag t-lib">C 库</span><span class="api"><code>SQ(i+1)</code> 不加括号会变成 <code>i+1*i+1</code></span></td><td>宏是纯文本替换，不是函数</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k">包含卫士</td><td class="ac"><span class="tag t-lib">C 库</span><span class="api"><code>#ifndef X_H</code> / <code>#define X_H</code> / <code>#endif</code></span></td><td>防止头文件被重复包含；或用 <code>#pragma once</code></td><td><span class="lvl b">常用</span></td><td class="x">头文件</td></tr>
+<tr><td class="k">条件编译</td><td class="ac"><span class="tag t-lib">C 库</span><span class="api"><code>#ifdef DEBUG</code>、<code>#if</code>、<code>#else</code>、<code>#endif</code></span></td><td>调试输出、平台差异、特性开关</td><td><span class="lvl b">常用</span></td><td class="x">调试</td></tr>
+<tr><td class="k">字符串化与拼接</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>#x</code>、<code>a##b</code></span></td><td>写日志宏、生成名字</td><td><span class="lvl r">进阶+</span></td><td class="x">—</td></tr>
+<tr><td class="k">预定义宏</td><td class="ac"><span class="tag t-lib">C 库</span><span class="api"><code>__FILE__</code>、<code>__LINE__</code>、<code>__func__</code></span></td><td>自定义日志/断言最有用的三件套</td><td><span class="lvl o">进阶</span></td><td class="x">调试</td></tr>
+<tr><td class="k"><code>#undef</code>、<code>#error</code></td><td class="ac"><span class="tag t-lib">C 库</span><span class="api"><code>#error 不支持的平台</code></span></td><td>编译期强行中断，比运行时报错早</td><td><span class="lvl o">进阶</span></td><td class="x">—</td></tr>
+</tbody></table></div>
+<div class="card" id="lib"><h3>标准库与调试<span class="de">Standardbibliothek</span></h3>
+<p class="goal">C 的标准库很小：字符串、内存、数学、时间、排序；调试靠 gdb 与 sanitizer。</p>
+<table><thead><tr><th style="width:15%">功能</th><th style="width:27%">关键字 / API</th><th style="width:33%">用来做什么</th><th style="width:10%">阶段</th><th style="width:15%">交叉</th></tr></thead><tbody>
+<tr><td class="k"><code>&lt;string.h&gt;</code></td><td class="ac"><span class="tag t-lib">C 库</span><span class="api"><code>memcpy/memmove/memset/strchr/strstr</code></span></td><td>内存块操作与查找；<code>memcpy</code> 不处理重叠</td><td><span class="lvl b">常用</span></td><td class="x">数组</td></tr>
+<tr><td class="k"><code>&lt;stdlib.h&gt;</code></td><td class="ac"><span class="tag t-lib">C 库</span><span class="api"><code>malloc/free/atoi/strtol/qsort/rand</code></span></td><td>转换、排序、随机数、进程退出 <code>exit()</code></td><td><span class="lvl b">常用</span></td><td class="x">内存管理</td></tr>
+<tr><td class="k"><code>qsort</code></td><td class="ac"><span class="tag t-lib">C 库</span><span class="api"><code>qsort(a, n, sizeof *a, cmp)</code></span></td><td>通用排序；比较函数返回负/0/正</td><td><span class="lvl b">常用</span></td><td class="x">函数</td></tr>
+<tr><td class="k"><code>&lt;math.h&gt;</code></td><td class="ac"><span class="tag t-lib">C 库</span><span class="api"><code>sqrt/pow/fabs/floor/ceil</code>（链接 <code>-lm</code>）</span></td><td>浮点运算；误差比较用 <code>fabs(a-b) &lt; 1e-9</code></td><td><span class="lvl b">常用</span></td><td class="x">编译</td></tr>
+<tr><td class="k"><code>&lt;time.h&gt;</code></td><td class="ac"><span class="tag t-lib">C 库</span><span class="api"><code>time()</code>、<code>clock()</code>、<code>strftime</code></span></td><td>计时与格式化时间</td><td><span class="lvl o">进阶</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>assert</code></td><td class="ac"><span class="tag t-lib">C 库</span><span class="api"><code>assert(p != NULL);</code></span></td><td>调试期断言；<code>-DNDEBUG</code> 会关掉</td><td><span class="lvl b">常用</span></td><td class="x">预处理器</td></tr>
+<tr><td class="k">gdb 基本盘</td><td class="ac"><span class="tag t-cli">命令行</span><span class="api"><code>gdb ./app</code>：<code>run</code> <code>bt</code> <code>break</code> <code>print</code> <code>next</code> <code>step</code></span></td><td>段错误第一件事：<code>bt</code> 看栈，<code>frame N</code> 看变量</td><td><span class="lvl b">常用</span></td><td class="x">内存管理</td></tr>
+<tr><td class="k">段错误怎么查</td><td class="ac"><span class="tag t-cli">命令行</span><span class="api"><code>-g</code> 编译 + <code>bt</code> + ASan</span></td><td>九成是空指针/越界/悬空</td><td><span class="lvl b">常用</span></td><td class="x">指针</td></tr>
+<tr><td class="k">静态检查</td><td class="ac"><span class="tag t-cli">命令行</span><span class="api"><code>gcc -fanalyzer</code>、<code>cppcheck</code>、<code>clang-tidy</code></span></td><td>不运行就找出可疑路径</td><td><span class="lvl r">进阶+</span></td><td class="x">编译</td></tr>
+<tr><td class="k">学习顺序</td><td class="ac"><span class="tag t-syn">写法</span><span class="api">能编译能跑 → 指针与数组 → 内存 → 结构体 → 文件 → 宏与多文件</span></td><td>别一上来啃 <code>void*</code> 回调</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+</tbody></table></div>
+<h2 id="cross">交叉项总表 · 同一概念出现在多个域</h2>
+<div class="card"><table><thead><tr><th style="width:18%">概念</th><th style="width:42%">出现在</th><th>为什么重复出现</th></tr></thead><tbody>
+<tr><td class="k">指针</td><td>指针「取地址与解引用」 · 数组与字符串「数组退化为指针」 · 函数「值传递」 · 内存管理「<code>malloc</code> 返回 <code>void*</code>」</td><td class="why">C 里「传地址」是唯一能改外部数据的方式，所以指针同时出现在数组、函数、内存三处</td></tr>
+<tr><td class="k">越界与未定义行为</td><td>数组与字符串「越界」 · 内存管理「悬空与双重释放」 · 标准库与调试「段错误怎么查」</td><td class="why">越界多半不报错，只在别处表现成怪现象；这三个域是同一个问题的三种面孔</td></tr>
+<tr><td class="k">字符串的 <code>\0</code></td><td>数组与字符串「<code>strlen</code>」 · 输入输出与文件「<code>fgets</code>」 · 标准库与调试「<code>memcpy</code>」</td><td class="why">所有字符串函数的「长度」都靠结尾的 <code>\0</code>，忘记留这一字节就会读到垃圾</td></tr>
+<tr><td class="k">头文件与声明</td><td>预处理器「包含卫士」 · 编译与工具链「链接多个文件」 · 函数「原型声明」</td><td class="why">声明放 <code>.h</code>、实现放 <code>.c</code>，由预处理器插入、由链接器接上——三处配合才有多文件工程</td></tr>
+<tr><td class="k">传递方式（值 / 地址）</td><td>函数「值传递」 · 指针「声明读法」 · 结构体与联合「按值 vs 按指针传参」</td><td class="why">同一件事的三个层次：参数是副本 → 用指针改外部 → 大结构体为了效率也传指针</td></tr>
+<tr><td class="k">缓冲区长度</td><td>数组与字符串「安全的格式化」 · 输入输出与文件「读取一行」 · 内存管理「<code>malloc</code>」</td><td class="why">所有「写入一块内存」的操作都必须知道容量，<code>snprintf</code>/<code>fgets</code>/<code>malloc</code> 都要求你先算清楚</td></tr>
+<tr><td class="k">函数指针</td><td>函数「函数指针」 · 标准库与调试「<code>qsort</code>」 · 指针「指向指针」</td><td class="why">把行为当数据传：<code>qsort</code> 的比较器、回调、跳转表都靠它</td></tr>
+<tr><td class="k">编译选项影响调试</td><td>编译与工具链「Sanitizer」 · 标准库与调试「gdb 基本盘」 · 类型与变量「<code>sizeof</code>」</td><td class="why"><code>-g -O0</code> 决定断点准不准，<code>-fsanitize</code> 决定错误能不能被抓住</td></tr>
+</tbody></table></div>
+<h2 id="notes">备注 · 易错点 / 取舍 / 顺序</h2>
+<div class="card note-block">
+<div class="note"><div class="i">1</div><div><div class="t"><code>scanf("%d")</code> 遇到非数字会卡死</div><div class="d">它不消费非法字符，下一次读还是同一个字符。检查返回值，失败时清缓冲（<code>while ((c=getchar()) != '\n' &amp;&amp; c != EOF);</code>）。</div></div></div>
+<div class="note"><div class="i">2</div><div><div class="t"><code>gets</code> 已从标准里删除</div><div class="d">用 <code>fgets(buf, sizeof buf, stdin)</code>；它最多读 n-1 个字符并补 <code>\0</code>。</div></div></div>
+<div class="note"><div class="i">3</div><div><div class="t"><code>sizeof(数组)</code> 只在定义处有效</div><div class="d">传给函数后数组退化成指针，<code>sizeof</code> 变成指针大小（8）。长度要另外传。</div></div></div>
+<div class="note"><div class="i">4</div><div><div class="t">有符号与无符号混用会反直觉</div><div class="d"><code>-1 &gt; 0u</code> 为真。长度、下标统一用 <code>size_t</code>。</div></div></div>
+<div class="note"><div class="i">5</div><div><div class="t">宏必须整体加括号</div><div class="d"><code>#define SQ(x) ((x)*(x))</code>；<code>SQ(i++)</code> 会自增两次——有副作用就别用宏。</div></div></div>
+<div class="note"><div class="i">6</div><div><div class="t"><code>free</code> 之后立刻置 <code>NULL</code></div><div class="d">能挡住大部分双重释放与悬空使用。</div></div></div>
+<div class="note"><div class="i">7</div><div><div class="t">越界写不会报错</div><div class="d">它可能改坏相邻变量、破坏栈帧，然后在几十行之后崩。学习期开 ASan。</div></div></div>
+<div class="note"><div class="i">8</div><div><div class="t"><code>char</code> 是否有符号是实现定义</div><div class="d">要存字节用 <code>unsigned char</code>；<code>&lt;stdint.h&gt;</code> 里的 <code>int8_t</code> 明确是有符号。</div></div></div>
+<div class="note"><div class="i">9</div><div><div class="t">浮点不能用 <code>==</code></div><div class="d"><code>fabs(a-b) &lt; 1e-9</code> 才是正确写法；<code>0.1+0.2 != 0.3</code>。</div></div></div>
+<div class="note"><div class="i">10</div><div><div class="t"><code>-Wall -Wextra</code> 不够就加 sanitizer</div><div class="d"><code>gcc -g -O0 -Wall -Wextra -fsanitize=address,undefined</code> 是学习期最好的默认档。</div></div></div>
+<div class="note"><div class="i">11</div><div><div class="t">学 C 的推荐顺序</div><div class="d">①能编译能跑 ②指针与数组 ③内存 ④结构体 ⑤文件 ⑥宏与多文件工程。别跳到回调与位域。</div></div></div>
+<div class="note"><div class="i">12</div><div><div class="t">C 与 C++ 的分界</div><div class="d">C 没有类、没有异常、没有模板、没有 <code>std::string</code>；学完 C 的指针与内存，再看 C++ 的 RAII 会突然通。</div></div></div>
+</div>
+<h2 id="quick">反向查 · 我要做 X，去哪个域</h2>
+<div class="card"><table><thead><tr><th style="width:45%">我要……</th><th>去这里</th></tr></thead><tbody>
+<tr><td class="k">打印一张对齐的表</td><td>输入输出与文件（<code>printf</code> 的宽度/精度）+ 数组</td></tr>
+<tr><td class="k">读一个文件逐行处理</td><td>输入输出与文件（<code>fgets</code> + <code>sscanf</code>）</td></tr>
+<tr><td class="k">把一堆数排序</td><td>标准库与调试（<code>qsort</code>）+ 函数（比较器）</td></tr>
+<tr><td class="k">要一个运行期才知道长度的数组</td><td>内存管理（<code>malloc</code>/<code>realloc</code>）</td></tr>
+<tr><td class="k">把相关字段打包成一个类型</td><td>结构体与联合</td></tr>
+<tr><td class="k">让函数改变外面的变量</td><td>指针（传地址）</td></tr>
+<tr><td class="k">拆成多个源文件</td><td>编译与工具链 + 预处理器（头文件卫士）</td></tr>
+<tr><td class="k">程序莫名其妙崩了</td><td>标准库与调试（gdb/ASan）+ 内存管理</td></tr>
+<tr><td class="k">做位标志开关</td><td>运算符与表达式（位运算）+ 结构体（位域）</td></tr>
+<tr><td class="k">切分一行 CSV</td><td>数组与字符串（<code>strtok</code>/<code>sscanf</code>）+ 输入输出</td></tr>
+</tbody></table></div>
+</main></div>
+<footer>C 语言知识地图 · 共 112 个条目 · 由 <code>mapkit.py</code> 从同一份数据生成（Markdown 版内容一致）</footer>
+
+<script>
+(function () {
+  var box = document.getElementById('q');
+  var hint = document.getElementById('hint');
+  var cards = Array.prototype.slice.call(document.querySelectorAll('.card, .note-block'));
+  var total = document.querySelectorAll('table tbody tr').length;
+
+  function norm(s) { return (s || '').toLowerCase(); }
+
+  box.addEventListener('input', function () {
+    var q = norm(box.value.trim());
+    var hits = 0;
+    cards.forEach(function (card) {
+      var rows = Array.prototype.slice.call(card.querySelectorAll('tbody tr'));
+      if (!rows.length) { return; }
+      var shown = 0;
+      rows.forEach(function (tr) {
+        var ok = !q || norm(tr.textContent).indexOf(q) >= 0;
+        tr.classList.toggle('hidden', !ok);
+        if (ok) { shown++; }
+      });
+      card.classList.toggle('hidden', shown === 0);
+      hits += shown;
+    });
+    hint.textContent = q ? (hits + ' 条命中') : (total + ' 条');
+  });
+
+  // aktiven Navigationspunkt hervorheben
+  var links = Array.prototype.slice.call(document.querySelectorAll('nav a[href^="#"]'));
+  var targets = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });
+  var obs = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (!e.isIntersecting) { return; }
+      links.forEach(function (a) { a.classList.remove('on'); });
+      var i = targets.indexOf(e.target);
+      if (i >= 0) { links[i].classList.add('on'); }
+    });
+  }, { rootMargin: '-15% 0px -75% 0px' });
+  targets.forEach(function (t) { if (t) { obs.observe(t); } });
+})();
+</script>
+</body>
+</html>

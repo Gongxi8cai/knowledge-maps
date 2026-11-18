@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HTML 知识地图</title>
+<style>
+:root {
+  --bg:#0d1117; --panel:#161b22; --panel2:#1c2330; --line:#2a3446;
+  --fg:#e6edf3; --dim:#8b98a9; --accent:#c792ea; --code:#9cd0ff;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0; background:var(--bg); color:var(--fg);
+  font:15px/1.65 -apple-system,"Segoe UI","Microsoft YaHei",Roboto,sans-serif;
+}
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header {
+  padding:34px 40px 22px; border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg,#121926 0%,var(--bg) 100%);
+}
+h1 { margin:0 0 8px; font-size:27px; letter-spacing:.4px; }
+h1 .dot { color:var(--accent); }
+.tagline { color:var(--dim); font-size:14px; max-width:960px; }
+.chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+.chip {
+  font-size:12.5px; color:var(--dim); border:1px solid var(--line);
+  border-radius:999px; padding:4px 11px; background:var(--panel);
+}
+.chip b { color:var(--fg); font-weight:600; }
+.wrap { display:grid; grid-template-columns:236px 1fr; align-items:start; }
+nav {
+  position:sticky; top:0; max-height:100vh; overflow:auto;
+  padding:20px 12px 40px; border-right:1px solid var(--line);
+}
+nav .grp { font-size:11.5px; color:#6c7a8d; text-transform:uppercase;
+  letter-spacing:1px; margin:16px 8px 6px; }
+nav a { display:flex; justify-content:space-between; gap:8px; color:#c3ccd8;
+  font-size:13.5px; padding:5px 8px; border-radius:6px; }
+nav a:hover { background:var(--panel2); text-decoration:none; }
+nav a.on { background:var(--panel2); color:var(--accent); }
+nav .n { color:#5d6b7e; font-size:12px; }
+main { padding:26px 40px 80px; max-width:1180px; }
+.search { position:sticky; top:0; z-index:5; padding:12px 0 14px; background:var(--bg); }
+.search input {
+  width:100%; max-width:430px; padding:10px 13px; border-radius:8px;
+  border:1px solid var(--line); background:var(--panel); color:var(--fg);
+  font-size:14px; outline:none;
+}
+.search input:focus { border-color:var(--accent); }
+.search .hint { color:#6c7a8d; font-size:12.5px; margin-left:10px; }
+h2 {
+  font-size:19px; margin:38px 0 14px; padding-bottom:8px;
+  border-bottom:1px solid var(--line);
+}
+h2:first-of-type { margin-top:10px; }
+.card {
+  background:var(--panel); border:1px solid var(--line); border-radius:12px;
+  padding:18px 20px 10px; margin:16px 0;
+}
+.card h3 { margin:0 0 4px; font-size:16.5px; }
+.card h3 .de { color:#6c7a8d; font-weight:400; font-size:12.5px; margin-left:8px; }
+.card .goal { color:var(--dim); font-size:13.5px; margin:0 0 12px; }
+table { width:100%; border-collapse:collapse; font-size:13.5px; }
+th {
+  text-align:left; color:#7f8da0; font-weight:600; font-size:12px;
+  text-transform:uppercase; letter-spacing:.6px;
+  padding:6px 10px; border-bottom:1px solid var(--line); white-space:nowrap;
+}
+td { padding:8px 10px; border-bottom:1px solid #1e2634; vertical-align:top; }
+tr:last-child td { border-bottom:none; }
+td.k { font-weight:600; color:#dbe6f3; }
+td .api {
+  font-family:ui-monospace,Consolas,"Cascadia Mono",monospace; font-size:12.5px;
+  color:var(--code); background:#0f1621; border:1px solid #1f2a3a;
+  border-radius:5px; padding:1px 5px; display:inline-block; word-break:break-word;
+}
+td .tag {
+  display:inline-block; font-size:10.5px; line-height:1; padding:3px 6px; margin-right:6px;
+  border-radius:5px; border:1px solid var(--line); color:var(--dim); background:#141b26;
+  vertical-align:1px; white-space:nowrap;
+}
+td.ac { display:flex; flex-wrap:wrap; gap:5px; align-items:flex-start; }
+td.ac .tag { margin-right:0; margin-top:1px; }
+td.ac .api { flex:0 1 auto; max-width:100%; }
+.t-kw  { border-color:#3b5bdb; color:#9db4ff; background:#141d33; }
+.t-ann { border-color:#7048b6; color:#c9a6ff; background:#1d1630; }
+.t-api { border-color:#1f6f43; color:#7fe3b0; background:#0f2a1d; }
+.t-lib { border-color:#1f6f43; color:#7fe3b0; background:#0f2a1d; }
+.t-stl { border-color:#1f6f43; color:#7fe3b0; background:#0f2a1d; }
+.t-mod { border-color:#1f6f43; color:#7fe3b0; background:#0f2a1d; }
+.t-bi  { border-color:#2a6f7a; color:#8fe4ef; background:#0d2328; }
+.t-cli { border-color:#7a5220; color:#f0b866; background:#2a1f0f; }
+.t-cmd { border-color:#2a6f7a; color:#8fe4ef; background:#0d2328; }
+.t-opt { border-color:#7a5220; color:#f0b866; background:#2a1f0f; }
+.t-cfg { border-color:#7a2f3c; color:#ff8fa3; background:#2a121a; }
+.t-fn  { border-color:#7a5220; color:#f0b866; background:#2a1f0f; }
+.t-tag { border-color:#2a6f7a; color:#8fe4ef; background:#0d2328; }
+.t-attr { border-color:#7048b6; color:#c9a6ff; background:#1d1630; }
+.t-syn { border-color:#3a4657; color:#93a2b5; background:#161d27; }
+.legend { display:flex; flex-wrap:wrap; gap:14px; align-items:center; color:var(--dim);
+  font-size:12.5px; margin:6px 0 2px; }
+.legend .tag { margin-right:5px; }
+td.why { color:#aab6c4; }
+.lvl {
+  font-size:11.5px; border-radius:999px; padding:1px 8px; white-space:nowrap;
+  border:1px solid var(--line); color:var(--dim);
+}
+.lvl.g { border-color:#1f6f43; color:#5ddb9b; background:#0f2a1d; }
+.lvl.b { border-color:#24507f; color:#7bb8ff; background:#0f1e2e; }
+.lvl.o { border-color:#7a5220; color:#f0b866; background:#2a1f0f; }
+.lvl.r { border-color:#7a2f3c; color:#ff8fa3; background:#2a121a; }
+.x { color:var(--accent); font-size:12.5px; }
+.note { display:flex; gap:12px; padding:10px 0; border-bottom:1px solid #1e2634; }
+.note:last-child { border-bottom:none; }
+.note .i {
+  flex:0 0 26px; height:26px; border-radius:8px; background:var(--panel2);
+  color:var(--accent); font-size:12.5px; display:grid; place-items:center;
+}
+.note .t { font-weight:600; }
+.note .d { color:#aab6c4; font-size:13.5px; }
+.outline li { margin:3px 0; }
+.outline .dn { color:var(--fg); font-weight:600; }
+.outline .en { color:var(--dim); }
+code {
+  font-family:ui-monospace,Consolas,"Cascadia Mono",monospace; font-size:12.5px;
+  color:var(--code); background:#0f1621; border:1px solid #1f2a3a;
+  border-radius:5px; padding:1px 5px;
+}
+.hidden { display:none !important; }
+footer { color:#5d6b7e; font-size:12.5px; padding:30px 40px 60px; border-top:1px solid var(--line); }
+@media (max-width:900px) {
+  .wrap { grid-template-columns:1fr; }
+  nav { position:static; max-height:none; border-right:none; border-bottom:1px solid var(--line); }
+  main, header, footer { padding-left:20px; padding-right:20px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+<h1>HTML <span class="dot">·</span>知识地图</h1>
+<div class="tagline">按「你要干什么」找标签。HTML 只负责结构与含义：样式交给 CSS、行为交给 JS。最容易犯的错是「为了长相挑标签」——那会让屏幕阅读器和搜索引擎都看不懂你的页面。</div>
+<div class="chips">
+<span class="chip">功能域 <b>11</b></span>
+<span class="chip">功能条目 <b>95</b></span>
+<span class="chip">基础通用 <b>10</b></span>
+<span class="chip">交叉概念 <b>7</b></span>
+<span class="chip">备注 <b>12</b></span>
+<span class="chip">自学 · 网页结构</span>
+</div>
+<div class="legend"><span>第 2 列的小标签表示这一条的性质：</span>
+<span><span class="tag t-tag">标签</span>HTML 标签</span>
+<span><span class="tag t-attr">属性</span>HTML 属性</span>
+<span><span class="tag t-syn">写法</span>写法或思路，不是某个名字</span>
+</div></header>
+<div class="wrap"><nav>
+<div class="grp">地基</div>
+<a href="#base">基础通用 <span class="n">10</span></a>
+<a href="#outline">一页提纲 <span class="n">11</span></a>
+<div class="grp">功能域</div>
+<a href="#doc">文档结构 <span class="n">9</span></a>
+<a href="#text">文本与语义 <span class="n">10</span></a>
+<a href="#link">链接与图片 <span class="n">9</span></a>
+<a href="#table">表格 <span class="n">7</span></a>
+<a href="#form">表单 <span class="n">10</span></a>
+<a href="#layout">语义化布局 <span class="n">10</span></a>
+<a href="#media">多媒体 <span class="n">7</span></a>
+<a href="#attr">属性 <span class="n">9</span></a>
+<a href="#a11y">可访问性 <span class="n">9</span></a>
+<a href="#meta">元信息与 SEO <span class="n">7</span></a>
+<a href="#cssjs">与 CSS/JS 的接口 <span class="n">8</span></a>
+<div class="grp">跨层</div>
+<a href="#cross">交叉项总表 <span class="n">7</span></a>
+<a href="#notes">备注 <span class="n">12</span></a>
+<a href="#quick">反向查 <span class="n">10</span></a>
+</nav><main>
+<div class="search"><input id="q" type="search" placeholder="搜功能、API 或关键词……（例如 指针 / 索引 / 管道）" autocomplete="off"><span class="hint" id="hint">122 条</span></div>
+<h2 id="base">第 0 层 · 基础通用（所有域共用）</h2>
+<div class="card"><table><thead><tr><th style="width:16%">条目</th><th style="width:38%">说明</th><th>例子</th></tr></thead><tbody>
+<tr><td class="k">三层分工</td><td>HTML 结构 / CSS 样式 / JavaScript 行为</td><td><span class="api">别用 HTML 属性做样式（<code>&lt;font&gt;</code> 已废弃）</span></td></tr>
+<tr><td class="k">标签成对出现</td><td><code>&lt;p&gt;…&lt;/p&gt;</code>；空元素如 <code>&lt;img&gt;</code>、<code>&lt;br&gt;</code> 不需要闭合</td><td><span class="api">漏闭合浏览器会自己猜，结果常不是你想要的</span></td></tr>
+<tr><td class="k">属性写在开始标签里</td><td><code>&lt;a href="x.html" title="提示"&gt;</code></td><td><span class="api">值用双引号包起来</span></td></tr>
+<tr><td class="k">嵌套要正确</td><td><code>&lt;p&gt;&lt;em&gt;x&lt;/em&gt;&lt;/p&gt;</code></td><td><span class="api">交叉嵌套（<code>&lt;b&gt;&lt;i&gt;&lt;/b&gt;&lt;/i&gt;</code>）是错的</span></td></tr>
+<tr><td class="k">空白会折叠</td><td>连续空格/换行在浏览器里显示成一个空格</td><td><span class="api"><code>&lt;pre&gt;</code> 里的空白才原样保留</span></td></tr>
+<tr><td class="k">标签名不区分大小写</td><td><code>&lt;DIV&gt;</code> 等于 <code>&lt;div&gt;</code></td><td><span class="api">但统一小写是社区共识</span></td></tr>
+<tr><td class="k">一个页面一个 <code>h1</code></td><td>标题层级 <code>h1→h2→h3</code> 不要跳级</td><td><span class="api">跳级会让大纲乱</span></td></tr>
+<tr><td class="k">语义优先于外观</td><td>该用 <code>&lt;button&gt;</code> 就别用 <code>&lt;div onclick&gt;</code></td><td><span class="api">语义决定可访问性与 SEO</span></td></tr>
+<tr><td class="k">看真实结构用开发者工具</td><td><code>F12</code> → Elements 看的是浏览器整理后的 DOM</td><td><span class="api">和 <code>查看源代码</code> 不完全一样</span></td></tr>
+<tr><td class="k">校验器</td><td><code>validator.w3.org</code></td><td><span class="api">学语法阶段跑一遍能发现漏闭合</span></td></tr>
+</tbody></table></div>
+<h2 id="outline">一页提纲 · 先扫这个</h2>
+<div class="card outline"><ul style="margin:0;padding-left:18px">
+<li><span class="dn">文档结构</span>：<span class="en"><code>&lt;!DOCTYPE html&gt;</code></span> · <span class="en"><code>&lt;html lang="zh-CN"&gt;</code></span> · <span class="en"><code>&lt;head&gt;</code></span> · <span class="en"><code>&lt;body&gt;</code></span> · <span class="en"><code>&lt;meta charset="utf-8"&gt;</code></span> · <span class="en"><code>&lt;title&gt;</code></span> · <span class="en">注释</span> · <span class="en"><code>index.html</code></span> · <span class="en"><code>&lt;base href&gt;</code></span></li>
+<li><span class="dn">文本与语义</span>：<span class="en">标题</span> · <span class="en">段落</span> · <span class="en">强调</span> · <span class="en">换行与分隔</span> · <span class="en">无序/有序列表</span> · <span class="en">定义列表</span> · <span class="en">引用</span> · <span class="en">代码</span> · <span class="en">上下标与删除</span> · <span class="en"><code>&lt;span&gt;</code></span></li>
+<li><span class="dn">链接与图片</span>：<span class="en">链接</span> · <span class="en">相对路径</span> · <span class="en">新窗口</span> · <span class="en">页内锚点</span> · <span class="en">邮件与电话</span> · <span class="en">图片</span> · <span class="en">图片格式</span> · <span class="en">图注</span> · <span class="en">懒加载</span></li>
+<li><span class="dn">表格</span>：<span class="en">基本结构</span> · <span class="en">分区</span> · <span class="en">标题</span> · <span class="en">合并单元格</span> · <span class="en">列宽与对齐</span> · <span class="en"><code>scope</code> 属性</span> · <span class="en">为什么不用表格排版</span></li>
+<li><span class="dn">表单</span>：<span class="en"><code>&lt;form&gt;</code></span> · <span class="en"><code>&lt;input&gt;</code> 的类型</span> · <span class="en"><code>&lt;label&gt;</code></span> · <span class="en"><code>name</code> 与 <code>value</code></span> · <span class="en">下拉框</span> · <span class="en">多行文本</span> · <span class="en">按钮</span> · <span class="en">校验属性</span> · <span class="en"><code>GET</code> vs <code>POST</code></span> · <span class="en">文件上传</span></li>
+<li><span class="dn">语义化布局</span>：<span class="en"><code>&lt;header&gt;</code></span> · <span class="en"><code>&lt;nav&gt;</code></span> · <span class="en"><code>&lt;main&gt;</code></span> · <span class="en"><code>&lt;section&gt;</code></span> · <span class="en"><code>&lt;article&gt;</code></span> · <span class="en"><code>&lt;aside&gt;</code></span> · <span class="en"><code>&lt;footer&gt;</code></span> · <span class="en"><code>&lt;div&gt;</code> 与 <code>&lt;span&gt;</code></span> · <span class="en">文档大纲</span> · <span class="en">不要 <code>div</code> 汤</span></li>
+<li><span class="dn">多媒体</span>：<span class="en"><code>&lt;video&gt;</code></span> · <span class="en"><code>&lt;audio&gt;</code></span> · <span class="en">多格式回退</span> · <span class="en">字幕</span> · <span class="en"><code>&lt;iframe&gt;</code></span> · <span class="en">iframe 的代价</span> · <span class="en"><code>poster</code> 与 <code>preload</code></span></li>
+<li><span class="dn">属性</span>：<span class="en"><code>id</code></span> · <span class="en"><code>class</code></span> · <span class="en"><code>style</code></span> · <span class="en"><code>title</code></span> · <span class="en"><code>data-*</code></span> · <span class="en">布尔属性</span> · <span class="en"><code>lang</code></span> · <span class="en"><code>tabindex</code></span> · <span class="en"><code>aria-*</code></span></li>
+<li><span class="dn">可访问性</span>：<span class="en"><code>alt</code> 替代文本</span> · <span class="en"><code>label</code> 关联</span> · <span class="en">键盘可达</span> · <span class="en">用真正的按钮</span> · <span class="en">焦点可见</span> · <span class="en">对比度</span> · <span class="en">标题层级</span> · <span class="en"><code>aria-*</code> 基础</span> · <span class="en">语言标注</span></li>
+<li><span class="dn">元信息与 SEO</span>：<span class="en"><code>viewport</code></span> · <span class="en"><code>description</code></span> · <span class="en">Open Graph</span> · <span class="en"><code>canonical</code></span> · <span class="en">favicon</span> · <span class="en"><code>robots</code></span> · <span class="en"><code>lang</code> 与字符集</span></li>
+<li><span class="dn">与 CSS/JS 的接口</span>：<span class="en">引入样式</span> · <span class="en">引入脚本</span> · <span class="en"><code>defer</code> vs <code>async</code></span> · <span class="en">选择器从哪来</span> · <span class="en">DOM 查询</span> · <span class="en">事件</span> · <span class="en">改了 DOM 才看得见</span> · <span class="en">表单与校验</span></li>
+</ul></div>
+<div class="card" id="doc"><h3>文档结构<span class="de">Dokument</span></h3>
+<p class="goal">每个页面都从同一个骨架开始：声明、语言、编码、标题。</p>
+<table><thead><tr><th style="width:15%">功能</th><th style="width:27%">关键字 / API</th><th style="width:33%">用来做什么</th><th style="width:10%">阶段</th><th style="width:15%">交叉</th></tr></thead><tbody>
+<tr><td class="k"><code>&lt;!DOCTYPE html&gt;</code></td><td class="ac"><span class="tag t-tag">标签</span><span class="api">第一行，声明 HTML5</span></td><td>少了它浏览器会进怪异模式</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>&lt;html lang="zh-CN"&gt;</code></td><td class="ac"><span class="tag t-tag">标签</span><span class="api">根元素，<code>lang</code> 说明语言</span></td><td>影响断词、朗读、翻译提示</td><td><span class="lvl g">入门</span></td><td class="x">元信息</td></tr>
+<tr><td class="k"><code>&lt;head&gt;</code></td><td class="ac"><span class="tag t-tag">标签</span><span class="api">放元信息，不显示在页面上</span></td><td><code>meta</code>/<code>title</code>/<code>link</code>/<code>script</code> 都在这儿</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>&lt;body&gt;</code></td><td class="ac"><span class="tag t-tag">标签</span><span class="api">放可见内容</span></td><td>整页内容都在里面</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>&lt;meta charset="utf-8"&gt;</code></td><td class="ac"><span class="tag t-tag">标签</span><span class="api">必须在 <code>head</code> 前 1024 字节内</span></td><td>少了它中文就会乱码</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>&lt;title&gt;</code></td><td class="ac"><span class="tag t-tag">标签</span><span class="api">浏览器标签页与搜索结果标题</span></td><td>每页不同，别都叫「首页」</td><td><span class="lvl g">入门</span></td><td class="x">元信息</td></tr>
+<tr><td class="k">注释</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>&lt;!-- 说明 --&gt;</code></span></td><td>不会显示；别在注释里写密码</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>index.html</code></td><td class="ac"><span class="tag t-syn">写法</span><span class="api">目录的默认首页文件名</span></td><td>本地打开文件夹时浏览器认它</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>&lt;base href&gt;</code></td><td class="ac"><span class="tag t-tag">标签</span><span class="api">统一改相对路径的基准</span></td><td>用的人少，容易踩坑</td><td><span class="lvl r">进阶+</span></td><td class="x">链接与图片</td></tr>
+</tbody></table></div>
+<div class="card" id="text"><h3>文本与语义<span class="de">Text</span></h3>
+<p class="goal">标题、段落、强调、列表——这些标签自带「这段文字是什么」的含义。</p>
+<table><thead><tr><th style="width:15%">功能</th><th style="width:27%">关键字 / API</th><th style="width:33%">用来做什么</th><th style="width:10%">阶段</th><th style="width:15%">交叉</th></tr></thead><tbody>
+<tr><td class="k">标题</td><td class="ac"><span class="tag t-tag">标签</span><span class="api"><code>&lt;h1&gt;</code> … <code>&lt;h6&gt;</code></span></td><td>层级表达结构，不是字号</td><td><span class="lvl g">入门</span></td><td class="x">可访问性</td></tr>
+<tr><td class="k">段落</td><td class="ac"><span class="tag t-tag">标签</span><span class="api"><code>&lt;p&gt;</code></span></td><td>一块文字；块级元素，会自动换行</td><td><span class="lvl g">入门</span></td><td class="x">布局</td></tr>
+<tr><td class="k">强调</td><td class="ac"><span class="tag t-tag">标签</span><span class="api"><code>&lt;strong&gt;</code>（重要）、<code>&lt;em&gt;</code>（语气）</span></td><td><code>&lt;b&gt;</code>/<code>&lt;i&gt;</code> 只是样式，无语义</td><td><span class="lvl g">入门</span></td><td class="x">可访问性</td></tr>
+<tr><td class="k">换行与分隔</td><td class="ac"><span class="tag t-tag">标签</span><span class="api"><code>&lt;br&gt;</code> 换行、<code>&lt;hr&gt;</code> 分隔线</span></td><td><code>&lt;br&gt;</code> 不该用来排版段落间距</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k">无序/有序列表</td><td class="ac"><span class="tag t-tag">标签</span><span class="api"><code>&lt;ul&gt;&lt;li&gt;…&lt;/li&gt;&lt;/ul&gt;</code>、<code>&lt;ol&gt;&lt;li&gt;…&lt;/li&gt;&lt;/ol&gt;</code></span></td><td>导航菜单通常用 <code>ul</code> + <code>a</code></td><td><span class="lvl g">入门</span></td><td class="x">布局</td></tr>
+<tr><td class="k">定义列表</td><td class="ac"><span class="tag t-tag">标签</span><span class="api"><code>&lt;dl&gt;&lt;dt&gt;术语&lt;/dt&gt;&lt;dd&gt;解释&lt;/dd&gt;&lt;/dl&gt;</code></span></td><td>术语表、FAQ</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k">引用</td><td class="ac"><span class="tag t-tag">标签</span><span class="api"><code>&lt;blockquote&gt;</code> 块引用、<code>&lt;q&gt;</code> 行内引用</span></td><td>配 <code>cite</code> 属性说明来源</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k">代码</td><td class="ac"><span class="tag t-tag">标签</span><span class="api"><code>&lt;code&gt;</code> 行内、<code>&lt;pre&gt;&lt;code&gt;</code> 代码块</span></td><td><code>pre</code> 保留空白与换行</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k">上下标与删除</td><td class="ac"><span class="tag t-tag">标签</span><span class="api"><code>&lt;sub&gt;</code> <code>&lt;sup&gt;</code> <code>&lt;del&gt;</code> <code>&lt;ins&gt;</code></span></td><td>化学式、数学式、修订痕迹</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>&lt;span&gt;</code></td><td class="ac"><span class="tag t-tag">标签</span><span class="api">行内容器，本身无语义</span></td><td>要样式钩子时才用</td><td><span class="lvl g">入门</span></td><td class="x">布局</td></tr>
+</tbody></table></div>
+<div class="card" id="link"><h3>链接与图片<span class="de">Links und Bilder</span></h3>
+<p class="goal">页面之间靠 <code>&lt;a&gt;</code> 连起来，图片靠 <code>&lt;img&gt;</code> 嵌进来——两者的路径规则一样。</p>
+<table><thead><tr><th style="width:15%">功能</th><th style="width:27%">关键字 / API</th><th style="width:33%">用来做什么</th><th style="width:10%">阶段</th><th style="width:15%">交叉</th></tr></thead><tbody>
+<tr><td class="k">链接</td><td class="ac"><span class="tag t-tag">标签</span><span class="api"><code>&lt;a href="page.html"&gt;文字&lt;/a&gt;</code></span></td><td>链接文字要说明去哪（别写「点这里」）</td><td><span class="lvl g">入门</span></td><td class="x">可访问性</td></tr>
+<tr><td class="k">相对路径</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>./a.html</code>、<code>../img/x.png</code>、<code>/根目录</code></span></td><td>相对的是「当前文件所在目录」</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k">新窗口</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>target="_blank" rel="noopener noreferrer"</code></span></td><td>加 <code>rel</code> 防安全与性能问题</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k">页内锚点</td><td class="ac"><span class="tag t-tag">标签</span><span class="api"><code>&lt;h2 id="kapitel2"&gt;</code> + <code>&lt;a href="#kapitel2"&gt;</code></span></td><td>长文档的目录就靠它</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k">邮件与电话</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>mailto:a@b.de</code>、<code>tel:+4989...</code></span></td><td>手机上点了会调起相应 App</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k">图片</td><td class="ac"><span class="tag t-tag">标签</span><span class="api"><code>&lt;img src="a.png" alt="描述" width="300"&gt;</code></span></td><td><code>alt</code> 是必填的替代文本</td><td><span class="lvl g">入门</span></td><td class="x">可访问性</td></tr>
+<tr><td class="k">图片格式</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>jpg</code> 照片、<code>png</code> 透明/图标、<code>svg</code> 矢量、<code>webp</code> 现代格式</span></td><td>矢量图别用 png 导出</td><td><span class="lvl b">常用</span></td><td class="x">多媒体</td></tr>
+<tr><td class="k">图注</td><td class="ac"><span class="tag t-tag">标签</span><span class="api"><code>&lt;figure&gt;&lt;img …&gt;&lt;figcaption&gt;说明&lt;/figcaption&gt;&lt;/figure&gt;</code></span></td><td>比在图片下面写个 <code>p</code> 语义清楚</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k">懒加载</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>loading="lazy"</code></span></td><td>长页面的图片延后加载</td><td><span class="lvl o">进阶</span></td><td class="x">多媒体</td></tr>
+</tbody></table></div>
+<div class="card" id="table"><h3>表格<span class="de">Tabellen</span></h3>
+<p class="goal">只用来放「行 × 列」的数据，不要用来排版页面。</p>
+<table><thead><tr><th style="width:15%">功能</th><th style="width:27%">关键字 / API</th><th style="width:33%">用来做什么</th><th style="width:10%">阶段</th><th style="width:15%">交叉</th></tr></thead><tbody>
+<tr><td class="k">基本结构</td><td class="ac"><span class="tag t-tag">标签</span><span class="api"><code>&lt;table&gt;&lt;tr&gt;&lt;th&gt;列&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;值&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</code></span></td><td><code>th</code> 表头、<code>td</code> 数据</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k">分区</td><td class="ac"><span class="tag t-tag">标签</span><span class="api"><code>&lt;thead&gt;</code> <code>&lt;tbody&gt;</code> <code>&lt;tfoot&gt;</code></span></td><td>便于样式与脚本分段处理</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k">标题</td><td class="ac"><span class="tag t-tag">标签</span><span class="api"><code>&lt;caption&gt;表 1：书目&lt;/caption&gt;</code></span></td><td>屏幕阅读器会读它</td><td><span class="lvl b">常用</span></td><td class="x">可访问性</td></tr>
+<tr><td class="k">合并单元格</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>colspan="2"</code>、<code>rowspan="3"</code></span></td><td>合并后该行少写一个 <code>td</code></td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k">列宽与对齐</td><td class="ac"><span class="tag t-syn">写法</span><span class="api">交给 CSS（<code>table-layout</code>、<code>text-align</code>）</span></td><td>别用 <code>width</code> 属性堆</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>scope</code> 属性</td><td class="ac"><span class="tag t-attr">属性</span><span class="api"><code>&lt;th scope="col"&gt;</code></span></td><td>说明表头管哪一方向</td><td><span class="lvl o">进阶</span></td><td class="x">可访问性</td></tr>
+<tr><td class="k">为什么不用表格排版</td><td class="ac"><span class="tag t-syn">写法</span><span class="api">布局该用 CSS Grid/Flex</span></td><td>表格布局在窄屏上必然崩</td><td><span class="lvl g">入门</span></td><td class="x">布局</td></tr>
+</tbody></table></div>
+<div class="card" id="form"><h3>表单<span class="de">Formulare</span></h3>
+<p class="goal">让用户输入：每个控件都要有 <code>name</code>（提交时的键）和 <code>label</code>（说明）。</p>
+<table><thead><tr><th style="width:15%">功能</th><th style="width:27%">关键字 / API</th><th style="width:33%">用来做什么</th><th style="width:10%">阶段</th><th style="width:15%">交叉</th></tr></thead><tbody>
+<tr><td class="k"><code>&lt;form&gt;</code></td><td class="ac"><span class="tag t-tag">标签</span><span class="api"><code>&lt;form action="/submit" method="post"&gt;</code></span></td><td><code>method</code> 默认 GET，密码必须 POST</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>&lt;input&gt;</code> 的类型</td><td class="ac"><span class="tag t-tag">标签</span><span class="api"><code>text</code> <code>password</code> <code>email</code> <code>number</code> <code>date</code> <code>checkbox</code> <code>radio</code> <code>file</code> <code>range</code> <code>color</code></span></td><td>选对类型就有自带校验与合适键盘</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>&lt;label&gt;</code></td><td class="ac"><span class="tag t-tag">标签</span><span class="api"><code>&lt;label for="mail"&gt;邮箱&lt;/label&gt;&lt;input id="mail"&gt;</code></span></td><td>点标签能聚焦输入框；<code>for</code> 要等于 <code>id</code></td><td><span class="lvl b">常用</span></td><td class="x">可访问性</td></tr>
+<tr><td class="k"><code>name</code> 与 <code>value</code></td><td class="ac"><span class="tag t-attr">属性</span><span class="api"><code>&lt;input name="email" value="a@b.de"&gt;</code></span></td><td>没有 <code>name</code> 的控件不会提交</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k">下拉框</td><td class="ac"><span class="tag t-tag">标签</span><span class="api"><code>&lt;select name="land"&gt;&lt;option value="de"&gt;德国&lt;/option&gt;&lt;/select&gt;</code></span></td><td><code>multiple</code> 多选、<code>size</code> 显示几行</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k">多行文本</td><td class="ac"><span class="tag t-tag">标签</span><span class="api"><code>&lt;textarea name="msg" rows="5"&gt;&lt;/textarea&gt;</code></span></td><td>内容写在标签之间，不是 <code>value</code></td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k">按钮</td><td class="ac"><span class="tag t-tag">标签</span><span class="api"><code>&lt;button type="submit"&gt;发送&lt;/button&gt;</code></span></td><td><code>type</code> 默认 <code>submit</code>，别在表单里乱放</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k">校验属性</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>required</code>、<code>pattern="[0-9]{5}"</code>、<code>min</code>/<code>max</code>、<code>maxlength</code></span></td><td>浏览器先挡一层，服务端仍必须再验</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>GET</code> vs <code>POST</code></td><td class="ac"><span class="tag t-syn">写法</span><span class="api">GET 参数在 URL、可被收藏；POST 在请求体</span></td><td>查询用 GET，改数据用 POST</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k">文件上传</td><td class="ac"><span class="tag t-tag">标签</span><span class="api"><code>&lt;input type="file" accept=".pdf"&gt;</code> + <code>enctype="multipart/form-data"</code></span></td><td>忘了 <code>enctype</code> 文件传不上去</td><td><span class="lvl o">进阶</span></td><td class="x">—</td></tr>
+</tbody></table></div>
+<div class="card" id="layout"><h3>语义化布局<span class="de">Layout</span></h3>
+<p class="goal">用有含义的容器描述页面区域，而不是一堆 <code>div</code>。</p>
+<table><thead><tr><th style="width:15%">功能</th><th style="width:27%">关键字 / API</th><th style="width:33%">用来做什么</th><th style="width:10%">阶段</th><th style="width:15%">交叉</th></tr></thead><tbody>
+<tr><td class="k"><code>&lt;header&gt;</code></td><td class="ac"><span class="tag t-tag">标签</span><span class="api">页头或区块头</span></td><td>可以出现多次（每个 section 一个）</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>&lt;nav&gt;</code></td><td class="ac"><span class="tag t-tag">标签</span><span class="api">主要导航链接组</span></td><td>辅助链接不必用 nav</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>&lt;main&gt;</code></td><td class="ac"><span class="tag t-tag">标签</span><span class="api">页面唯一主体内容</span></td><td>一页只应有一个</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>&lt;section&gt;</code></td><td class="ac"><span class="tag t-tag">标签</span><span class="api">有主题的一组内容，通常带标题</span></td><td>没标题就别用 section</td><td><span class="lvl b">常用</span></td><td class="x">文本与语义</td></tr>
+<tr><td class="k"><code>&lt;article&gt;</code></td><td class="ac"><span class="tag t-tag">标签</span><span class="api">可独立成篇的内容（帖子、卡片）</span></td><td>判断标准：单独拿出去还讲得通吗</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>&lt;aside&gt;</code></td><td class="ac"><span class="tag t-tag">标签</span><span class="api">旁支内容（侧栏、相关链接）</span></td><td>不是主体的一部分</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>&lt;footer&gt;</code></td><td class="ac"><span class="tag t-tag">标签</span><span class="api">页脚、版权、联系方式</span></td><td>同样可多次出现</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>&lt;div&gt;</code> 与 <code>&lt;span&gt;</code></td><td class="ac"><span class="tag t-tag">标签</span><span class="api">无语义的块级/行内容器</span></td><td>只在没有更合适的标签时用</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k">文档大纲</td><td class="ac"><span class="tag t-syn">写法</span><span class="api">标题层级决定结构，语义标签只是标注区域</span></td><td><code>h1</code>–<code>h6</code> 别跳级</td><td><span class="lvl b">常用</span></td><td class="x">文本与语义</td></tr>
+<tr><td class="k">不要 <code>div</code> 汤</td><td class="ac"><span class="tag t-tag">标签</span><span class="api"><code>&lt;div class="header"&gt;&lt;div class="nav"&gt;</code> 是反例</span></td><td>换成语义标签，CSS 一样能选中</td><td><span class="lvl b">常用</span></td><td class="x">可访问性</td></tr>
+</tbody></table></div>
+<div class="card" id="media"><h3>多媒体<span class="de">Medien</span></h3>
+<p class="goal">音频、视频、嵌入页面——注意格式与加载成本。</p>
+<table><thead><tr><th style="width:15%">功能</th><th style="width:27%">关键字 / API</th><th style="width:33%">用来做什么</th><th style="width:10%">阶段</th><th style="width:15%">交叉</th></tr></thead><tbody>
+<tr><td class="k"><code>&lt;video&gt;</code></td><td class="ac"><span class="tag t-tag">标签</span><span class="api"><code>&lt;video src="a.mp4" controls width="640"&gt;&lt;/video&gt;</code></span></td><td><code>controls</code> 才有播放条</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>&lt;audio&gt;</code></td><td class="ac"><span class="tag t-tag">标签</span><span class="api"><code>&lt;audio src="a.mp3" controls&gt;&lt;/audio&gt;</code></span></td><td>同样需要 <code>controls</code></td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k">多格式回退</td><td class="ac"><span class="tag t-tag">标签</span><span class="api"><code>&lt;video&gt;&lt;source src="a.webm" type="video/webm"&gt;&lt;source src="a.mp4"&gt;&lt;/video&gt;</code></span></td><td>浏览器挑第一个能播的</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k">字幕</td><td class="ac"><span class="tag t-tag">标签</span><span class="api"><code>&lt;track kind="subtitles" src="a.vtt" srclang="de"&gt;</code></span></td><td>WebVTT 格式</td><td><span class="lvl o">进阶</span></td><td class="x">可访问性</td></tr>
+<tr><td class="k"><code>&lt;iframe&gt;</code></td><td class="ac"><span class="tag t-tag">标签</span><span class="api"><code>&lt;iframe src="https://…" title="说明"&gt;&lt;/iframe&gt;</code></span></td><td>嵌外部页面；<code>title</code> 必填</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k">iframe 的代价</td><td class="ac"><span class="tag t-tag">标签</span><span class="api">独立文档、样式不继承、可能被 <code>X-Frame-Options</code> 拒</span></td><td>能嵌代码就别嵌整页</td><td><span class="lvl o">进阶</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>poster</code> 与 <code>preload</code></td><td class="ac"><span class="tag t-attr">属性</span><span class="api"><code>poster="封面.jpg"</code>、<code>preload="metadata"</code></span></td><td>首帧不空白、少下载</td><td><span class="lvl o">进阶</span></td><td class="x">—</td></tr>
+</tbody></table></div>
+<div class="card" id="attr"><h3>属性<span class="de">Attribute</span></h3>
+<p class="goal">全局属性是所有标签都能用的开关；<code>data-*</code> 是自己造的。</p>
+<table><thead><tr><th style="width:15%">功能</th><th style="width:27%">关键字 / API</th><th style="width:33%">用来做什么</th><th style="width:10%">阶段</th><th style="width:15%">交叉</th></tr></thead><tbody>
+<tr><td class="k"><code>id</code></td><td class="ac"><span class="tag t-attr">属性</span><span class="api">页面内唯一</span></td><td>锚点、<code>label for</code>、JS 都用它</td><td><span class="lvl g">入门</span></td><td class="x">脚本接口</td></tr>
+<tr><td class="k"><code>class</code></td><td class="ac"><span class="tag t-attr">属性</span><span class="api">可重复、可多个（空格分隔）</span></td><td>样式钩子的主力</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>style</code></td><td class="ac"><span class="tag t-tag">标签</span><span class="api">行内样式</span></td><td>调试用，正式样式放 CSS</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>title</code></td><td class="ac"><span class="tag t-tag">标签</span><span class="api">鼠标悬停提示</span></td><td>触屏没有悬停，别放关键信息</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>data-*</code></td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>data-id="42"</code></span></td><td>给自己的 JS/CSS 存数据，合法且不污染语义</td><td><span class="lvl b">常用</span></td><td class="x">脚本接口</td></tr>
+<tr><td class="k">布尔属性</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>hidden</code>、<code>disabled</code>、<code>required</code>、<code>checked</code></span></td><td>写名字就为真，<code>hidden="false"</code> 仍是真</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>lang</code></td><td class="ac"><span class="tag t-attr">属性</span><span class="api">局部语言切换：<code>&lt;span lang="de"&gt;</code></span></td><td>多语言页面要标</td><td><span class="lvl o">进阶</span></td><td class="x">可访问性</td></tr>
+<tr><td class="k"><code>tabindex</code></td><td class="ac"><span class="tag t-attr">属性</span><span class="api"><code>0</code> 可聚焦、<code>-1</code> 只能脚本聚焦</span></td><td>别用正数打乱 Tab 顺序</td><td><span class="lvl o">进阶</span></td><td class="x">可访问性</td></tr>
+<tr><td class="k"><code>aria-*</code></td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>aria-label</code>、<code>aria-hidden</code>、<code>aria-expanded</code></span></td><td>语义标签不够时的补充，不是替代</td><td><span class="lvl o">进阶</span></td><td class="x">可访问性</td></tr>
+</tbody></table></div>
+<div class="card" id="a11y"><h3>可访问性<span class="de">Barrierefreiheit</span></h3>
+<p class="goal">让屏幕阅读器、键盘用户、色弱用户都能用——这也是 SEO 的基础。</p>
+<table><thead><tr><th style="width:15%">功能</th><th style="width:27%">关键字 / API</th><th style="width:33%">用来做什么</th><th style="width:10%">阶段</th><th style="width:15%">交叉</th></tr></thead><tbody>
+<tr><td class="k"><code>alt</code> 替代文本</td><td class="ac"><span class="tag t-attr">属性</span><span class="api"><code>&lt;img alt="书封面：Der Hobbit"&gt;</code></span></td><td>纯装饰图用 <code>alt=""</code>（不是省略）</td><td><span class="lvl g">入门</span></td><td class="x">链接与图片</td></tr>
+<tr><td class="k"><code>label</code> 关联</td><td class="ac"><span class="tag t-tag">标签</span><span class="api"><code>&lt;label for="x"&gt;</code> + <code>id="x"</code></span></td><td>占位符 <code>placeholder</code> 不能替代 label</td><td><span class="lvl b">常用</span></td><td class="x">表单</td></tr>
+<tr><td class="k">键盘可达</td><td class="ac"><span class="tag t-syn">写法</span><span class="api">所有交互都能用 Tab + Enter 完成</span></td><td><code>div</code> 加 <code>onclick</code> 默认不可聚焦</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k">用真正的按钮</td><td class="ac"><span class="tag t-tag">标签</span><span class="api"><code>&lt;button&gt;</code> 而不是 <code>&lt;div role="button"&gt;</code></span></td><td>原生元素自带键盘与语义</td><td><span class="lvl b">常用</span></td><td class="x">布局</td></tr>
+<tr><td class="k">焦点可见</td><td class="ac"><span class="tag t-syn">写法</span><span class="api">别 <code>outline: none</code> 了事</span></td><td>要自定义就换成更明显的样式</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k">对比度</td><td class="ac"><span class="tag t-syn">写法</span><span class="api">正文至少 4.5:1</span></td><td>浅灰字最常见的不合格项</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k">标题层级</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>h1→h2→h3</code> 不跳级</span></td><td>屏幕阅读器按层级导航</td><td><span class="lvl g">入门</span></td><td class="x">文本与语义</td></tr>
+<tr><td class="k"><code>aria-*</code> 基础</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>aria-label</code>（无可视文字时）、<code>aria-hidden="true"</code>（装饰）</span></td><td>原生语义优先，ARIA 是补丁</td><td><span class="lvl o">进阶</span></td><td class="x">属性</td></tr>
+<tr><td class="k">语言标注</td><td class="ac"><span class="tag t-tag">标签</span><span class="api"><code>&lt;html lang&gt;</code> 与局部 <code>lang</code></span></td><td>朗读发音依赖它</td><td><span class="lvl o">进阶</span></td><td class="x">文档结构</td></tr>
+</tbody></table></div>
+<div class="card" id="meta"><h3>元信息与 SEO<span class="de">Meta</span></h3>
+<p class="goal"><code>&lt;head&gt;</code> 里的东西决定分享卡片、手机缩放、搜索引擎摘要。</p>
+<table><thead><tr><th style="width:15%">功能</th><th style="width:27%">关键字 / API</th><th style="width:33%">用来做什么</th><th style="width:10%">阶段</th><th style="width:15%">交叉</th></tr></thead><tbody>
+<tr><td class="k"><code>viewport</code></td><td class="ac"><span class="tag t-tag">标签</span><span class="api"><code>&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;</code></span></td><td>不加手机端会缩成一小块</td><td><span class="lvl g">入门</span></td><td class="x">文档结构</td></tr>
+<tr><td class="k"><code>description</code></td><td class="ac"><span class="tag t-tag">标签</span><span class="api"><code>&lt;meta name="description" content="一句话摘要"&gt;</code></span></td><td>搜索结果里的摘要</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k">Open Graph</td><td class="ac"><span class="tag t-attr">属性</span><span class="api"><code>&lt;meta property="og:title" content="…"&gt;</code>、<code>og:image</code>、<code>og:description</code></span></td><td>微信/Twitter 分享卡片的来源</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>canonical</code></td><td class="ac"><span class="tag t-tag">标签</span><span class="api"><code>&lt;link rel="canonical" href="https://…"&gt;</code></span></td><td>多 URL 指向同一内容时告诉搜索引擎哪个是正本</td><td><span class="lvl o">进阶</span></td><td class="x">—</td></tr>
+<tr><td class="k">favicon</td><td class="ac"><span class="tag t-tag">标签</span><span class="api"><code>&lt;link rel="icon" href="favicon.ico"&gt;</code></span></td><td>标签页小图标</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>robots</code></td><td class="ac"><span class="tag t-tag">标签</span><span class="api"><code>&lt;meta name="robots" content="noindex"&gt;</code></span></td><td>测试页别被收录</td><td><span class="lvl o">进阶</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>lang</code> 与字符集</td><td class="ac"><span class="tag t-attr">属性</span><span class="api"><code>&lt;html lang&gt;</code> + <code>&lt;meta charset&gt;</code></span></td><td>双重影响索引与朗读</td><td><span class="lvl g">入门</span></td><td class="x">文档结构</td></tr>
+</tbody></table></div>
+<div class="card" id="cssjs"><h3>与 CSS/JS 的接口<span class="de">CSS und JS</span></h3>
+<p class="goal">HTML 提供结构，CSS 与 JS 通过选择器和 DOM 挂上来。</p>
+<table><thead><tr><th style="width:15%">功能</th><th style="width:27%">关键字 / API</th><th style="width:33%">用来做什么</th><th style="width:10%">阶段</th><th style="width:15%">交叉</th></tr></thead><tbody>
+<tr><td class="k">引入样式</td><td class="ac"><span class="tag t-tag">标签</span><span class="api"><code>&lt;link rel="stylesheet" href="style.css"&gt;</code></span></td><td>放 <code>head</code> 里；内联 <code>&lt;style&gt;</code> 只用于关键样式</td><td><span class="lvl g">入门</span></td><td class="x">—</td></tr>
+<tr><td class="k">引入脚本</td><td class="ac"><span class="tag t-tag">标签</span><span class="api"><code>&lt;script src="app.js" defer&gt;&lt;/script&gt;</code></span></td><td><code>defer</code> 等解析完再按顺序执行</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k"><code>defer</code> vs <code>async</code></td><td class="ac"><span class="tag t-attr">属性</span><span class="api"><code>defer</code> 保序、<code>async</code> 谁先下载完谁先跑</span></td><td>操作 DOM 的脚本用 <code>defer</code></td><td><span class="lvl o">进阶</span></td><td class="x">—</td></tr>
+<tr><td class="k">选择器从哪来</td><td class="ac"><span class="tag t-attr">属性</span><span class="api"><code>id</code> → <code>#x</code>、<code>class</code> → <code>.x</code>、标签 → <code>p</code>、属性 → <code>[data-id]</code></span></td><td>CSS 与 JS 都靠这些钩子</td><td><span class="lvl b">常用</span></td><td class="x">属性</td></tr>
+<tr><td class="k">DOM 查询</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>document.querySelector("#x")</code>、<code>querySelectorAll</code></span></td><td>现代写法，比 <code>getElementById</code> 通用</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k">事件</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>btn.addEventListener("click", fn)</code></span></td><td>别用 <code>onclick="..."</code> 行内写法</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k">改了 DOM 才看得见</td><td class="ac"><span class="tag t-syn">写法</span><span class="api"><code>el.textContent = "新"</code>、<code>el.classList.add("on")</code></span></td><td>改 <code>class</code> 比改 <code>style</code> 好维护</td><td><span class="lvl b">常用</span></td><td class="x">—</td></tr>
+<tr><td class="k">表单与校验</td><td class="ac"><span class="tag t-attr">属性</span><span class="api"><code>form.checkValidity()</code>、<code>submit</code> 事件里 <code>preventDefault()</code></span></td><td>前端校验只为体验，服务端必须再验</td><td><span class="lvl o">进阶</span></td><td class="x">表单</td></tr>
+</tbody></table></div>
+<h2 id="cross">交叉项总表 · 同一概念出现在多个域</h2>
+<div class="card"><table><thead><tr><th style="width:18%">概念</th><th style="width:42%">出现在</th><th>为什么重复出现</th></tr></thead><tbody>
+<tr><td class="k"><code>alt</code> 替代文本</td><td>链接与图片「图片」 · 可访问性「<code>alt</code> 替代文本」 · 多媒体「字幕」</td><td class="why">图片、图表、视频都要有文字替代；这是「看不见的人也能用」的第一道门</td></tr>
+<tr><td class="k">语义标签</td><td>文本与语义「强调」 · 语义化布局「<code>&lt;main&gt;</code>」 · 可访问性「用真正的按钮」</td><td class="why">语义不是风格问题：它决定屏幕阅读器怎么念、搜索引擎怎么理解、键盘能不能用</td></tr>
+<tr><td class="k">表单控件与标签</td><td>表单「<code>&lt;label&gt;</code>」 · 可访问性「<code>label</code> 关联」 · 与 CSS/JS 的接口「表单与校验」</td><td class="why">一个 <code>input</code> 要同时被 label 关联、被 CSS 选中、被 JS 读到——三处都靠 <code>id</code>/<code>name</code></td></tr>
+<tr><td class="k">属性钩子</td><td>属性「<code>data-*</code>」 · 与 CSS/JS 的接口「选择器从哪来」 · 可访问性「<code>aria-*</code> 基础」</td><td class="why"><code>id</code>/<code>class</code>/<code>data-*</code>/<code>aria-*</code> 都是「挂东西的地方」，但只有前两个该用于样式</td></tr>
+<tr><td class="k">加载与顺序</td><td>文档结构「<code>&lt;head&gt;</code>」 · 与 CSS/JS 的接口「<code>defer</code> vs <code>async</code>」 · 多媒体「懒加载」</td><td class="why">谁先下载、谁先执行决定了「为什么脚本拿不到元素」这类问题</td></tr>
+<tr><td class="k">标题层级</td><td>文本与语义「标题」 · 语义化布局「文档大纲」 · 可访问性「标题层级」</td><td class="why"><code>h1</code>–<code>h6</code> 同时是视觉层级、文档大纲、和屏幕阅读器的导航结构</td></tr>
+<tr><td class="k">路径</td><td>链接与图片「相对路径」 · 文档结构「<code>&lt;base href&gt;</code>」 · 多媒体「<code>&lt;iframe&gt;</code>」</td><td class="why">相对路径以「当前文件」为基准，所以同一段 <code>../img/a.png</code> 在不同深度的页面里指向不同位置</td></tr>
+</tbody></table></div>
+<h2 id="notes">备注 · 易错点 / 取舍 / 顺序</h2>
+<div class="card note-block">
+<div class="note"><div class="i">1</div><div><div class="t">漏闭合标签浏览器不会报错</div><div class="d">它会自己猜，结果往往不是你想要的。写完用 <code>validator.w3.org</code> 过一遍。</div></div></div>
+<div class="note"><div class="i">2</div><div><div class="t"><code>&lt;img&gt;</code> 一定要有 <code>alt</code></div><div class="d">装饰图写 <code>alt=""</code>（空但存在），不是不写。</div></div></div>
+<div class="note"><div class="i">3</div><div><div class="t">表格只放数据</div><div class="d">布局用 CSS Grid/Flex；表格布局在手机宽度下必崩。</div></div></div>
+<div class="note"><div class="i">4</div><div><div class="t"><code>placeholder</code> 不是标签</div><div class="d">它一输入就消失，不能替代 <code>&lt;label&gt;</code>。</div></div></div>
+<div class="note"><div class="i">5</div><div><div class="t"><code>type</code> 选对省一半校验</div><div class="d"><code>type="email"</code>、<code>type="number"</code>、<code>required</code> 都是免费的。</div></div></div>
+<div class="note"><div class="i">6</div><div><div class="t">相对路径以文件位置为准</div><div class="d"><code>css/a.css</code> 里的 <code>url(../img/x.png)</code> 相对的是 CSS 文件，不是 HTML。</div></div></div>
+<div class="note"><div class="i">7</div><div><div class="t">忘了 viewport 手机端会缩小</div><div class="d">整页缩成一小块，用户要放大才能读。</div></div></div>
+<div class="note"><div class="i">8</div><div><div class="t"><code>defer</code> 比放在 <code>&lt;/body&gt;</code> 前更明确</div><div class="d">两者都能保证 DOM 就绪，但 <code>defer</code> 语义更清楚。</div></div></div>
+<div class="note"><div class="i">9</div><div><div class="t">中文乱码 = 缺 <code>&lt;meta charset&gt;</code></div><div class="d">或者文件本身没存成 UTF-8。</div></div></div>
+<div class="note"><div class="i">10</div><div><div class="t"><code>&lt;div&gt;</code> + <code>onclick</code> 不是按钮</div><div class="d">键盘用户按不到；用 <code>&lt;button&gt;</code>。</div></div></div>
+<div class="note"><div class="i">11</div><div><div class="t"><code>target="_blank"</code> 要配 <code>rel</code></div><div class="d"><code>noopener noreferrer</code>，否则新页面能操作原页面。</div></div></div>
+<div class="note"><div class="i">12</div><div><div class="t">学 HTML 的顺序</div><div class="d">①骨架与文本 ②链接与图片 ③列表与表格 ④表单 ⑤语义布局 ⑥可访问性 ⑦与 CSS/JS 接口。</div></div></div>
+</div>
+<h2 id="quick">反向查 · 我要做 X，去哪个域</h2>
+<div class="card"><table><thead><tr><th style="width:45%">我要……</th><th>去这里</th></tr></thead><tbody>
+<tr><td class="k">做一个能提交的表单</td><td>表单（<code>form</code> + <code>label</code> + <code>input name</code>）</td></tr>
+<tr><td class="k">把页面分成页头/导航/主体/页脚</td><td>语义化布局</td></tr>
+<tr><td class="k">插入一张带说明的图</td><td>链接与图片（<code>figure</code>/<code>figcaption</code>）+ 可访问性（<code>alt</code>）</td></tr>
+<tr><td class="k">做一个行×列的数据表</td><td>表格（<code>thead</code>/<code>tbody</code>/<code>th scope</code>）</td></tr>
+<tr><td class="k">让手机端正常显示</td><td>元信息与 SEO（<code>viewport</code>）</td></tr>
+<tr><td class="k">分享到微信时有缩略图和标题</td><td>元信息与 SEO（Open Graph）</td></tr>
+<tr><td class="k">让键盘也能操作</td><td>可访问性（真按钮、焦点可见、label）</td></tr>
+<tr><td class="k">给元素挂自定义数据</td><td>属性（<code>data-*</code>）+ 与 CSS/JS 的接口</td></tr>
+<tr><td class="k">嵌一个 YouTube/B 站视频</td><td>多媒体（<code>&lt;iframe title&gt;</code> 或 <code>&lt;video&gt;</code>）</td></tr>
+<tr><td class="k">页内跳到某一节</td><td>链接与图片（页内锚点 <code>#id</code>）</td></tr>
+</tbody></table></div>
+</main></div>
+<footer>HTML 知识地图 · 共 95 个条目 · 由 <code>mapkit.py</code> 从同一份数据生成（Markdown 版内容一致）</footer>
+
+<script>
+(function () {
+  var box = document.getElementById('q');
+  var hint = document.getElementById('hint');
+  var cards = Array.prototype.slice.call(document.querySelectorAll('.card, .note-block'));
+  var total = document.querySelectorAll('table tbody tr').length;
+
+  function norm(s) { return (s || '').toLowerCase(); }
+
+  box.addEventListener('input', function () {
+    var q = norm(box.value.trim());
+    var hits = 0;
+    cards.forEach(function (card) {
+      var rows = Array.prototype.slice.call(card.querySelectorAll('tbody tr'));
+      if (!rows.length) { return; }
+      var shown = 0;
+      rows.forEach(function (tr) {
+        var ok = !q || norm(tr.textContent).indexOf(q) >= 0;
+        tr.classList.toggle('hidden', !ok);
+        if (ok) { shown++; }
+      });
+      card.classList.toggle('hidden', shown === 0);
+      hits += shown;
+    });
+    hint.textContent = q ? (hits + ' 条命中') : (total + ' 条');
+  });
+
+  // aktiven Navigationspunkt hervorheben
+  var links = Array.prototype.slice.call(document.querySelectorAll('nav a[href^="#"]'));
+  var targets = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });
+  var obs = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (!e.isIntersecting) { return; }
+      links.forEach(function (a) { a.classList.remove('on'); });
+      var i = targets.indexOf(e.target);
+      if (i >= 0) { links[i].classList.add('on'); }
+    });
+  }, { rootMargin: '-15% 0px -75% 0px' });
+  targets.forEach(function (t) { if (t) { obs.observe(t); } });
+})();
+</script>
+</body>
+</html>
