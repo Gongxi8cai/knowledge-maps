@@ -1,4 +1,7 @@
-# 编程知识地图 · 七份
+# 编程知识地图
+
+> 线上版：**https://gongxi8cai.github.io/knowledge-maps/**
+> 仓库：https://github.com/Gongxi8cai/knowledge-maps
 
 六门语言/技术（C、C++、Python、MySQL、Linux、HTML）加原有的 Java，一个模子做出来的查表式知识地图。
 
