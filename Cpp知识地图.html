@@ -147,7 +147,7 @@ footer { color:#5d6b7e; font-size:12.5px; padding:30px 40px 60px; border-top:1px
 <span class="chip">功能条目 <b>122</b></span>
 <span class="chip">基础通用 <b>10</b></span>
 <span class="chip">交叉概念 <b>7</b></span>
-<span class="chip">备注 <b>12</b></span>
+<span class="chip">备注 <b>13</b></span>
 <span class="chip">自学 · C 之后</span>
 </div>
 <div class="legend"><span>第 2 列的小标签表示这一条的性质：</span>
@@ -177,7 +177,7 @@ footer { color:#5d6b7e; font-size:12.5px; padding:30px 40px 60px; border-top:1px
 <a href="#test">构建与测试 <span class="n">8</span></a>
 <div class="grp">跨层</div>
 <a href="#cross">交叉项总表 <span class="n">7</span></a>
-<a href="#notes">备注 <span class="n">12</span></a>
+<a href="#notes">备注 <span class="n">13</span></a>
 <a href="#quick">反向查 <span class="n">10</span></a>
 </nav><main>
 <div class="search"><input id="q" type="search" placeholder="搜功能、API 或关键词……（例如 指针 / 索引 / 管道）" autocomplete="off"><span class="hint" id="hint">149 条</span></div>
@@ -413,6 +413,7 @@ footer { color:#5d6b7e; font-size:12.5px; padding:30px 40px 60px; border-top:1px
 <div class="note"><div class="i">10</div><div><div class="t">编译慢的常见原因</div><div class="d">头文件引太多、模板太重、没开并行编译（<code>make -j</code>）。前置声明和 <code>-O2</code> 只在发布时用。</div></div></div>
 <div class="note"><div class="i">11</div><div><div class="t">学 C++ 的顺序</div><div class="d">①类与 RAII ②容器与算法 ③继承与多态 ④移动语义 ⑤模板。C++ 不能像 Python 那样「边写边学」。</div></div></div>
 <div class="note"><div class="i">12</div><div><div class="t">和 Java 的关键差别</div><div class="d">C++ 没有垃圾回收、有真正的值语义与析构函数、模板在编译期展开（Java 泛型是类型擦除）。</div></div></div>
+<div class="note"><div class="i">13</div><div><div class="t">Windows 上别把编译输出写进中文路径</div><div class="d"><code>g++ -o D:\学业\xxx.exe</code> 会报 <code>cannot open output file</code>（工具链按 cp936 解析 UTF-8 路径）。先 <code>cd</code> 进目录，<code>-o</code> 只写文件名。</div></div></div>
 </div>
 <h2 id="quick">反向查 · 我要做 X，去哪个域</h2>
 <div class="card"><table><thead><tr><th style="width:45%">我要……</th><th>去这里</th></tr></thead><tbody>
